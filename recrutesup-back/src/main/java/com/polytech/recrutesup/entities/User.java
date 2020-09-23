@@ -13,7 +13,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "survey_id", unique = true, nullable = false)
+    @Column(name = "id", unique = true, nullable = false)
     public Long get_id() {
         return _id;
     }
