@@ -45,5 +45,4 @@ jobs:
           port: ${{ secrets.ocean_port }}
           source: "cwt-spring/target/cwt-spring-SNAPSHOT.jar"
           strip_components: 2
-          path: "./recrutesup-back"
           target: "/var/github-release"
