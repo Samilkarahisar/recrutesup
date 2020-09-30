@@ -1,4 +1,4 @@
-name: test
+name: deploy
 on:
   push:
     tags:
@@ -14,7 +14,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-          path:./recrutesup-back
       - name: mvn -B clean package -DskipTests
         run: mvn -B clean package -DskipTests
       - name: Create GitHub Release
@@ -46,4 +45,5 @@ jobs:
           port: ${{ secrets.ocean_port }}
           source: "cwt-spring/target/cwt-spring-SNAPSHOT.jar"
           strip_components: 2
+          path: "./recrutesup-back"
           target: "/var/github-release"
