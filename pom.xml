@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.polytech</groupId>
 	<artifactId>recrutesup</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>SNAPSHOT</version>
 	<name>recrutesup</name>
 	<description>Gestion Forum recrutement</description>
 
