@@ -32,3 +32,4 @@ build/
 /.metadata/
 .gitignore
 /target/
+/.apt_generated_tests/

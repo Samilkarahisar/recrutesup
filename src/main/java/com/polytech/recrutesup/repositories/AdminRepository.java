@@ -1,10 +1,11 @@
 package com.polytech.recrutesup.repositories;
 
-import com.polytech.recrutesup.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.polytech.recrutesup.entities.Admin;
+
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface AdminRepository extends JpaRepository<Admin, Long> {
 
 }

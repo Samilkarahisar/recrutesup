@@ -13,9 +13,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Table(name = "CompanyAttachment")
-public class CompanyAttachment implements Serializable {
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "Offer_Attachment")
+public class OfferAttachment implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = IDENTITY)
@@ -26,7 +37,7 @@ public class CompanyAttachment implements Serializable {
 	private String label;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_company", referencedColumnName = "id")
-	private Company company;
+    @JoinColumn(name = "id_offer", referencedColumnName = "id", nullable = false)
+	private Offer offer;
 	
 }
