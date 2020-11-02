@@ -1,5 +1,5 @@
 HELP.md
-
+bin/
 
 ### STS ###
 .apt_generated
@@ -31,3 +31,4 @@ build/
 .DS_Store
 /.metadata/
 .gitignore
+/target/
