@@ -40,4 +40,7 @@ public class User implements Serializable {
 	
 	@Column(name = "password", nullable = false)
     private String password;
+
+	@Column(name = "token")
+    private String token;
 }
