@@ -8,6 +8,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -16,7 +18,20 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.polytech.recrutesup.entities.reference.WorkflowState;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Table(name = "Company")
 public class Company implements Serializable {
 
@@ -28,19 +43,20 @@ public class Company implements Serializable {
 	@Column(name = "name", length = 40, nullable = false)
     private String name;
 	
-	@Column(name = "address", length = 40, nullable = false)
-    private String address;
-	
 	@Column(name = "mailAddress", length = 40, nullable = false)
     private String mailAddress;
+	
+	@Column(name = "website_url", length = 200, nullable = false)
+    private String websiteUrl;
 	
 	@Column(name = "description", length = 500, nullable = true)
     private String description;
 	
-	@Column(name = "indicator", length = 40, nullable = false)
-    private String indicator;
+	@Column(name = "state", length = 40, nullable = false)
+	@Enumerated(EnumType.STRING)
+	private WorkflowState state;
 	
-	@Column(name = "label_logo", length = 40, nullable = true)
+	@Column(name = "label_logo", length = 200, nullable = true)
 	private String labelLogo;
 	
 	@JoinTable(name = "CompanyEmployee",

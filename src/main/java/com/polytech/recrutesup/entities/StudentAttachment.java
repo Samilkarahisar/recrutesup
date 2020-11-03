@@ -13,8 +13,19 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Table(name = "StudentAttachment")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "Student_Attachment")
 public class StudentAttachment implements Serializable {
 	
 	@Id
@@ -26,6 +37,6 @@ public class StudentAttachment implements Serializable {
 	private String label;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_student", referencedColumnName = "id")
+    @JoinColumn(name = "id_student", referencedColumnName = "id", nullable = false)
 	private Student student;
 }
