@@ -1,7 +1,8 @@
 package com.polytech.recrutesup.api;
 
 import com.polytech.recrutesup.entities.User;
-import com.polytech.recrutesup.services.UserService;
+import com.polytech.recrutesup.services.impl.UserServiceImpl;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +16,11 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public String getUser(@PathVariable Long id) {
-        return userService.get(id).get().getUsername();
+        return userService.get(id).get().getFirstname();
     }
     @GetMapping(value = "/")
     public List<User> list(){
