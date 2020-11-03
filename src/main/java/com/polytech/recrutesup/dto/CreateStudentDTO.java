@@ -1,5 +1,8 @@
 package com.polytech.recrutesup.dto;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,25 +14,25 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class StudentDTO {
-
-	private Long id;
+public class CreateStudentDTO {
 	
+	@NotNull
+	@Size(max = 40)
 	private String firstname;
 	
+	@NotNull
+	@Size(max = 40)
 	private String lastname;
 	
+	@NotNull
+	@Size(max = 40)
 	private String mailAddress;
 	
+	@NotNull
+	@Size(max = 40)
 	private String phoneNumber;
 	
+	@NotNull
+	@Size(max = 40)
 	private String schoolYear;
-	
-	private String label;
-	
-	private String description;
-	
-	private String state;
-	
-	private String labelPicture;
 }

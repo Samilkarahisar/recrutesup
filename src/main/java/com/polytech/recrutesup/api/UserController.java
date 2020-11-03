@@ -20,7 +20,7 @@ public class UserController {
 
     @GetMapping(value = "/{id}", produces = "application/json")
     public String getUser(@PathVariable Long id) {
-        return userService.get(id).get().getUsername();
+        return userService.get(id).get().getFirstname();
     }
     @GetMapping(value = "/")
     public List<User> list(){
