@@ -1,5 +1,7 @@
 package com.polytech.recrutesup.services.dto;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -11,4 +13,6 @@ public interface StudentServiceDTO {
 	StudentDTO createStudent(@NotNull @Valid CreateStudentDTO createDossierDTO);
 	
 	StudentDTO getStudent(@NotNull Long idStudent);
+	
+	List<StudentDTO> getAllStudents();
 }

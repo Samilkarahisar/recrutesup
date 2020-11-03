@@ -1,6 +1,9 @@
 package com.polytech.recrutesup.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,11 @@ public class StudentController {
 	
 	@Autowired
 	private StudentServiceDTO studentServiceDTO;
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<StudentDTO>> getAllStudents() {
+		return new ResponseEntity<>(this.studentServiceDTO.getAllStudents(), HttpStatus.OK);
+	}
 	
 	@GetMapping("/{idStudent}")
 	public ResponseEntity<StudentDTO> getStudent(@PathVariable Long idStudent) {
