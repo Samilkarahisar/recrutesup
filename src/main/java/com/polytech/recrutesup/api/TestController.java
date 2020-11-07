@@ -16,25 +16,25 @@ public class TestController {
     }
 
     @GetMapping("/user")
-    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_COMPANY') or hasRole('ROLE_STUDENT')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
     public String userAccess() {
         return "User Content.";
     }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public String adminAccess() {
         return "Admin Board.";
     }
 
     @GetMapping("/company")
-    @PreAuthorize("hasRole('ROLE_COMPANY')")
+    @PreAuthorize("hasRole('COMPANY')")
     public String companyAccess() {
         return "Company Board.";
     }
 
     @GetMapping("/student")
-    @PreAuthorize("hasRole('ROLE_STUDENT')")
+    @PreAuthorize("hasRole('STUDENT')")
     public String studentAccess() {
         return "Student Board.";
     }

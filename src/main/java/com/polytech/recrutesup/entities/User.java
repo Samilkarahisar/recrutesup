@@ -41,8 +41,8 @@ public class User implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinTable(name = "User_Role",
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_Role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Role role;
