@@ -15,7 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.polytech.recrutesup.entities.reference.WorkflowState;
+import com.polytech.recrutesup.entities.reference.EWorkflowState;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,26 +32,26 @@ import lombok.Setter;
 @Table(name = "Company_Wish")
 public class CompanyWish implements Serializable {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-	
-	@OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_company", referencedColumnName = "id", nullable = false)
-	private Company company;
-	
-	@OneToOne(cascade = CascadeType.ALL)
+    private Company company;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_offer", referencedColumnName = "id", nullable = false)
-	private Offer offer;
-	
-	@Column(name = "priority_sender", length = 40, nullable = false)
-	private int prioritySender;
-	
-	@Column(name = "priority_receiver", length = 40, nullable = false)
-	private int priorityReceiver;
-	
-	@Column(name = "state", length = 40, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private WorkflowState state;
+    private Offer offer;
+
+    @Column(name = "priority_sender", length = 40, nullable = false)
+    private int prioritySender;
+
+    @Column(name = "priority_receiver", length = 40, nullable = false)
+    private int priorityReceiver;
+
+    @Column(name = "state", length = 40, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EWorkflowState state;
 }

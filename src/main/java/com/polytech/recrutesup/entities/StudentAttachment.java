@@ -27,16 +27,16 @@ import lombok.Setter;
 @Builder
 @Table(name = "Student_Attachment")
 public class StudentAttachment implements Serializable {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-	
-	@Column(name = "label", length = 40, nullable = false)
-	private String label;
-	
-	@OneToOne(cascade = CascadeType.ALL)
+
+    @Column(name = "label", length = 40, nullable = false)
+    private String label;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_student", referencedColumnName = "id", nullable = false)
-	private Student student;
+    private Student student;
 }

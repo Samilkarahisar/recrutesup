@@ -27,13 +27,13 @@ import lombok.Setter;
 @Builder
 @Table(name = "Admin")
 public class Admin implements Serializable {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-	
-	@OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user", referencedColumnName = "id")
-	private User user;
+    private User user;
 }

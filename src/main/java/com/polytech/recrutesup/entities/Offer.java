@@ -18,7 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.polytech.recrutesup.entities.reference.WorkflowState;
+import com.polytech.recrutesup.entities.reference.EWorkflowState;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,42 +35,42 @@ import lombok.Setter;
 @Table(name = "Offer")
 public class Offer implements Serializable {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-	
-	@Column(name = "label", length = 40, nullable = false)
+
+    @Column(name = "label", length = 40, nullable = false)
     private String label;
-	
-	@Column(name = "description", length = 500, nullable = true)
+
+    @Column(name = "description", length = 500, nullable = true)
     private String description;
-	
-	@Column(name = "address", length = 40, nullable = false)
+
+    @Column(name = "address", length = 40, nullable = false)
     private String address;
-	
-	@Column(name = "city", length = 40, nullable = false)
+
+    @Column(name = "city", length = 40, nullable = false)
     private String city;
-	
-	@Column(name = "mailAddress", length = 40, nullable = false)
+
+    @Column(name = "mail_address", length = 40, nullable = false)
     private String mailAddress;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "creation_date", length = 40, nullable = false, updatable = false)
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "creation_date", length = 40, nullable = false, updatable = false)
     private Date creationDate;
-	
-	@Column(name = "creation_username", length = 40, nullable = false, updatable = false)
+
+    @Column(name = "creation_username", length = 40, nullable = false, updatable = false)
     private User creationUsername;
-	
-	@Column(name = "state", length = 40, nullable = false)
-	@Enumerated(EnumType.STRING)
-	private WorkflowState state;
-	
-	@OneToOne(cascade = CascadeType.ALL)
+
+    @Column(name = "state", length = 40, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EWorkflowState state;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_company", referencedColumnName = "id", nullable = false)
-	private Company company;
-	
-	@OneToOne(cascade = CascadeType.ALL)
+    private Company company;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_attachment", referencedColumnName = "id", nullable = true)
-	private OfferAttachment attachment;
+    private OfferAttachment attachment;
 }

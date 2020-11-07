@@ -7,14 +7,13 @@ import java.util.Optional;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.polytech.recrutesup.dto.CreateStudentDTO;
 import com.polytech.recrutesup.dto.StudentDTO;
 import com.polytech.recrutesup.entities.Student;
 import com.polytech.recrutesup.entities.User;
-import com.polytech.recrutesup.entities.reference.WorkflowState;
+import com.polytech.recrutesup.entities.reference.EWorkflowState;
 import com.polytech.recrutesup.exceptions.RecruteSupApplicationException;
 import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
 import com.polytech.recrutesup.mappers.StudentMapper;
@@ -65,7 +64,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		user.setPhoneNumber(createStudentDTO.getPhoneNumber());
 		user.setPassword("mot de passe");
 		student = this.studentMapper.createStudentDTOToStudent(createStudentDTO, user);
-		student.setState(WorkflowState.ENREGISTRE);
+		student.setState(EWorkflowState.ENREGISTRE);
 		
 		// Sauvegarde en BDD
 		user = userRepository.save(user);
