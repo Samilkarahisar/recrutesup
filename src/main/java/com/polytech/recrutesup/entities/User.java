@@ -40,11 +40,11 @@ public class User implements Serializable {
 
     @Column(name = "password", nullable = false)
     private String password;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_Role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    @OneToOne(cascade = {CascadeType.ALL})
     private Role role;
 
 }

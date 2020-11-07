@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,13 +25,14 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Builder
 @Table(name = "Role")
-public class Role {
+public class Role implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
+    @Column(name = "name", length = 40, nullable = false)
     @Enumerated(EnumType.STRING)
-    @Column(length = 20)
     private ERole name;
 }

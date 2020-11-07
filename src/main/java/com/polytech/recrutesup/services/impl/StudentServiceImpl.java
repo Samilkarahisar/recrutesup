@@ -11,15 +11,15 @@ import org.springframework.stereotype.Service;
 
 import com.polytech.recrutesup.dto.CreateStudentDTO;
 import com.polytech.recrutesup.dto.StudentDTO;
+import com.polytech.recrutesup.entities.Role;
 import com.polytech.recrutesup.entities.Student;
 import com.polytech.recrutesup.entities.User;
+import com.polytech.recrutesup.entities.reference.ERole;
 import com.polytech.recrutesup.entities.reference.EWorkflowState;
 import com.polytech.recrutesup.exceptions.RecruteSupApplicationException;
 import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
 import com.polytech.recrutesup.mappers.StudentMapper;
-import com.polytech.recrutesup.mappers.UserMapper;
 import com.polytech.recrutesup.repositories.StudentRepository;
-import com.polytech.recrutesup.repositories.UserRepository;
 import com.polytech.recrutesup.services.StudentService;
 import com.polytech.recrutesup.services.dto.StudentServiceDTO;
 
@@ -30,13 +30,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 	private StudentRepository studentRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
 	private StudentMapper studentMapper;
-	
-	@Autowired
-	private UserMapper userMapper;
 
 	@Override
 	public Student findOne(Long id) {
@@ -56,19 +50,22 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 			throw new RecruteSupApplicationException(RecruteSupErrorType.STUDENT_ALREADY_CREATED);
 		}
 		
-		// On récupère les objets User et Student à sauvegarder depuis l'objet CreateStudentDTO
+		// On crée l'objet Student et toutes ses dépendances à sauvegarder depuis l'objet CreateStudentDTO
+		Role role = new Role();
+		role.setName(ERole.ROLE_STUDENT);
+		
 		User user = new User();
-		user.setFirstname(createStudentDTO.getFirstname());
-		user.setLastname(createStudentDTO.getLastname().toUpperCase());
-		user.setMailAddress(createStudentDTO.getMailAddress());
-		user.setPhoneNumber(createStudentDTO.getPhoneNumber());
+		user.setFirstname(createStudentDTO.getFirstname().trim());
+		user.setLastname(createStudentDTO.getLastname().trim().toUpperCase());
+		user.setMailAddress(createStudentDTO.getMailAddress().trim());
+		user.setPhoneNumber(createStudentDTO.getPhoneNumber().trim());
+		user.setRole(role);
 		//TODO : generate password using BEncryption
 		user.setPassword("mot de passe");
 		student = this.studentMapper.createStudentDTOToStudent(createStudentDTO, user);
 		student.setState(EWorkflowState.ENREGISTRE);
 		
 		// Sauvegarde en BDD
-		user = userRepository.save(user);
 		student = studentRepository.save(student);
 		
 		// On retourne le StudentDTO au front
