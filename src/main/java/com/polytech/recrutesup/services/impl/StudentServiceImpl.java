@@ -62,6 +62,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		user.setLastname(createStudentDTO.getLastname().toUpperCase());
 		user.setMailAddress(createStudentDTO.getMailAddress());
 		user.setPhoneNumber(createStudentDTO.getPhoneNumber());
+		//TODO : generate password using BEncryption
 		user.setPassword("mot de passe");
 		student = this.studentMapper.createStudentDTOToStudent(createStudentDTO, user);
 		student.setState(EWorkflowState.ENREGISTRE);
