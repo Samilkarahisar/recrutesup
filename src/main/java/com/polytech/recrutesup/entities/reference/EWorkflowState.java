@@ -1,6 +1,6 @@
 package com.polytech.recrutesup.entities.reference;
 
-public enum WorkflowState {
+public enum EWorkflowState {
 	ENREGISTRE,
 	VALIDE,
 	INVALIDE,

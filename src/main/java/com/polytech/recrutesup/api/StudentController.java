@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +19,7 @@ import com.polytech.recrutesup.dto.CreateStudentDTO;
 import com.polytech.recrutesup.dto.StudentDTO;
 import com.polytech.recrutesup.services.dto.StudentServiceDTO;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("student")
 public class StudentController {
@@ -25,6 +28,7 @@ public class StudentController {
 	private StudentServiceDTO studentServiceDTO;
 	
 	@GetMapping("/all")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY')")
 	public ResponseEntity<List<StudentDTO>> getAllStudents() {
 		return new ResponseEntity<>(this.studentServiceDTO.getAllStudents(), HttpStatus.OK);
 	}
@@ -35,6 +39,7 @@ public class StudentController {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<StudentDTO> createStudent(@RequestBody CreateStudentDTO createStudentDTO) {
 		return new ResponseEntity<>(this.studentServiceDTO.createStudent(createStudentDTO), HttpStatus.OK);
 	}

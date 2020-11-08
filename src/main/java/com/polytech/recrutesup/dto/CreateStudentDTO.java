@@ -28,7 +28,6 @@ public class CreateStudentDTO {
 	@Size(max = 40)
 	private String mailAddress;
 	
-	@NotNull
 	@Size(max = 40)
 	private String phoneNumber;
 	

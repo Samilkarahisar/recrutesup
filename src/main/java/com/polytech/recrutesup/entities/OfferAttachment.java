@@ -27,17 +27,16 @@ import lombok.Setter;
 @Builder
 @Table(name = "Offer_Attachment")
 public class OfferAttachment implements Serializable {
-	
-	@Id
+
+    @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
-	
-	@Column(name = "label", length = 40, nullable = false)
-	private String label;
-	
-	@OneToOne(cascade = CascadeType.ALL)
+
+    @Column(name = "label", length = 40, nullable = false)
+    private String label;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_offer", referencedColumnName = "id", nullable = false)
-	private Offer offer;
-	
+    private Offer offer;
 }
