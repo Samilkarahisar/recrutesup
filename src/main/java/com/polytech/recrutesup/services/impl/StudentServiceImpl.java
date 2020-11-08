@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import com.polytech.recrutesup.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.polytech.recrutesup.dto.CreateStudentDTO;
@@ -35,6 +36,9 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public Student findOne(Long id) {
@@ -55,7 +59,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		}
 		
 		// On crée l'objet Student et toutes ses dépendances à sauvegarder depuis l'objet CreateStudentDTO
-		Role role = roleRepository.findByName(ERole.ROLE_STUDENT).orElseThrow(()-> new RuntimeException("Role Student not found"));
+		Role role = roleRepository.findByName(ERole.ROLE_STUDENT).orElseThrow(()-> new RecruteSupApplicationException(RecruteSupErrorType.ROLE_STUDENT_UNKNOWN));
 		
 		User user = new User();
 		user.setFirstname(createStudentDTO.getFirstname().trim());
@@ -64,7 +68,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		user.setPhoneNumber(createStudentDTO.getPhoneNumber());
 		user.setRole(role);
 		//TODO : generate password using BEncryption
-		user.setPassword("mot de passe");
+		user.setPassword(passwordEncoder.encode("Testtest"));
 		student = this.studentMapper.createStudentDTOToStudent(createStudentDTO, user);
 		student.setState(EWorkflowState.ENREGISTRE);
 		
