@@ -61,7 +61,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		user.setFirstname(createStudentDTO.getFirstname().trim());
 		user.setLastname(createStudentDTO.getLastname().trim().toUpperCase());
 		user.setMailAddress(createStudentDTO.getMailAddress().trim());
-		user.setPhoneNumber(createStudentDTO.getPhoneNumber().trim());
+		user.setPhoneNumber(createStudentDTO.getPhoneNumber());
 		user.setRole(role);
 		//TODO : generate password using BEncryption
 		user.setPassword("mot de passe");
