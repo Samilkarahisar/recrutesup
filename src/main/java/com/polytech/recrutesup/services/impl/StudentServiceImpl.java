@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
+import com.polytech.recrutesup.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,9 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 	@Autowired
 	private StudentMapper studentMapper;
 
+	@Autowired
+	private RoleRepository roleRepository;
+
 	@Override
 	public Student findOne(Long id) {
 		Optional<Student> student = this.studentRepository.findById(id);
@@ -51,8 +55,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		}
 		
 		// On crée l'objet Student et toutes ses dépendances à sauvegarder depuis l'objet CreateStudentDTO
-		Role role = new Role();
-		role.setName(ERole.ROLE_STUDENT);
+		Role role = roleRepository.findByName(ERole.ROLE_STUDENT).orElseThrow(()-> new RuntimeException("Role Student not found"));
 		
 		User user = new User();
 		user.setFirstname(createStudentDTO.getFirstname().trim());
