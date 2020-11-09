@@ -7,18 +7,15 @@ public class JwtResponse {
     private Long id;
     private String mailAddress;
     private String role;
+    private String firstname;
+    private String lastname;
 
-    /**
-     *
-     * @param token
-     * @param id
-     * @param mailAddress
-     * @param role
-     */
-    public JwtResponse(String token, Long id, String mailAddress, String role) {
+    public JwtResponse(String token, Long id, String mailAddress, String firstname, String lastname, String role) {
         this.token = token;
         this.id = id;
         this.mailAddress = mailAddress;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.role = role;
     }
 
@@ -56,5 +53,21 @@ public class JwtResponse {
 
     public String getRole() {
         return this.role;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }
