@@ -41,12 +41,12 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 	@Override
 	public CompanyDTO createCompany(@NotNull @Valid CreateCompanyDTO createCompanyDTO) {
 
-		Company company = companyRepository.findOneByName(createCompanyDTO.getName());
-		if(company != null) {
+		Optional<Company> optCompany = companyRepository.findByName(createCompanyDTO.getName());
+		if(optCompany.isPresent()) {
 			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANT_ALREADY_CREATED);
 		}
 		
-		company = this.companyMapper.CreateCompanyDTOToCompany(createCompanyDTO);
+		Company company = this.companyMapper.CreateCompanyDTOToCompany(createCompanyDTO);
 		company.setState(EWorkflowState.ENREGISTRE);
 		company.setEmployees(new ArrayList<>());
 		
