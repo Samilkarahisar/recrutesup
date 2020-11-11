@@ -1,8 +1,10 @@
 package com.polytech.recrutesup.entities;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import java.io.Serializable;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,14 +12,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
@@ -25,8 +25,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "Offer_Attachment")
-public class OfferAttachment implements Serializable {
+@Table(name = "Attachment")
+public class Attachment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -36,7 +36,4 @@ public class OfferAttachment implements Serializable {
     @Column(name = "label", length = 40, nullable = false)
     private String label;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_offer", referencedColumnName = "id", nullable = false)
-    private Offer offer;
 }

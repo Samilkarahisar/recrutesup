@@ -1,9 +1,11 @@
 package com.polytech.recrutesup.entities;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-import java.io.Serializable;
-import java.util.Date;
+import com.polytech.recrutesup.entities.reference.EWorkflowState;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,18 +15,17 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
-import com.polytech.recrutesup.entities.reference.EWorkflowState;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Getter
@@ -59,18 +60,23 @@ public class Offer implements Serializable {
     @Column(name = "creation_date", length = 40, nullable = false, updatable = false)
     private Date creationDate;
 
-    @Column(name = "creation_username", length = 40, nullable = false, updatable = false)
-    private User creationUsername;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "created_by_user", referencedColumnName = "id", nullable = false)
+    private User createdByUser;
 
     @Column(name = "state", length = 40, nullable = false)
     @Enumerated(EnumType.STRING)
     private EWorkflowState state;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_company", referencedColumnName = "id", nullable = false)
+    @JoinTable(name = "company_offer",
+            joinColumns = @JoinColumn(name = "id_offer", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_company", referencedColumnName = "id"))
+    @ManyToOne(cascade = {CascadeType.ALL})
     private Company company;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_attachment", referencedColumnName = "id", nullable = true)
-    private OfferAttachment attachment;
+    @JoinTable(name = "offer_attachment",
+            joinColumns = @JoinColumn(name = "id_offer", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_attachment", referencedColumnName = "id"))
+    @ManyToOne(cascade = {CascadeType.ALL})
+    private Attachment attachment;
 }
