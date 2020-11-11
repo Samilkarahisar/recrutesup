@@ -48,6 +48,15 @@ INSERT IGNORE INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
 INSERT IGNORE INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
 (2, 2);
 
+
+-- INSERTION OFFERS COMPANY --
+INSERT IGNORE INTO `company_offer` (`id_company`, `id_offer`) VALUES
+(1, 1);
+INSERT IGNORE INTO `company_offer` (`id_company`, `id_offer`) VALUES
+(1, 2);
+
+
+
 --
 -- INSERTION DES LIAISONS ENTRE USER ET ROLE
 --

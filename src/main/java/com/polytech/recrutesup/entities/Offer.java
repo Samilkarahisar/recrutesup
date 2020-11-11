@@ -77,6 +77,6 @@ public class Offer implements Serializable {
     @JoinTable(name = "offer_attachment",
             joinColumns = @JoinColumn(name = "id_offer", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_attachment", referencedColumnName = "id"))
-    @ManyToOne(cascade = {CascadeType.ALL})
-    private Attachment attachment;
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Attachment> attachmentList;
 }

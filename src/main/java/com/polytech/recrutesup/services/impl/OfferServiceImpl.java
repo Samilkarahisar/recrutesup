@@ -47,8 +47,7 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
             List<Offer> allOffersByCompany = offerRepository.findAllByCompany(company.get());
             allOffersByCompany
                     .forEach(offer -> {
-                        List<Attachment> attachmentList = attachmentRepository.findAllAttachmentByOffer(offer.getId());
-                        offerDTOList.add(offerMapper.offerToOfferDTO(offer, attachmentList));
+                        offerDTOList.add(offerMapper.offerToOfferDTO(offer));
                     });
         }
 
@@ -70,8 +69,7 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
         List<Offer> allOffersByCompany = offerRepository.findAll();
         allOffersByCompany
                 .forEach(offer -> {
-                    List<Attachment> attachmentList = attachmentRepository.findAllAttachmentByOffer(offer.getId());
-                    offerDTOList.add(offerMapper.offerToOfferDTO(offer, attachmentList));
+                    offerDTOList.add(offerMapper.offerToOfferDTO(offer));
                 });
 
         return offerDTOList;
