@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.polytech.recrutesup.entities.reference.EWorkflowState;
@@ -60,6 +62,6 @@ public class Company implements Serializable {
     @JoinTable(name = "company_employee",
             joinColumns = @JoinColumn(name = "id_company", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "id_employee", referencedColumnName = "id"))
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<User> employees;
 }
