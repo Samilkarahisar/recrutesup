@@ -2,10 +2,13 @@ package com.polytech.recrutesup.exceptions;
 
 public enum RecruteSupErrorType{
 
-	STUDENT_UNKNOWN("Etudiant inconnu", "l'étudiant ne peut pas être trouvée en BDD"),
+	STUDENT_UNKNOWN("Etudiant inconnu", "l'étudiant ne peut pas être trouvé en BDD"),
 	STUDENT_ALREADY_CREATED("Etudiant déjà créé","l'étudiant existe déjà en BDD et ne peut être créé une deuxième fois"),
 	
-	ROLE_STUDENT_UNKNOWN("Role Etudiant inconnu", "le role Etudiant souhaité n'existe pas en BDD");
+	ROLE_STUDENT_UNKNOWN("Role Etudiant inconnu", "le role Etudiant souhaité n'existe pas en BDD"),
+	
+	COMPANY_UNKNOWN("Entreprise inconnue", "l'entreprise ne peut pas être trouvée en BDD"),
+	COMPANT_ALREADY_CREATED("Entreprise déjà créée","l'entreprise existe déjà en BDD et ne peut être créée une deuxième fois");
 	
 	private final String title;
 	private final String message;

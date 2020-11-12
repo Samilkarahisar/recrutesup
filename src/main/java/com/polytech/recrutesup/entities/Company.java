@@ -44,7 +44,7 @@ public class Company implements Serializable {
     @Column(name = "mail_address", length = 40, nullable = false)
     private String mailAddress;
 
-    @Column(name = "website_url", length = 200, nullable = false)
+    @Column(name = "website_url", length = 200, nullable = true)
     private String websiteUrl;
 
     @Column(name = "description", length = 500, nullable = true)

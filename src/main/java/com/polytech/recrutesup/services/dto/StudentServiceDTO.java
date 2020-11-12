@@ -10,7 +10,7 @@ import com.polytech.recrutesup.dto.StudentDTO;
 
 public interface StudentServiceDTO {
 
-	StudentDTO createStudent(@NotNull @Valid CreateStudentDTO createDossierDTO);
+	StudentDTO createStudent(@NotNull @Valid CreateStudentDTO createStudentDTO);
 	
 	StudentDTO getStudent(@NotNull Long idStudent);
 	
