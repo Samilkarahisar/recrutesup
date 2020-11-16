@@ -1,5 +1,6 @@
 package com.polytech.recrutesup.repositories;
 
+import com.polytech.recrutesup.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +13,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
     Optional<Company> findById(Long idCompany);
 
-	Optional<Company> findByName(String name);
+    Optional<Company> findByName(String name);
+
+    Optional<Company> findByEmployeesContains(User employee);
 }

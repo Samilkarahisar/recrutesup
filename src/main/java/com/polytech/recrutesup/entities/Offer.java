@@ -56,7 +56,7 @@ public class Offer implements Serializable {
     @Column(name = "mail_address", length = 40, nullable = false)
     private String mailAddress;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @Column(name = "creation_date", length = 40, nullable = false, updatable = false)
     private Date creationDate;
 

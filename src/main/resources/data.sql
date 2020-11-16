@@ -31,9 +31,9 @@ INSERT IGNORE INTO `student` (`id`, `description`, `label`, `label_picture`, `sc
 
 -- INSERTION OFFERS --
 INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
-(1, 'TEST', 'DESCRIPTION_TEST', 'CITY', 'MAIL', '2010-04-02 15:28:22', 1, 'ENREGISTRE');
+(1, 'TEST', 'DESCRIPTION_TEST', 'CITY', 'MAIL', '2010-04-02', 1, 'ENREGISTRE');
 INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
-(2, 'TEST2', 'DESCRIPTION_TEST2', 'CITY2', 'MAIL2', '2010-04-05 15:28:22', 2, 'ENREGISTRE');
+(2, 'TEST2', 'DESCRIPTION_TEST2', 'CITY2', 'MAIL2', '2010-04-05', 2, 'ENREGISTRE');
 
 
 -- INSERTION ATTACHMENT --
