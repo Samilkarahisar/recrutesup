@@ -11,7 +11,6 @@ import com.polytech.recrutesup.exceptions.RecruteSupApplicationException;
 import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
 import com.polytech.recrutesup.mappers.OfferMapper;
 import com.polytech.recrutesup.payload.request.CreateOfferRequest;
-import com.polytech.recrutesup.repositories.AttachmentRepository;
 import com.polytech.recrutesup.repositories.CompanyRepository;
 import com.polytech.recrutesup.repositories.OfferRepository;
 import com.polytech.recrutesup.repositories.UserRepository;
@@ -23,11 +22,6 @@ import org.springframework.stereotype.Service;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,9 +37,6 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
 
     @Autowired
     private CompanyRepository companyRepository;
-
-    @Autowired
-    private AttachmentRepository attachmentRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -107,14 +98,24 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
     @Override
     public OfferDTO createOffer(@NotNull @Valid CreateOfferRequest createOfferRequest) {
 
-        Optional<User> user = userRepository.findById(createOfferRequest.getUserId());
-        Optional<Company> company = companyRepository.findByEmployeesContains(user.get());
+        List<Attachment> attachmentList = new ArrayList<>();
         Offer offer = new Offer();
 
-        if(company.isPresent()){
-            offer = offerMapper.createOfferRequestToOffer(createOfferRequest, company.get());
-            offer.setState(EWorkflowState.ENREGISTRE);
+        Optional<User> user = userRepository.findById(createOfferRequest.getUserId());
+        Optional<Company> company = companyRepository.findByEmployeesContains(user.get());
 
+        if(!createOfferRequest.getAttachmentNamesList().isEmpty()){
+            for(String name : createOfferRequest.getAttachmentNamesList()){
+                Attachment attachment = new Attachment();
+                attachment.setLabel(name);
+                attachmentList.add(attachment);
+            }
+        }
+
+        if(company.isPresent()){
+            offer = offerMapper.createOfferRequestToOffer(createOfferRequest, company.get(), attachmentList, user.get());
+            offer.setState(EWorkflowState.ENREGISTRE);
+            offer.setCreationDate(new Date(System.currentTimeMillis()));
             offerRepository.save(offer);
         }
 

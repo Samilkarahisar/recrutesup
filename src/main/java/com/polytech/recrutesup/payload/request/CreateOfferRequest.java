@@ -1,13 +1,11 @@
 package com.polytech.recrutesup.payload.request;
 
-import com.polytech.recrutesup.entities.Attachment;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
-
 
 @Getter
 @Setter
@@ -33,7 +31,7 @@ public class CreateOfferRequest {
     @Size(max = 40)
     private String mailAddress;
 
-    private List<Attachment> attachmentList;
+    private List<String> attachmentNamesList;
 
     private Long userId;
 }

@@ -1,7 +1,5 @@
 package com.polytech.recrutesup.dto;
 
-import com.polytech.recrutesup.entities.Attachment;
-import com.polytech.recrutesup.entities.Company;
 import com.polytech.recrutesup.entities.reference.EWorkflowState;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
 /***
  * Use this class in case you need a lighter Offer

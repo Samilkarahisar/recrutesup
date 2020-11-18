@@ -2,7 +2,6 @@ package com.polytech.recrutesup.api;
 
 import com.polytech.recrutesup.dto.OfferDTO;
 import com.polytech.recrutesup.dto.OfferLightDTO;
-import com.polytech.recrutesup.dto.StudentDTO;
 import com.polytech.recrutesup.payload.request.CreateOfferRequest;
 import com.polytech.recrutesup.services.impl.OfferServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
