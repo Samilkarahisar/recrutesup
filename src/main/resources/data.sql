@@ -29,10 +29,37 @@ INSERT IGNORE INTO `user` (`id`, `firstname`, `lastname`, `mail_address`, `passw
 INSERT IGNORE INTO `student` (`id`, `description`, `label`, `label_picture`, `school_year`, `state`, `id_user`) VALUES
 (1, NULL, NULL, NULL, '5A', 'ENREGISTRE', 3);
 
+-- INSERTION OFFERS --
+INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
+(1, 'TEST', 'DESCRIPTION_TEST', 'CITY', 'MAIL', '2010-04-02', 1, 'ENREGISTRE');
+INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
+(2, 'TEST2', 'DESCRIPTION_TEST2', 'CITY2', 'MAIL2', '2010-04-05', 2, 'ENREGISTRE');
+
+
+-- INSERTION ATTACHMENT --
+INSERT IGNORE INTO `attachment` (`id`, `label`) VALUES
+(1, 'TESTLABEL');
+INSERT IGNORE INTO `attachment` (`id`, `label`) VALUES
+(2, 'TESTLABEL2');
+
+-- INSERTION OFFERS ATTACHMENT--
+INSERT IGNORE INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
+(1, 1);
+INSERT IGNORE INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
+(2, 2);
+
+
+-- INSERTION OFFERS COMPANY --
+INSERT IGNORE INTO `company_offer` (`id_company`, `id_offer`) VALUES
+(1, 1);
+INSERT IGNORE INTO `company_offer` (`id_company`, `id_offer`) VALUES
+(1, 2);
+
+
 
 --
 -- INSERTION DES LIAISONS ENTRE USER ET ROLE
 --
-INSERT IGNORE INTO `user_role` (`role_id`, `user_id`) VALUES (1, 1);
-INSERT IGNORE INTO `user_role` (`role_id`, `user_id`) VALUES (2, 2);
-INSERT IGNORE INTO `user_role` (`role_id`, `user_id`) VALUES (3, 3);
+INSERT IGNORE INTO `user_role` (`id_role`, `id_user`) VALUES (1, 1);
+INSERT IGNORE INTO `user_role` (`id_role`, `id_user`) VALUES (2, 2);
+INSERT IGNORE INTO `user_role` (`id_role`, `id_user`) VALUES (3, 3);

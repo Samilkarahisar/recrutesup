@@ -56,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 
 		Optional<Company> optCompany = companyRepository.findByName(createCompanyDTO.getName());
 		if(optCompany.isPresent()) {
-			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANT_ALREADY_CREATED);
+			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_ALREADY_CREATED);
 		}
 		
 		Company company = this.companyMapper.CreateCompanyDTOToCompany(createCompanyDTO);
