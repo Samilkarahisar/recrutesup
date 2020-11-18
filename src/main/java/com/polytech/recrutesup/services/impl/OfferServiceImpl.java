@@ -61,10 +61,15 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
     }
 
     @Override
-    public Optional<OfferDTO> getOffer(@NotNull Long idStudent) {
+    public OfferDTO getOffer(@NotNull Long idOffer) {
 
+        Optional<Offer> offer = offerRepository.findById(idOffer);
 
-        return Optional.empty();
+        if (offer.isPresent()) {
+            return offerMapper.offerToOfferDTO(offer.get());
+        } else {
+            throw new RecruteSupApplicationException(RecruteSupErrorType.OFFER_UNKNOWN);
+        }
     }
 
     @Override
@@ -96,6 +101,24 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
     }
 
     @Override
+    public List<OfferLightDTO> getAllOfferByCompanyIdLight(@NotNull Long idCompany) {
+
+        List<OfferLightDTO> offerLightDTOList = new ArrayList<>();
+
+        Optional<Company> company = companyRepository.findById(idCompany);
+
+        if (company.isPresent()) {
+            List<Offer> allOffersByCompany = offerRepository.findAllByCompany(company.get());
+            allOffersByCompany
+                    .forEach(offer -> {
+                        offerLightDTOList.add(offerMapper.offerToOfferLightDTO(offer));
+                    });
+        }
+
+        return offerLightDTOList;
+    }
+
+    @Override
     public OfferDTO createOffer(@NotNull @Valid CreateOfferRequest createOfferRequest) {
 
         List<Attachment> attachmentList = new ArrayList<>();
@@ -104,15 +127,15 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
         Optional<User> user = userRepository.findById(createOfferRequest.getUserId());
         Optional<Company> company = companyRepository.findByEmployeesContains(user.get());
 
-        if(!createOfferRequest.getAttachmentNamesList().isEmpty()){
-            for(String name : createOfferRequest.getAttachmentNamesList()){
+        if (!createOfferRequest.getAttachmentNamesList().isEmpty()) {
+            for (String name : createOfferRequest.getAttachmentNamesList()) {
                 Attachment attachment = new Attachment();
                 attachment.setLabel(name);
                 attachmentList.add(attachment);
             }
         }
 
-        if(company.isPresent()){
+        if (company.isPresent()) {
             offer = offerMapper.createOfferRequestToOffer(createOfferRequest, company.get(), attachmentList, user.get());
             offer.setState(EWorkflowState.ENREGISTRE);
             offer.setCreationDate(new Date(System.currentTimeMillis()));
@@ -129,9 +152,9 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
         if (!offer.isPresent()) {
             throw new RecruteSupApplicationException(RecruteSupErrorType.OFFER_UNKNOWN);
         }
+
         return offer.get();
     }
-
 
 
 }

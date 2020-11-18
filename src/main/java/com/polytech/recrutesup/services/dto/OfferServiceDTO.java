@@ -14,11 +14,13 @@ public interface OfferServiceDTO {
 
     List<OfferDTO> getAllOfferByCompanyId(@NotNull Long idCompany);
 
-    Optional<OfferDTO> getOffer(@NotNull Long idStudent);
+    OfferDTO getOffer(@NotNull Long idOffer);
 
     List<OfferDTO> getAllOffer();
 
     List<OfferLightDTO> getAllOfferLight();
+
+    List<OfferLightDTO> getAllOfferByCompanyIdLight(@NotNull Long idCompany);
 
     OfferDTO createOffer(@NotNull @Valid CreateOfferRequest createOfferRequest);
 }

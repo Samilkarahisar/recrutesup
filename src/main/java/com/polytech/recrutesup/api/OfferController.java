@@ -28,6 +28,13 @@ public class OfferController {
     @Autowired
     private OfferServiceImpl offerService;
 
+
+    @GetMapping("/{idOffer}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
+    public ResponseEntity<OfferDTO> getOffer(@PathVariable Long idOffer) {
+        return new ResponseEntity<>(this.offerService.getOffer(idOffer), HttpStatus.OK);
+    }
+
     @GetMapping("/all")
     @PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
     public ResponseEntity<List<OfferDTO>> getAllOffer() {
@@ -44,6 +51,12 @@ public class OfferController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
     public ResponseEntity<List<OfferLightDTO>> getAllOfferLight() {
         return new ResponseEntity<>(this.offerService.getAllOfferLight(), HttpStatus.OK);
+    }
+
+    @GetMapping("/allByCompany/{idCompany}/list")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
+    public ResponseEntity<List<OfferLightDTO>> getAllOfferByCompanyLight(@PathVariable Long idCompany) {
+        return new ResponseEntity<>(this.offerService.getAllOfferByCompanyIdLight(idCompany), HttpStatus.OK);
     }
 
     @PostMapping("/add")
