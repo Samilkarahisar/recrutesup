@@ -79,4 +79,10 @@ public class Offer implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_attachment", referencedColumnName = "id"))
     @OneToMany(cascade = {CascadeType.ALL})
     private List<Attachment> attachmentList;
+
+    @JoinTable(name = "offer_student_wish",
+            joinColumns = @JoinColumn(name = "id_offer", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_student_wish", referencedColumnName = "id"))
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<StudentWish> studentWishList;
 }

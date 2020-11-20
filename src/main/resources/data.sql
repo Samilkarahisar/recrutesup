@@ -31,7 +31,7 @@ INSERT IGNORE INTO `student` (`id`, `description`, `label`, `label_picture`, `sc
 
 -- INSERTION OFFERS --
 INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
-(1, 'TEST', 'DESCRIPTION_TEST', 'CITY', 'MAIL', '2010-04-02', 1, 'ENREGISTRE');
+(1, 'TEST', 'DESCRIPTION_TEST', 'CITY', 'MAIL', '2010-04-02', 2, 'ENREGISTRE');
 INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
 (2, 'TEST2', 'DESCRIPTION_TEST2', 'CITY2', 'MAIL2', '2010-04-05', 2, 'ENREGISTRE');
 
@@ -48,14 +48,23 @@ INSERT IGNORE INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
 INSERT IGNORE INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
 (2, 2);
 
+-- INSERTION STUDENT WISH --
+INSERT IGNORE INTO `student_wish`(`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_company`, `id_offer`, `id_student`) VALUES
+(1, SYSDATE(), 2, 1, 'ENREGISTRE', 1, 1, 1);
+INSERT IGNORE INTO `student_wish`(`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_company`, `id_offer`, `id_student`) VALUES
+(2, SYSDATE(), 2, 1, 'ENREGISTRE', 1, 2, 1);
 
--- INSERTION OFFERS COMPANY --
+
+-- INSERTION COMPANY WISH --
+INSERT IGNORE INTO `company_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_company`, `id_student`) VALUES
+(1, SYSDATE(), 3, 2, 'ENREGISTRE', 1, 1);
+
+
+-- INSERTION COMPANY OFFER --
 INSERT IGNORE INTO `company_offer` (`id_company`, `id_offer`) VALUES
 (1, 1);
 INSERT IGNORE INTO `company_offer` (`id_company`, `id_offer`) VALUES
 (1, 2);
-
-
 
 --
 -- INSERTION DES LIAISONS ENTRE USER ET ROLE

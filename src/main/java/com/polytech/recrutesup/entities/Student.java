@@ -3,6 +3,7 @@ package com.polytech.recrutesup.entities;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -56,4 +59,16 @@ public class Student implements Serializable {
 
     @Column(name = "label_picture", length = 100, nullable = true)
     private String labelPicture;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "student")
+    private List<StudentWish> wishSendList;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "student")
+    private List<CompanyWish> wishReceivedList;
+
+    @JoinTable(name = "student_attachment",
+            joinColumns = @JoinColumn(name = "id_student", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id_attachment", referencedColumnName = "id"))
+    @OneToMany(cascade = {CascadeType.ALL})
+    private List<Attachment> attachmentList;
 }

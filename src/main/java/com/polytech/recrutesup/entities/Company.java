@@ -64,4 +64,10 @@ public class Company implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_employee", referencedColumnName = "id"))
     @OneToMany(cascade = CascadeType.ALL)
     private List<User> employees;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "company")
+    private List<CompanyWish> wishSendList;
+
+    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "company")
+    private List<StudentWish> wishReceivedList;
 }

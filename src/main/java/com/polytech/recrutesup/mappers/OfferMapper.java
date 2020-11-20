@@ -19,6 +19,8 @@ public interface OfferMapper {
     @Mappings({
             @Mapping(source = "offer.createdByUser.firstname", target = "userFirstname"),
             @Mapping(source = "offer.createdByUser.lastname", target = "userLastname"),
+            @Mapping(source = "offer.company.id", target = "companyId"),
+            @Mapping(source = "offer.company.name", target = "companyName"),
     })
     OfferDTO offerToOfferDTO(Offer offer);
 
