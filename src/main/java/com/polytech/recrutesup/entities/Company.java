@@ -68,6 +68,4 @@ public class Company implements Serializable {
     @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "company")
     private List<CompanyWish> wishSendList;
 
-    @OneToMany(cascade = {CascadeType.ALL}, mappedBy = "company")
-    private List<StudentWish> wishReceivedList;
 }

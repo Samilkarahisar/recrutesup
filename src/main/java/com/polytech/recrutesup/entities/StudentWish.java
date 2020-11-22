@@ -49,10 +49,6 @@ public class StudentWish implements Serializable {
     private Student student;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_company", referencedColumnName = "id", nullable = false)
-    private Company company;
-
-    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_offer", referencedColumnName = "id", nullable = false)
     private Offer offer;
 
