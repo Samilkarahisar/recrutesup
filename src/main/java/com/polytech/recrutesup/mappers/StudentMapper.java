@@ -16,8 +16,7 @@ public interface StudentMapper {
 		@Mapping(target = "id", ignore = true),
 		@Mapping(target = "label", ignore = true),
 		@Mapping(target = "description", ignore = true),
-		@Mapping(target = "state", ignore = true),
-		@Mapping(target = "labelPicture", ignore = true)
+		@Mapping(target = "state", ignore = true)
 	})
 	Student createStudentDTOToStudent(CreateStudentDTO createStudentDTO, User user);
 	

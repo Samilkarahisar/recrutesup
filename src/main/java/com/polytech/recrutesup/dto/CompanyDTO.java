@@ -14,16 +14,14 @@ import lombok.Setter;
 public class CompanyDTO {
 
 	private Long id;
-	
+
 	private String name;
-	
+
 	private String mailAddress;
-	
+
 	private String websiteUrl;
-	
+
 	private String description;
-	
+
 	private String state;
-	
-	private String labelLogo;
 }

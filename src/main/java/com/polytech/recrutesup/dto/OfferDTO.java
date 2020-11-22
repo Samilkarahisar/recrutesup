@@ -39,7 +39,9 @@ public class OfferDTO {
 
     private EWorkflowState state;
 
-    private Company company;
+    private Long companyId;
+
+    private String companyName;
 
     private List<Attachment> attachmentList;
 

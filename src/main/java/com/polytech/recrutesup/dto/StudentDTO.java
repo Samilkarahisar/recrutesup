@@ -14,22 +14,20 @@ import lombok.Setter;
 public class StudentDTO {
 
 	private Long id;
-	
+
 	private String firstname;
-	
+
 	private String lastname;
-	
+
 	private String mailAddress;
-	
+
 	private String phoneNumber;
-	
+
 	private String schoolYear;
-	
+
 	private String label;
-	
+
 	private String description;
-	
+
 	private String state;
-	
-	private String labelPicture;
 }
