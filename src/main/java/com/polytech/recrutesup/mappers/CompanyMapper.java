@@ -15,7 +15,6 @@ public interface CompanyMapper {
 		@Mapping(target = "id", ignore = true),
 		@Mapping(target = "description", ignore = true),
 		@Mapping(target = "state", ignore = true),
-		@Mapping(target = "labelLogo", ignore = true),
 		@Mapping(target = "employees", ignore = true)
 	})
 	Company CreateCompanyDTOToCompany(CreateCompanyDTO createCompanyDTO);
