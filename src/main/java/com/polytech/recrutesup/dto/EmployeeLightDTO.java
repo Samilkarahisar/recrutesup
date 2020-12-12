@@ -1,8 +1,5 @@
 package com.polytech.recrutesup.dto;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,16 +11,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateCompanyDTO {
+public class EmployeeLightDTO {
 
-	@NotNull
-	@Size(max = 40)
-	private String name;
-	
-	@NotNull
-	@Size(max = 40)
+	private Long id;
+
+	private String firstname;
+
+	private String lastname;
+
 	private String mailAddress;
-	
-	@Size(max = 200)
-	private String websiteUrl;
+
+	private String phoneNumber;
 }

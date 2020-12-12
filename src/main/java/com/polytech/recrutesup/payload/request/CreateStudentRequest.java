@@ -14,13 +14,30 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginRequest {
+public class CreateStudentRequest {
+
+	@NotBlank
+	@Size(max = 40)
+	private String firstname;
+
+	@NotBlank
+	@Size(max = 40)
+	private String lastname;
 
 	@NotBlank
 	@Size(max = 40)
 	private String mailAddress;
 
 	@NotBlank
-	@Size(min = 6)
-	private String password;
+	@Size(max = 40)
+	private String schoolYear;
+	
+	@Size(max = 10)
+	private String phoneNumber;
+	
+	@Size(max = 40)
+	private String label;
+	
+	@Size(max = 500)
+	private String description;
 }

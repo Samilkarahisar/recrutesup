@@ -1,6 +1,6 @@
-package com.polytech.recrutesup.dto;
+package com.polytech.recrutesup.payload.request;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -14,23 +14,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateEmployeeDTO {
+public class UpdateAdminRequest {
 
-	@NotNull
+	@NotBlank
 	@Size(max = 40)
 	private String firstname;
-	
-	@NotNull
+
+	@NotBlank
 	@Size(max = 40)
 	private String lastname;
-	
-	@NotNull
+
+	@NotBlank
 	@Size(max = 40)
 	private String mailAddress;
-	
-	@Size(max = 40)
+
+	@Size(max = 10)
 	private String phoneNumber;
-	
-	@NotNull
-	private Long idCompany;
 }

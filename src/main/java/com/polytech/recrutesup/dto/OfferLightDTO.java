@@ -28,6 +28,8 @@ public class OfferLightDTO {
     private Date creationDate;
 
     private EWorkflowState state;
+    
+    private Long idCompany;
 
     private String companyName;
     

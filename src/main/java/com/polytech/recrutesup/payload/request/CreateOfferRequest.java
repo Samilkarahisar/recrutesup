@@ -2,6 +2,7 @@ package com.polytech.recrutesup.payload.request;
 
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -12,22 +13,22 @@ import lombok.Setter;
 @Setter
 public class CreateOfferRequest {
 
-	@NotNull
+	@NotBlank
 	@Size(max = 40)
 	private String label;
 
 	@Size(max = 500)
 	private String description;
 
-	@NotNull
+	@NotBlank
 	@Size(max = 40)
 	private String address;
 
-	@NotNull
+	@NotBlank
 	@Size(max = 40)
 	private String city;
 
-	@NotNull
+	@NotBlank
 	@Size(max = 40)
 	private String mailAddress;
 

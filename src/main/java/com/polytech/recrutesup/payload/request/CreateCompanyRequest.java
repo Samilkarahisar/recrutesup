@@ -14,13 +14,19 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LoginRequest {
+public class CreateCompanyRequest {
+
+	@NotBlank
+	@Size(max = 40)
+	private String name;
 
 	@NotBlank
 	@Size(max = 40)
 	private String mailAddress;
 
-	@NotBlank
-	@Size(min = 6)
-	private String password;
+	@Size(max = 200)
+	private String websiteUrl;
+	
+	@Size(max = 500)
+	private String description;
 }

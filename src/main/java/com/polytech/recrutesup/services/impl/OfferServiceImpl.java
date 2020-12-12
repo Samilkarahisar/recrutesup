@@ -1,5 +1,16 @@
 package com.polytech.recrutesup.services.impl;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.polytech.recrutesup.dto.OfferDTO;
 import com.polytech.recrutesup.dto.OfferLightDTO;
 import com.polytech.recrutesup.entities.Attachment;
@@ -16,15 +27,6 @@ import com.polytech.recrutesup.repositories.OfferRepository;
 import com.polytech.recrutesup.repositories.UserRepository;
 import com.polytech.recrutesup.services.OfferService;
 import com.polytech.recrutesup.services.dto.OfferServiceDTO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OfferServiceImpl implements OfferService, OfferServiceDTO {
@@ -127,7 +129,7 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
         Optional<User> user = userRepository.findById(createOfferRequest.getUserId());
         Optional<Company> company = companyRepository.findByEmployeesContains(user.get());
 
-        if (!createOfferRequest.getAttachmentNamesList().isEmpty()) {
+        if (createOfferRequest.getAttachmentNamesList() != null && !createOfferRequest.getAttachmentNamesList().isEmpty()) {
             for (String name : createOfferRequest.getAttachmentNamesList()) {
                 Attachment attachment = new Attachment();
                 attachment.setLabel(name);
@@ -139,6 +141,7 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
             offer = offerMapper.createOfferRequestToOffer(createOfferRequest, company.get(), attachmentList, user.get());
             offer.setState(EWorkflowState.ENREGISTRE);
             offer.setCreationDate(new Date(System.currentTimeMillis()));
+            offer.setWishReceivedList(new ArrayList<>());
             offerRepository.save(offer);
         }
 
@@ -155,6 +158,15 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
 
         return offer.get();
     }
+
+	@Override
+	public OfferDTO updateOffer(@NotNull Long idOffer, @NotNull @Valid CreateOfferRequest offerDTO) {
+		Offer offer = this.findOne(idOffer);
+		this.offerMapper.updateOfferFromCreateOfferRequest(offerDTO, offer);	
+		offer = offerRepository.save(offer);
+		
+		return offerMapper.offerToOfferDTO(offer);
+	}
 
 
 }

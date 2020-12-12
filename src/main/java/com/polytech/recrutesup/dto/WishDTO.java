@@ -1,7 +1,5 @@
 package com.polytech.recrutesup.dto;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,23 +11,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CompanyDTO {
+public class WishDTO {
 
 	private Long id;
 
-	private String name;
+	private String sender;
 
-	private String mailAddress;
+	private String receiver;
 
-	private String websiteUrl;
-
-	private String description;
+	private int priority;
 
 	private String state;
-	
-	private List<OfferLightDTO> offers;
-
-	private List<EmployeeLightDTO> employees;
-
-	private List<WishDTO> wishSendList;
 }
