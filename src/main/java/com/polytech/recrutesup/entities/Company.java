@@ -55,6 +55,12 @@ public class Company implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private EWorkflowState state;
 
+	@JoinTable(name = "company_offer",
+			   joinColumns = @JoinColumn(name = "id_company", referencedColumnName = "id"),
+			   inverseJoinColumns = @JoinColumn(name = "id_offer", referencedColumnName = "id"))
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Offer> offers;
+	
 	@JoinTable(name = "company_employee",
 			   joinColumns = @JoinColumn(name = "id_company", referencedColumnName = "id"),
 			   inverseJoinColumns = @JoinColumn(name = "id_employee", referencedColumnName = "id"))

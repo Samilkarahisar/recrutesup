@@ -2,14 +2,15 @@ package com.polytech.recrutesup.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Mappings;
 
-import com.polytech.recrutesup.dto.CreateStudentDTO;
 import com.polytech.recrutesup.dto.StudentDTO;
 import com.polytech.recrutesup.entities.Student;
 import com.polytech.recrutesup.entities.User;
+import com.polytech.recrutesup.payload.request.CreateStudentRequest;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = { WishMapper.class })
 public interface StudentMapper {
 
 	@Mappings({
@@ -18,7 +19,7 @@ public interface StudentMapper {
 		@Mapping(target = "description", ignore = true),
 		@Mapping(target = "state", ignore = true)
 	})
-	Student createStudentDTOToStudent(CreateStudentDTO createStudentDTO, User user);
+	Student createStudentRequestToStudent(CreateStudentRequest createStudentDTO, User user);
 	
 	
 	@Mappings({
@@ -28,4 +29,11 @@ public interface StudentMapper {
 		@Mapping(source = "user.phoneNumber", target = "phoneNumber")
 	})
 	StudentDTO studentToStudentDTO(Student student);
+	
+	@Mappings({
+		@Mapping(target = "user.firstname", source = "firstname"),
+		@Mapping(target = "user.lastname", source = "lastname"),
+		@Mapping(target = "user.mailAddress", source = "mailAddress"),
+		@Mapping(target = "user.phoneNumber", source = "phoneNumber") })
+	void updateStudentFromCreateStudentRequest(CreateStudentRequest studentDTO, @MappingTarget Student student);
 }

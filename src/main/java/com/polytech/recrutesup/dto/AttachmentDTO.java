@@ -11,19 +11,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDTO {
+public class AttachmentDTO {
 
-	private Long id;
-	
-	private String firstname;
+    private Long id;
 
-	private String lastname;
-	
-	private String mailAddress;
-	
-	private String role;
-	
-	private String token;
-
-	private String type;
+    private String label;
 }

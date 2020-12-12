@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,41 +28,47 @@ import com.polytech.recrutesup.services.dto.OfferServiceDTO;
 public class OfferController {
 
 	@Autowired
-	private OfferServiceDTO offerService;
+	private OfferServiceDTO offerServiceDTO;
 
 	@GetMapping("/{idOffer}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
 	public ResponseEntity<OfferDTO> getOffer(@PathVariable Long idOffer) {
-		return new ResponseEntity<>(this.offerService.getOffer(idOffer), HttpStatus.OK);
+		return new ResponseEntity<>(this.offerServiceDTO.getOffer(idOffer), HttpStatus.OK);
 	}
 
 	@GetMapping("/all")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
-	public ResponseEntity<List<OfferDTO>> getAllOffer() {
-		return new ResponseEntity<>(this.offerService.getAllOffer(), HttpStatus.OK);
+	public ResponseEntity<List<OfferDTO>> getAllOffers() {
+		return new ResponseEntity<>(this.offerServiceDTO.getAllOffer(), HttpStatus.OK);
 	}
 
-	@GetMapping("/allByCompany/{idCompany}")
+	@GetMapping("/all/{idCompany}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY')")
-	public ResponseEntity<List<OfferDTO>> getAllOfferByCompany(@PathVariable Long idCompany) {
-		return new ResponseEntity<>(this.offerService.getAllOfferByCompanyId(idCompany), HttpStatus.OK);
+	public ResponseEntity<List<OfferDTO>> getAllOffersByCompany(@PathVariable Long idCompany) {
+		return new ResponseEntity<>(this.offerServiceDTO.getAllOfferByCompanyId(idCompany), HttpStatus.OK);
 	}
 
-	@GetMapping("/list")
+	@GetMapping("/light/all")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
-	public ResponseEntity<List<OfferLightDTO>> getAllOfferLight() {
-		return new ResponseEntity<>(this.offerService.getAllOfferLight(), HttpStatus.OK);
+	public ResponseEntity<List<OfferLightDTO>> getAllOffersLight() {
+		return new ResponseEntity<>(this.offerServiceDTO.getAllOfferLight(), HttpStatus.OK);
 	}
 
-	@GetMapping("/allByCompany/{idCompany}/list")
+	@GetMapping("/light/all/{idCompany}")
 	@PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY') or hasRole('STUDENT')")
-	public ResponseEntity<List<OfferLightDTO>> getAllOfferByCompanyLight(@PathVariable Long idCompany) {
-		return new ResponseEntity<>(this.offerService.getAllOfferByCompanyIdLight(idCompany), HttpStatus.OK);
+	public ResponseEntity<List<OfferLightDTO>> getAllOfferLightByCompany(@PathVariable Long idCompany) {
+		return new ResponseEntity<>(this.offerServiceDTO.getAllOfferByCompanyIdLight(idCompany), HttpStatus.OK);
 	}
 
-	@PostMapping("/add")
+	@PostMapping
 	@PreAuthorize("hasRole('COMPANY')")
 	public ResponseEntity<OfferDTO> createOffer(@Valid @RequestBody CreateOfferRequest createOfferRequest) {
-		return new ResponseEntity<>(this.offerService.createOffer(createOfferRequest), HttpStatus.CREATED);
+		return new ResponseEntity<>(this.offerServiceDTO.createOffer(createOfferRequest), HttpStatus.CREATED);
+	}
+	
+	@PatchMapping("/{idOffer}")
+	@PreAuthorize("hasRole('COMPANY')")
+	public ResponseEntity<OfferDTO> updateOffer(@PathVariable Long idOffer, @RequestBody CreateOfferRequest offerDTO) {
+		return new ResponseEntity<>(this.offerServiceDTO.updateOffer(idOffer, offerDTO), HttpStatus.OK);
 	}
 }

@@ -15,4 +15,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 		 + "inner join User u on u.id = s.user.id "
 	     + "where u.mailAddress = :mailAddress ")
 	Student findOneByMailAddress(@Param("mailAddress") String mailAddress);
+	
+	@Query("Select s "
+		 + "from Student s "
+		 + "where s.user.id = :idUser ")
+	Student findByIdUser(@Param("idUser") Long idUser);
 }
