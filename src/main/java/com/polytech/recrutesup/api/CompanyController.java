@@ -42,6 +42,12 @@ public class CompanyController {
 	public ResponseEntity<CompanyDTO> getCompany(@PathVariable Long idCompany) {
 		return new ResponseEntity<>(this.companyServiceDTO.getCompany(idCompany), HttpStatus.OK);
 	}
+	
+	@GetMapping("/byemployee/{idUser}")
+	@PreAuthorize("hasRole('COMPANY')")
+	public ResponseEntity<CompanyDTO> getCompanyContainingEmployee(@PathVariable Long idUser) {
+		return new ResponseEntity<>(this.companyServiceDTO.getCompanyContainingEmployee(idUser), HttpStatus.OK);
+	}
 
 	@PatchMapping("/{idCompany}")
 	@PreAuthorize("hasRole('COMPANY')")

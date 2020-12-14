@@ -55,7 +55,6 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 
 	@Override
 	public CompanyDTO createCompany(@NotNull @Valid CreateCompanyRequest createCompanyDTO) {
-
 		Optional<Company> optCompany = companyRepository.findByName(createCompanyDTO.getName());
 		if (optCompany.isPresent()) {
 			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_ALREADY_CREATED);
@@ -75,9 +74,23 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 	@Override
 	public CompanyDTO getCompany(Long idCompany) {
 		Company company = this.findOne(idCompany);
-
 		return companyMapper.companyToCompanyDTO(company);
 	}
+	
+	@Override
+	public CompanyDTO getCompanyContainingEmployee(@NotNull Long idUser) {
+		List<Company> listCompany = this.companyRepository.findAll();
+		for (Company company : listCompany) {
+			for (User employee : company.getEmployees()) {
+				if (employee.getId() == idUser) {
+					return companyMapper.companyToCompanyDTO(company);
+				}
+			}
+		}
+
+		throw new RecruteSupApplicationException(RecruteSupErrorType.EMPLOYEE_UNKNOWN);
+	}
+
 
 	@Override
 	public List<CompanyDTO> getAllCompanies() {
@@ -193,5 +206,4 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 
 		throw new RecruteSupApplicationException(RecruteSupErrorType.EMPLOYEE_UNKNOWN);
 	}
-
 }

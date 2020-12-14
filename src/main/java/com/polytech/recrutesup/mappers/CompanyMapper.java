@@ -24,8 +24,8 @@ public interface CompanyMapper {
 
 	@Mappings({
 		@Mapping(target = "employees", source = "company.employees"),
-        @Mapping(target = "wishSendList", source = "company.wishSendList"),
-        @Mapping(target = "offers", source = "company.offers")})
+        @Mapping(target = "wishSendList", source = "company.wishSendList", qualifiedByName = { "WishMapper", "listCompanyWishSended"}),
+        @Mapping(target = "offers", source = "company.offers") })
 	CompanyDTO companyToCompanyDTO(Company company);
 
 	@Mappings({ @Mapping(target = "id", ignore = true) })
@@ -34,7 +34,7 @@ public interface CompanyMapper {
 	@Mappings({ @Mapping(target = "id", source = "employee.id"),
 		        @Mapping(target = "idCompany", source = "company.id"),
 			    @Mapping(target = "companyName", source = "company.name"),
-			    @Mapping(target = "mailAddress", source = "employee.mailAddress")})
+			    @Mapping(target = "mailAddress", source = "employee.mailAddress") })
 	EmployeeDTO userToEmployeeDTO(User employee, Company company);
 	
 	EmployeeLightDTO userToEmployeeLightDTO(User user);

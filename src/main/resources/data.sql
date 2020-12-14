@@ -31,9 +31,9 @@ INSERT IGNORE INTO `student` (`id`, `description`, `label`, `school_year`, `stat
 
 -- INSERTION OFFERS --
 INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
-(1, 'TEST', 'DESCRIPTION_TEST', 'CITY', 'MAIL', '2010-04-02', 2, 'ENREGISTRE');
+(1, 'TEST', 'DESCRIPTION_TEST', 'CITY', 'MAIL', '2010-04-02', 2, 'BROUILLON');
 INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
-(2, 'TEST2', 'DESCRIPTION_TEST2', 'CITY2', 'MAIL2', '2010-04-05', 2, 'ENREGISTRE');
+(2, 'TEST2', 'DESCRIPTION_TEST2', 'CITY2', 'MAIL2', '2010-04-05', 2, 'BROUILLON');
 
 
 -- INSERTION ATTACHMENT --
@@ -50,9 +50,9 @@ INSERT IGNORE INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
 
 -- INSERTION STUDENT WISH --
 INSERT IGNORE INTO `student_wish`(`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_offer`, `id_student`) VALUES
-(1, SYSDATE(), 2, 1, 'ENREGISTRE', 1, 1);
+(1, SYSDATE(), 1, 1, 'TRANSMIS', 1, 1);
 INSERT IGNORE INTO `student_wish`(`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_offer`, `id_student`) VALUES
-(2, SYSDATE(), 2, 1, 'ENREGISTRE', 2, 1);
+(2, SYSDATE(), 1, 2, 'TRANSMIS', 2, 1);
 
 
 -- INSERTION OFFER_STUDENT_WISH --
@@ -63,7 +63,7 @@ INSERT IGNORE INTO `offer_student_wish` (`id_offer`, `id_student_wish`) VALUES
 
 -- INSERTION COMPANY WISH --
 INSERT IGNORE INTO `company_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_company`, `id_student`) VALUES
-(1, SYSDATE(), 3, 2, 'ENREGISTRE', 1, 1);
+(1, SYSDATE(), 1, 1, 'TRANSMIS', 1, 1);
 
 
 -- INSERTION COMPANY OFFER --

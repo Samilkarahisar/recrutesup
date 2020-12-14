@@ -16,7 +16,10 @@ public enum RecruteSupErrorType{
 	EMPLOYEE_ALREADY_CREATED("Employé déjà créé", "l'employé existe déjà en BDD et ne peut être créé une deuxième fois"),
 	
 	OFFER_UNKNOWN("Offre inconnue", "l'offre ne peut pas être trouvée en BDD"),
-
+	
+	STUDENT_WISH_ALREADY_CREATED("voeu étudiant déjà créé", "le voeu reliant l'étudiant et l'offre existe déjà en BDD et ne peut être créé une deuxième fois"),
+	COMPANY_WISH_ALREADY_CREATED("voeu entreprise déjà créé", "le voeu reliant l'entreprise et l'étudiant existe déjà en BDD et ne peut être créé une deuxième fois"),
+	
 	ADMIN_UNKNOWN("Admin inconnu", "l'admin souhaité n'existe pas en BDD");
 	
 	private final String title;
