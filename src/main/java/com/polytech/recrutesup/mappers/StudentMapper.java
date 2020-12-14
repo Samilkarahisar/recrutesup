@@ -26,7 +26,9 @@ public interface StudentMapper {
 		@Mapping(source = "user.firstname", target = "firstname"),
 		@Mapping(source = "user.lastname", target = "lastname"),
 		@Mapping(source = "user.mailAddress", target = "mailAddress"),
-		@Mapping(source = "user.phoneNumber", target = "phoneNumber")
+		@Mapping(source = "user.phoneNumber", target = "phoneNumber"),
+		@Mapping(target = "wishSendList", source = "wishSendList", qualifiedByName = { "WishMapper", "listStudentWishSended" }),
+		@Mapping(target = "wishReceivedList", source = "wishReceivedList", qualifiedByName = { "WishMapper", "listCompanyWishReceived" })
 	})
 	StudentDTO studentToStudentDTO(Student student);
 	

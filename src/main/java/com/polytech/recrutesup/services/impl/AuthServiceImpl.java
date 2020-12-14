@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthServiceDTO {
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
-
+		
 		return new UserDTO(userDetails.getId(), userDetails.getFirstname(),	userDetails.getLastname(),
 				           userDetails.getUsername(), roles.get(0), jwt, "Bearer");
 	}

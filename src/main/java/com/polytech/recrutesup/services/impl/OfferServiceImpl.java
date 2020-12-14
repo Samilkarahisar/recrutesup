@@ -139,7 +139,7 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
 
         if (company.isPresent()) {
             offer = offerMapper.createOfferRequestToOffer(createOfferRequest, company.get(), attachmentList, user.get());
-            offer.setState(EWorkflowState.ENREGISTRE);
+            offer.setState(EWorkflowState.BROUILLON);
             offer.setCreationDate(new Date(System.currentTimeMillis()));
             offer.setWishReceivedList(new ArrayList<>());
             offerRepository.save(offer);
