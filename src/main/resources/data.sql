@@ -11,29 +11,29 @@ INSERT IGNORE INTO `role` (`id`, `name`) VALUES
 
 -- INSERTION COMPANY TEST --
 INSERT IGNORE INTO `company` (`id`, `description`, `mail_address`, `name`, `state`, `website_url`) VALUES
-(1, '', 'mail', 'ENTREPRISE_TEST', 'ENREGISTRE', 'url');
+(1, '', 'company@test.com', 'Entreprise Test Industry', 'ENREGISTRE', 'url');
 
 -- INSERTION USER ADMIN --
 INSERT IGNORE INTO `user` (`id`, `firstname`, `lastname`, `mail_address`, `password`, `phone_number`) VALUES
-(1, 'ADMIN', 'TEST', 'admin_test', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL);
+(1, 'Admin', 'TEST', 'admin@test.com', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL);
 INSERT IGNORE INTO `admin` (`id`, `id_user`) VALUES (1, 1);
 
 -- INSERTION USER COMPANY_EMPLOYEE --
 INSERT IGNORE INTO `user` (`id`, `firstname`, `lastname`, `mail_address`, `password`, `phone_number`) VALUES
-(2, 'COMPANY', 'TEST', 'company_test', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL);
+(2, 'Employee', 'TEST', 'employee@test.com', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL);
 INSERT IGNORE INTO `company_employee` (`id_company`, `id_employee`) VALUES (1, 2);
 
 -- INSERTION USER STUDENT --
 INSERT IGNORE INTO `user` (`id`, `firstname`, `lastname`, `mail_address`, `password`, `phone_number`) VALUES
-(3, 'STUDENT', 'TEST', 'student_test', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL);
+(3, 'Student', 'TEST', 'student@test.com', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL);
 INSERT IGNORE INTO `student` (`id`, `description`, `label`, `school_year`, `state`, `id_user`) VALUES
 (1, NULL, NULL, '5A', 'ENREGISTRE', 3);
 
 -- INSERTION OFFERS --
 INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
-(1, 'TEST', 'DESCRIPTION_TEST', 'CITY', 'MAIL', '2010-04-02', 2, 'BROUILLON');
+(1, 'Offer TEST', 'DESCRIPTION_TEST', 'CITY', 'contact-offer@test.com', '2010-04-02', 2, 'BROUILLON');
 INSERT IGNORE INTO `offer` (`id`, `label`, `description`, `city`, `mail_address`, `creation_date`, `created_by_user`, `state`) VALUES
-(2, 'TEST2', 'DESCRIPTION_TEST2', 'CITY2', 'MAIL2', '2010-04-05', 2, 'BROUILLON');
+(2, 'Offer TEST2', 'DESCRIPTION_TEST2', 'CITY2', 'contact-offer2@test.com', '2010-04-05', 2, 'BROUILLON');
 
 
 -- INSERTION ATTACHMENT --
