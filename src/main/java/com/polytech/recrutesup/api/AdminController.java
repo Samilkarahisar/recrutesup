@@ -2,6 +2,8 @@ package com.polytech.recrutesup.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.polytech.recrutesup.dto.AdminDTO;
+import com.polytech.recrutesup.payload.request.LoginRequest;
 import com.polytech.recrutesup.payload.request.UpdateAdminRequest;
 import com.polytech.recrutesup.services.dto.AdminServiceDTO;
 
@@ -38,7 +41,13 @@ public class AdminController {
 
 	@PatchMapping("/{idUser}")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<AdminDTO> updateAdmin(@PathVariable Long idUser, @RequestBody UpdateAdminRequest adminDTO) {
+	public ResponseEntity<AdminDTO> updateAdmin(@PathVariable Long idUser, @Valid @RequestBody UpdateAdminRequest adminDTO) {
 		return new ResponseEntity<>(this.adminServiceDTO.updateAdmin(idUser, adminDTO), HttpStatus.OK);
+	}
+	
+	@PatchMapping("/changePW/{idUser}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<AdminDTO> changePassword(@PathVariable Long idUser, @Valid @RequestBody LoginRequest loginRequest) {
+		return new ResponseEntity<>(this.adminServiceDTO.changePassword(idUser, loginRequest), HttpStatus.OK);
 	}
 }

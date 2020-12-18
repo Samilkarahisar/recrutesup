@@ -2,6 +2,8 @@ package com.polytech.recrutesup.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import com.polytech.recrutesup.dto.EmployeeDTO;
 import com.polytech.recrutesup.dto.EmployeeLightDTO;
 import com.polytech.recrutesup.payload.request.CreateCompanyRequest;
 import com.polytech.recrutesup.payload.request.CreateEmployeeRequest;
+import com.polytech.recrutesup.payload.request.LoginRequest;
 import com.polytech.recrutesup.services.dto.CompanyServiceDTO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -51,7 +54,7 @@ public class CompanyController {
 
 	@PatchMapping("/{idCompany}")
 	@PreAuthorize("hasRole('COMPANY')")
-	public ResponseEntity<CompanyDTO> updateCompany(@PathVariable Long idCompany, @RequestBody CreateCompanyRequest companyDTO) {
+	public ResponseEntity<CompanyDTO> updateCompany(@PathVariable Long idCompany, @Valid @RequestBody CreateCompanyRequest companyDTO) {
 		return new ResponseEntity<>(this.companyServiceDTO.updateCompany(idCompany, companyDTO), HttpStatus.OK);
 	}
 
@@ -92,5 +95,10 @@ public class CompanyController {
 	public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody CreateEmployeeRequest createEmployeeDTO) {
 		return new ResponseEntity<>(this.companyServiceDTO.createEmployee(createEmployeeDTO), HttpStatus.CREATED);
 	}
-
+	
+	@PatchMapping("/changePW/{idUser}")
+	@PreAuthorize("hasRole('COMPANY')")
+	public ResponseEntity<EmployeeDTO> changePassword(@PathVariable Long idUser, @Valid @RequestBody LoginRequest loginRequest) {
+		return new ResponseEntity<>(this.companyServiceDTO.changePassword(idUser, loginRequest), HttpStatus.OK);
+	}
 }

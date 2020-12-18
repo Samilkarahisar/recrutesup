@@ -17,12 +17,16 @@ import com.polytech.recrutesup.entities.reference.ERole;
 import com.polytech.recrutesup.entities.reference.EWorkflowState;
 import com.polytech.recrutesup.exceptions.RecruteSupApplicationException;
 import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
+import com.polytech.recrutesup.mail.service.MailService;
 import com.polytech.recrutesup.mappers.StudentMapper;
 import com.polytech.recrutesup.payload.request.CreateStudentRequest;
+import com.polytech.recrutesup.payload.request.LoginRequest;
 import com.polytech.recrutesup.repositories.RoleRepository;
 import com.polytech.recrutesup.repositories.StudentRepository;
 import com.polytech.recrutesup.services.StudentService;
 import com.polytech.recrutesup.services.dto.StudentServiceDTO;
+
+import net.bytebuddy.utility.RandomString;
 
 @Service
 public class StudentServiceImpl implements StudentService, StudentServiceDTO {
@@ -38,6 +42,9 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private MailService mailService;
 
 	@Override
 	public Student findOne(Long idUser) {
@@ -66,13 +73,19 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		user.setMailAddress(createStudentDTO.getMailAddress().trim());
 		user.setPhoneNumber(createStudentDTO.getPhoneNumber());
 		user.setRole(role);
-		//TODO : generate password using BEncryption
-		user.setPassword(passwordEncoder.encode("Testtest"));
+		
+		// Génération d'un mot de passe aléatoire de 16 caractères
+		RandomString randomString = new RandomString(16);
+		String mdp = randomString.nextString();
+		user.setPassword(passwordEncoder.encode(mdp));
+		
 		student = this.studentMapper.createStudentRequestToStudent(createStudentDTO, user);
 		student.setState(EWorkflowState.ENREGISTRE);
 		
 		// Sauvegarde en BDD
-		student = studentRepository.save(student);
+		student = studentRepository.save(student);	
+		
+		mailService.sendEmailCreationStudentProfil(user, mdp);
 		
 		// On retourne le StudentDTO au front
 		return studentMapper.studentToStudentDTO(student);
@@ -105,6 +118,21 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		this.studentMapper.updateStudentFromCreateStudentRequest(studentDTO, student);
 		student = studentRepository.save(student);
 		
+		return studentMapper.studentToStudentDTO(student);
+	}
+
+	@Override
+	public StudentDTO changePassword(Long idUser, LoginRequest loginRequest) {
+		// On récupère l'étudiant en BDD si il existe
+		Student student = this.findOne(idUser);
+		
+		student.getUser().setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+		
+		student = studentRepository.save(student);	
+		
+		mailService.sendEmailConfirmationChangePassword(student.getUser());
+		
+		// On retourne le StudentDTO au front
 		return studentMapper.studentToStudentDTO(student);
 	}
 	

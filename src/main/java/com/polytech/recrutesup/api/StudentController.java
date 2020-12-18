@@ -2,6 +2,8 @@ package com.polytech.recrutesup.api;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.polytech.recrutesup.dto.StudentDTO;
 import com.polytech.recrutesup.payload.request.CreateStudentRequest;
+import com.polytech.recrutesup.payload.request.LoginRequest;
 import com.polytech.recrutesup.services.dto.StudentServiceDTO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -40,14 +43,20 @@ public class StudentController {
 	
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<StudentDTO> createStudent(@RequestBody CreateStudentRequest createStudentDTO) {
+	public ResponseEntity<StudentDTO> createStudent(@Valid @RequestBody CreateStudentRequest createStudentDTO) {
 		return new ResponseEntity<>(this.studentServiceDTO.createStudent(createStudentDTO), HttpStatus.CREATED);
 	}
 	
 	@PatchMapping("/{idUser}")
 	@PreAuthorize("hasRole('STUDENT')")
-	public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long idUser, @RequestBody CreateStudentRequest studentDTO) {
+	public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long idUser, @Valid @RequestBody CreateStudentRequest studentDTO) {
 		return new ResponseEntity<>(this.studentServiceDTO.updateStudent(idUser, studentDTO), HttpStatus.OK);
+	}
+	
+	@PatchMapping("/changePW/{idUser}")
+	@PreAuthorize("hasRole('STUDENT')")
+	public ResponseEntity<StudentDTO> changePassword(@PathVariable Long idUser, @Valid @RequestBody LoginRequest loginRequest) {
+		return new ResponseEntity<>(this.studentServiceDTO.changePassword(idUser, loginRequest), HttpStatus.OK);
 	}
 
 }
