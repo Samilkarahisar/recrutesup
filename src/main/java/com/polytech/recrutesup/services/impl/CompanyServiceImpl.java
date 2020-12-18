@@ -21,13 +21,17 @@ import com.polytech.recrutesup.entities.reference.ERole;
 import com.polytech.recrutesup.entities.reference.EWorkflowState;
 import com.polytech.recrutesup.exceptions.RecruteSupApplicationException;
 import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
+import com.polytech.recrutesup.mail.service.MailService;
 import com.polytech.recrutesup.mappers.CompanyMapper;
 import com.polytech.recrutesup.payload.request.CreateCompanyRequest;
 import com.polytech.recrutesup.payload.request.CreateEmployeeRequest;
+import com.polytech.recrutesup.payload.request.LoginRequest;
 import com.polytech.recrutesup.repositories.CompanyRepository;
 import com.polytech.recrutesup.repositories.RoleRepository;
 import com.polytech.recrutesup.services.CompanyService;
 import com.polytech.recrutesup.services.dto.CompanyServiceDTO;
+
+import net.bytebuddy.utility.RandomString;
 
 @Service
 public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
@@ -43,6 +47,9 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	private MailService mailService;
 
 	@Override
 	public Company findOne(Long id) {
@@ -67,6 +74,8 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 		company.setWishSendList(new ArrayList<>());
 
 		company = this.companyRepository.save(company);
+		
+		mailService.sendEmailCreationCompanyProfil(company);
 
 		return this.companyMapper.companyToCompanyDTO(company);
 	}
@@ -142,13 +151,18 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 		employee.setMailAddress(createEmployeeDTO.getMailAddress().trim());
 		employee.setPhoneNumber(createEmployeeDTO.getPhoneNumber());
 		employee.setRole(role);
-		// TODO : generate password using BEncryption
-		employee.setPassword(passwordEncoder.encode("Testtest"));
+
+		// Génération d'un mot de passe aléatoire de 16 caractères
+		RandomString randomString = new RandomString(16);
+		String mdp = randomString.nextString();
+		employee.setPassword(passwordEncoder.encode(mdp));
 
 		company.getEmployees().add(employee);
 		company = this.companyRepository.save(company);
 		
 		employee = getEmployee(employee.getMailAddress());
+		
+		mailService.sendEmailCreationEmployeeProfil(employee, mdp);
 		
 		return this.companyMapper.userToEmployeeDTO(employee, company);
 	}
@@ -204,6 +218,24 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 			}
 		}
 
+		throw new RecruteSupApplicationException(RecruteSupErrorType.EMPLOYEE_UNKNOWN);
+	}
+
+	@Override
+	public EmployeeDTO changePassword(@NotNull Long idUser, @NotNull @Valid LoginRequest loginRequest) {
+		List<Company> listCompany = this.companyRepository.findAll();
+		for (Company company : listCompany) {
+			for (User employee : company.getEmployees()) {
+				if (employee.getId() == idUser) {
+					employee.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+					company = companyRepository.save(company);
+					mailService.sendEmailConfirmationChangePassword(employee);
+					
+					return companyMapper.userToEmployeeDTO(employee, company);
+				}
+			}
+		}
+		
 		throw new RecruteSupApplicationException(RecruteSupErrorType.EMPLOYEE_UNKNOWN);
 	}
 }

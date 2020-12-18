@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.polytech.recrutesup.dto.StudentDTO;
 import com.polytech.recrutesup.payload.request.CreateStudentRequest;
+import com.polytech.recrutesup.payload.request.LoginRequest;
 
 public interface StudentServiceDTO {
 
@@ -20,4 +21,6 @@ public interface StudentServiceDTO {
 	List<StudentDTO> getAllStudents();
 	
 	StudentDTO updateStudent(@PathVariable Long idUser, @RequestBody CreateStudentRequest studentDTO);
+	
+	StudentDTO changePassword(@PathVariable Long idUser, @RequestBody LoginRequest loginRequest);
 }

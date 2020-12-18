@@ -10,6 +10,7 @@ import com.polytech.recrutesup.dto.EmployeeDTO;
 import com.polytech.recrutesup.dto.EmployeeLightDTO;
 import com.polytech.recrutesup.payload.request.CreateCompanyRequest;
 import com.polytech.recrutesup.payload.request.CreateEmployeeRequest;
+import com.polytech.recrutesup.payload.request.LoginRequest;
 
 public interface CompanyServiceDTO {
 
@@ -34,4 +35,6 @@ public interface CompanyServiceDTO {
 	EmployeeDTO updateEmployee(@NotNull Long idUser, @NotNull @Valid CreateEmployeeRequest employeeDTO);
 
 	EmployeeDTO createEmployee(@NotNull @Valid CreateEmployeeRequest createEmployeeDTO);
+	
+	EmployeeDTO changePassword(@NotNull Long idUser, @NotNull @Valid LoginRequest loginRequest);
 }

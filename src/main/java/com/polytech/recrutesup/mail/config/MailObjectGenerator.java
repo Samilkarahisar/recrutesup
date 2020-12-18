@@ -1,0 +1,54 @@
+package com.polytech.recrutesup.mail.config;
+
+public class MailObjectGenerator {
+	
+	public static final String confirmCreationStudentProfil(String firstname, String lastname, String mdp) {
+		return 
+				" <h3>" + firstname + " " + lastname + " : Votre profil Etudiant a bien été créé ! </h3>"
+				+ "Voici votre mot de passe pour vous connecter : <h4>" + mdp + " </h4>"
+				+ "Ce mot de passe est unique et doit rester <b>secret</b>, vous seul pouvez l'utiliser. <br>"
+				+ "Vous pouvez vous connecter au site recruteSUP et le modifier dans votre profil Utilisateur <br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String confirmCreationEmployeeProfil(String firstname, String lastname, String mdp) {
+		return 
+				" <h3>" + firstname + " " + lastname + " : Votre profil Salarié a bien été créé ! </h3>"
+				+ "Voici votre mot de passe pour vous connecter : <h4>" + mdp + " </h4>"
+				+ "Ce mot de passe est unique et doit rester <b>secret</b>, vous seul pouvez l'utiliser. <br>"
+				+ "Vous pouvez vous connecter au site recruteSUP et le modifier dans votre profil Utilisateur <br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String confirmCreationCompanyProfil(String companyName) {
+		return 
+				" <h3>L'entreprise " + companyName + " a bien été créée ! </h3>"
+				+ "Les administrateurs de Polytech vont maintenant enregistrer les profils 'Salarié' liés à votre entreprise. <br>"
+				+ "Vous pourrez donc bientôt vous connecter au site recruteSUP ! <br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String recuperationPassword(String mdp) {
+		return 
+				" <h3>Vous avez demandé à récupérer votre mot de passe</h3>"
+				+ "Voici votre nouveau mot de passe pour vous connecter : <h4>" + mdp + " </h4>"
+				+ "Ce mot de passe est unique et doit rester <b>secret</b>, vous seul pouvez l'utiliser. <br>"
+				+ "Vous pouvez vous connecter au site recruteSUP et le modifier dans votre profil Utilisateur. <br><br>"
+				+ "Si vous n'êtes pas à l'origine de cette demande, ignorez ce mail et contactez les administrateurs de Polytech Lyon. <br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String changePassword(String firstname, String lastname) {
+		return 
+				" <h3>" + firstname + " " + lastname + " : Vous avez demandé à changer votre mot de passe</h3>"
+				+ "Votre mot de passe a bien été modifié !<br>"
+				+ "Vous pouvez vous connecter au site recruteSUP et l'utiliser<br><br>"
+				+ "Si vous n'êtes pas à l'origine de cette demande, ignorez ce mail et contactez les administrateurs de Polytech Lyon. <br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+}

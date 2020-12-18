@@ -2,6 +2,8 @@ package com.polytech.recrutesup.exceptions;
 
 public enum RecruteSupErrorType{
 
+	USER_UNKNOWN("Utilisateur inconnu", "l'utilisateur ne peut pas être trouvée en BDD"),
+	
 	STUDENT_UNKNOWN("Etudiant inconnu", "l'étudiant ne peut pas être trouvée en BDD"),
 	STUDENT_ALREADY_CREATED("Etudiant déjà créé","l'étudiant existe déjà en BDD et ne peut être créé une deuxième fois"),
 	
@@ -20,7 +22,9 @@ public enum RecruteSupErrorType{
 	STUDENT_WISH_ALREADY_CREATED("voeu étudiant déjà créé", "le voeu reliant l'étudiant et l'offre existe déjà en BDD et ne peut être créé une deuxième fois"),
 	COMPANY_WISH_ALREADY_CREATED("voeu entreprise déjà créé", "le voeu reliant l'entreprise et l'étudiant existe déjà en BDD et ne peut être créé une deuxième fois"),
 	
-	ADMIN_UNKNOWN("Admin inconnu", "l'admin souhaité n'existe pas en BDD");
+	ADMIN_UNKNOWN("Admin inconnu", "l'admin souhaité n'existe pas en BDD"),
+	
+	EMAIL_ERROR("Erreur Service Email", "une erreur s'est produite avec le service d'envoi de mail automatique");
 	
 	private final String title;
 	private final String message;
