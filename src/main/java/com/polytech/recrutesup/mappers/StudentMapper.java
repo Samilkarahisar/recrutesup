@@ -23,6 +23,7 @@ public interface StudentMapper {
 	
 	
 	@Mappings({
+		@Mapping(source = "user.id", target = "id"),
 		@Mapping(source = "user.firstname", target = "firstname"),
 		@Mapping(source = "user.lastname", target = "lastname"),
 		@Mapping(source = "user.mailAddress", target = "mailAddress"),

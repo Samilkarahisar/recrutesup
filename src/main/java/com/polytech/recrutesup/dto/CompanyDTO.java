@@ -27,7 +27,7 @@ public class CompanyDTO {
 
 	private String state;
 	
-	private List<OfferLightDTO> offers;
+	private List<OfferDTO> offers;
 
 	private List<EmployeeLightDTO> employees;
 

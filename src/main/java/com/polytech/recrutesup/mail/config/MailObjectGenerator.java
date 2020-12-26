@@ -51,4 +51,23 @@ public class MailObjectGenerator {
 				+ "Très bonne journée à vous ! <br>"
 				+ "L'équipe RecruteSUP";
 	}
+	
+	public static final String creationCompanyWish(String companyName, String firstname) {
+		return
+				" <h3>" + firstname + " : Vous avez reçu un voeu d'une entreprise !</h3>"
+				+ "L'entreprise <b>" + companyName + "</b> vous a envoyé un voeu et cherche à rentrer en contact avec vous.<br>"
+				+ "Allez dans l'onglet 'Voeux' de l'application RecruteSUP pour consulter vos voeux envoyés et reçus.<br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String creationStudentWish(String firstname, String lastname, String companyName, String labelOffer) {
+		return
+				" <h3>" + companyName + " : Vous avez reçu un voeu d'un étudiant !</h3>"
+				+ "<b>" + firstname + " " + lastname + "</b> vous a envoyé un voeu et cherche à rentrer en contact avec vous.<br>"
+				+ "Cet étudiant est intéressé par l'offre que vous avez publié : <b>" + labelOffer + "</b><br>"
+				+ "Allez dans l'onglet 'Voeux' de l'application RecruteSUP pour consulter vos voeux envoyés et reçus.<br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
 }

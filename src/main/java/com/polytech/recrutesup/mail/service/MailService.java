@@ -12,6 +12,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.polytech.recrutesup.entities.Company;
+import com.polytech.recrutesup.entities.Offer;
+import com.polytech.recrutesup.entities.Student;
 import com.polytech.recrutesup.entities.User;
 import com.polytech.recrutesup.mail.config.MailObjectGenerator;
 
@@ -61,5 +63,13 @@ public class MailService {
 	
 	public void sendEmailConfirmationChangePassword(User user) {
 		this.sendEmail("ptut.recrutesup@gmail.com", "Modification mot de passe", MailObjectGenerator.changePassword(user.getFirstname(), user.getLastname()));
+	}
+	
+	public void sendEmailCreationCompanyWish(Company company, Student student) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Vous avez reçu un voeu !", MailObjectGenerator.creationCompanyWish(company.getName(), student.getUser().getFirstname()));
+	}
+	
+	public void sendEmailConfirmationStudentWish(Student student, Offer offer) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Vous avez reçu un voeu !", MailObjectGenerator.creationStudentWish(student.getUser().getFirstname(), student.getUser().getLastname(), offer.getCompany().getName(), offer.getLabel()));
 	}
 }
