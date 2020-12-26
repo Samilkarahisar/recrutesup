@@ -33,14 +33,14 @@ public interface WishMapper {
 	@Named("studentWishSended")
 	@Mappings({
         @Mapping(target = "sender", expression = "java(studentWish.getStudent().getUser().getFirstname() + \" \" + studentWish.getStudent().getUser().getLastname())"),
-	    @Mapping(target = "receiver", source = "offer.label"),
+	    @Mapping(target = "receiver", expression = "java(studentWish.getOffer().getCompany().getName() + \" : \" + studentWish.getOffer().getLabel())"),
 	    @Mapping(target = "priority", expression = "java(studentWish.getPrioritySender())")})
 	WishDTO studentWishSendedToWishDTO(StudentWish studentWish);
 	
 	@Named("studentWishReceived")
 	@Mappings({
         @Mapping(target = "sender", expression = "java(studentWish.getStudent().getUser().getFirstname() + \" \" + studentWish.getStudent().getUser().getLastname())"),
-	    @Mapping(target = "receiver", source = "offer.label"),
+	    @Mapping(target = "receiver", expression = "java(studentWish.getOffer().getCompany().getName() + \" : \" + studentWish.getOffer().getLabel())"),
 	    @Mapping(target = "priority", expression = "java(studentWish.getPriorityReceiver())")})
 	WishDTO studentWishReceivedToWishDTO(StudentWish studentWish);
 	

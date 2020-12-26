@@ -19,6 +19,7 @@ import com.polytech.recrutesup.entities.StudentWish;
 import com.polytech.recrutesup.entities.reference.EWorkflowState;
 import com.polytech.recrutesup.exceptions.RecruteSupApplicationException;
 import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
+import com.polytech.recrutesup.mail.service.MailService;
 import com.polytech.recrutesup.mappers.WishMapper;
 import com.polytech.recrutesup.repositories.CompanyRepository;
 import com.polytech.recrutesup.repositories.OfferRepository;
@@ -37,6 +38,9 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 	
 	@Autowired
 	private OfferRepository offerRepository;
+	
+	@Autowired
+	private MailService mailService;
 	
 	@Autowired
 	private WishMapper wishMapper;
@@ -83,6 +87,8 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
         student = this.studentRepository.save(student);
         offer = this.offerRepository.save(offer);
         
+        this.mailService.sendEmailConfirmationStudentWish(student, offer);
+        
         return this.wishMapper.studentWishSendedToWishDTO(studentWish);
 	}
 
@@ -118,6 +124,8 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 		
 		company = this.companyRepository.save(company);
 		student = this.studentRepository.save(student);
+		
+		this.mailService.sendEmailCreationCompanyWish(company, student);
 		
 		return this.wishMapper.companyWishSendedToWishDTO(companyWish);	
 	}

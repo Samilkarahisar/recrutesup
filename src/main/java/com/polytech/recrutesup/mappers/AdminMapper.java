@@ -13,6 +13,7 @@ import com.polytech.recrutesup.payload.request.UpdateAdminRequest;
 public interface AdminMapper {
 
 	@Mappings({
+		@Mapping(source = "user.id", target = "id"),
 		@Mapping(source = "user.firstname", target = "firstname"),
 	    @Mapping(source = "user.lastname", target = "lastname"),
 	    @Mapping(source = "user.mailAddress", target = "mailAddress"),

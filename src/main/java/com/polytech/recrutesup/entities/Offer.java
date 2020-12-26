@@ -1,11 +1,10 @@
 package com.polytech.recrutesup.entities;
 
-import com.polytech.recrutesup.entities.reference.EWorkflowState;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,11 +20,14 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
-import static javax.persistence.GenerationType.IDENTITY;
+import com.polytech.recrutesup.entities.reference.EWorkflowState;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -41,7 +43,7 @@ public class Offer implements Serializable {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "label", length = 40, nullable = false)
+    @Column(name = "label", length = 100, nullable = false)
     private String label;
 
     @Column(name = "description", length = 500, nullable = true)
