@@ -24,7 +24,11 @@ public enum RecruteSupErrorType{
 	
 	ADMIN_UNKNOWN("Admin inconnu", "l'admin souhaité n'existe pas en BDD"),
 	
-	EMAIL_ERROR("Erreur Service Email", "une erreur s'est produite avec le service d'envoi de mail automatique");
+	EMAIL_ERROR("Erreur Service Email", "une erreur s'est produite avec le service d'envoi de mail automatique"),
+	
+	WISH_UNKNOWN("Voeu inconnu", "Le voeu souhaité n'existe pas en BDD"),
+	WISH_BAD_TYPE("Erreur de type de voeu", "Le type du voeu traité n'est pac valide"),
+	WISH_INCORRECT("Erreur voeu incorect", "Problème d'id ou de status sur le voeu");
 	
 	private final String title;
 	private final String message;

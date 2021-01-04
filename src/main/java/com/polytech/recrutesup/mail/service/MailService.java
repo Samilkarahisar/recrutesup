@@ -1,6 +1,7 @@
 package com.polytech.recrutesup.mail.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
@@ -11,6 +12,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.polytech.recrutesup.entities.Admin;
 import com.polytech.recrutesup.entities.Company;
 import com.polytech.recrutesup.entities.Offer;
 import com.polytech.recrutesup.entities.Student;
@@ -72,4 +74,44 @@ public class MailService {
 	public void sendEmailConfirmationStudentWish(Student student, Offer offer) {
 		this.sendEmail("ptut.recrutesup@gmail.com", "Vous avez reçu un voeu !", MailObjectGenerator.creationStudentWish(student.getUser().getFirstname(), student.getUser().getLastname(), offer.getCompany().getName(), offer.getLabel()));
 	}
+	
+	public void sendEmailMeetingCreationRequest(String dateMeeting, String message, Student sender, Offer interlocutor, User receiver) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
+				MailObjectGenerator.creationMeetingRequest(dateMeeting,
+														   message,
+														   sender.getUser().getFirstname() + " " + sender.getUser().getLastname(),
+														   sender.getUser().getMailAddress(),
+														   interlocutor.getCreatedByUser().getFirstname() + " " + interlocutor.getCreatedByUser().getLastname() + " (" + interlocutor.getCompany().getName() + ")"));
+	
+	}
+	
+	public void sendEmailMeetingCreationRequestToAdmin(String dateMeeting, String message, Student sender, Offer interlocutor, List<Admin> receivers) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
+				MailObjectGenerator.creationMeetingRequestToAdmin(dateMeeting,
+															      message,
+															      sender.getUser().getFirstname() + " " + sender.getUser().getLastname(),
+															      sender.getUser().getMailAddress(),
+															      interlocutor.getCreatedByUser().getFirstname() + " " + interlocutor.getCreatedByUser().getLastname() + " (" + interlocutor.getCompany().getName() + ")",
+																  interlocutor.getCreatedByUser().getMailAddress()));
+	
+	}
+	
+	public void sendEmailMeetingCreationRequest(String dateMeeting, String message, User sender, Company company, Student interlocutor, User receiver) {
+			this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
+					MailObjectGenerator.creationMeetingRequest(dateMeeting,
+							                                   message,
+							                                   sender.getFirstname() + " " + sender.getLastname() + " (" + company.getName() + ")",
+							                                   sender.getMailAddress(),
+							                                   interlocutor.getUser().getFirstname()));
+	}
+	
+	public void sendEmailMeetingCreationRequestToAdmin(String dateMeeting, String message, User sender, Company company, Student interlocutor, List<Admin> receivers) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
+				MailObjectGenerator.creationMeetingRequestToAdmin(dateMeeting,
+							                                      message,
+							                                      sender.getFirstname() + " " + sender.getLastname() + " (" + company.getName() + ")",
+							                                      sender.getMailAddress(),
+							                                      interlocutor.getUser().getFirstname() + " " + interlocutor.getUser().getLastname(),
+							                                      interlocutor.getUser().getMailAddress()));
+}
 }
