@@ -31,6 +31,8 @@ public class OfferDTO {
 	private String mailAddress;
 
 	private Date creationDate;
+	
+	private Long userId;
 
 	private String userFirstname;
 

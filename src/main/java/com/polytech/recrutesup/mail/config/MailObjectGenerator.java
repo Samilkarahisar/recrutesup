@@ -70,4 +70,29 @@ public class MailObjectGenerator {
 				+ "Très bonne journée à vous ! <br>"
 				+ "L'équipe RecruteSUP";
 	}
+	
+	public static final String creationMeetingRequestToAdmin(String dateMeeting, String message, String sender, String senderMail, String interlocutor, String interlocutorMail) {
+		return
+				" <h3>" + sender + " souhaite rencontrer " + interlocutor + "</h3>"
+				+ "Message de " + sender + " : <br>"
+				+ "<div style=\"white-space: pre-wrap;\"> \"" + message + "\" </div> <br><br>"  
+				+ "Pouvez-vous organiser cette rencontre ? Elle doit avoir lieu le " + dateMeeting + ".<br>"
+				+ "<b>Attention</b> , tous les administrateurs de Polytech Lyon ont reçu cette demande <br>"
+				+ "Les participants obligatoires sont : <br>"
+				+ " - " + sender + " : " + senderMail + "<br>"
+				+ " - " + interlocutor + " : " + interlocutorMail + "<br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String creationMeetingRequest(String dateMeeting, String message, String sender, String senderMail, String interlocutor) {
+		return
+				" <h3>" + interlocutor + " : " + sender + " souhaite vous rencontrer </h3>"
+				+ "Message de " + sender + " : <br>"
+				+ "<div style=\"white-space: pre-wrap;\"> \"" + message + "\" </div> <br><br>"  
+				+ "Cette rencontre doit avoir lieu le " + dateMeeting + "<br>"
+				+ "Si vous souhaitez contacter cette personne directement son adresse mail est la suivante : " + senderMail + "<br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
 }

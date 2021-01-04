@@ -14,10 +14,16 @@ import lombok.Setter;
 public class WishDTO {
 
 	private Long id;
+	
+	private String type;
 
 	private String sender;
+	
+	private Long idSender;
 
 	private String receiver;
+	
+	private Long idReceiver;
 
 	private int priority;
 

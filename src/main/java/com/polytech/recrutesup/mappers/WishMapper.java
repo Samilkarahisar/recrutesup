@@ -18,29 +18,41 @@ public interface WishMapper {
 
 	@Named("companyWishSended")
 	@Mappings({
+		@Mapping(target = "type", expression = "java(\"COMPANY\")"),
         @Mapping(target = "sender", source = "company.name"),
+        @Mapping(target = "idSender", source = "company.id"),
 	    @Mapping(target = "receiver", expression = "java(companyWish.getStudent().getUser().getFirstname() + \" \" + companyWish.getStudent().getUser().getLastname())"),
+	    @Mapping(target = "idReceiver", expression = "java(companyWish.getStudent().getUser().getId())"),
 	    @Mapping(target = "priority", expression = "java(companyWish.getPrioritySender())")})
 	WishDTO companyWishSendedToWishDTO(CompanyWish companyWish);
 	
 	@Named("companyWishReceived")
 	@Mappings({
+		@Mapping(target = "type", expression = "java(\"COMPANY\")"),
         @Mapping(target = "sender", source = "company.name"),
+        @Mapping(target = "idSender", source = "company.id"),
 	    @Mapping(target = "receiver", expression = "java(companyWish.getStudent().getUser().getFirstname() + \" \" + companyWish.getStudent().getUser().getLastname())"),
+	    @Mapping(target = "idReceiver", expression = "java(companyWish.getStudent().getUser().getId())"),
 	    @Mapping(target = "priority", expression = "java(companyWish.getPriorityReceiver())")})
 	WishDTO companyWishReceivedToWishDTO(CompanyWish companyWish);
 	
 	@Named("studentWishSended")
 	@Mappings({
+		@Mapping(target = "type", expression = "java(\"STUDENT\")"),
         @Mapping(target = "sender", expression = "java(studentWish.getStudent().getUser().getFirstname() + \" \" + studentWish.getStudent().getUser().getLastname())"),
-	    @Mapping(target = "receiver", expression = "java(studentWish.getOffer().getCompany().getName() + \" : \" + studentWish.getOffer().getLabel())"),
+        @Mapping(target = "idSender", expression = "java(studentWish.getStudent().getUser().getId())"),
+        @Mapping(target = "receiver", expression = "java(studentWish.getOffer().getCompany().getName() + \" : \" + studentWish.getOffer().getLabel())"),
+        @Mapping(target = "idReceiver", expression = "java(studentWish.getOffer().getId())"),
 	    @Mapping(target = "priority", expression = "java(studentWish.getPrioritySender())")})
 	WishDTO studentWishSendedToWishDTO(StudentWish studentWish);
 	
 	@Named("studentWishReceived")
 	@Mappings({
+		@Mapping(target = "type", expression = "java(\"STUDENT\")"),
         @Mapping(target = "sender", expression = "java(studentWish.getStudent().getUser().getFirstname() + \" \" + studentWish.getStudent().getUser().getLastname())"),
+        @Mapping(target = "idSender", expression = "java(studentWish.getStudent().getUser().getId())"),
 	    @Mapping(target = "receiver", expression = "java(studentWish.getOffer().getCompany().getName() + \" : \" + studentWish.getOffer().getLabel())"),
+	    @Mapping(target = "idReceiver", expression = "java(studentWish.getOffer().getId())"),
 	    @Mapping(target = "priority", expression = "java(studentWish.getPriorityReceiver())")})
 	WishDTO studentWishReceivedToWishDTO(StudentWish studentWish);
 	
