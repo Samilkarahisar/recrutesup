@@ -21,4 +21,8 @@ public interface WishServiceDTO {
 	WishDTO createCompanyWish(@NotNull Long idCompany, @NotNull Long idUser);
 
 	WishDTO createMeeting(@Valid @NotNull CreateMeetingRequest createMeetingRequest);
+
+	WishDTO updateStateCompanyWish(@NotNull Long idWish, @NotNull String currentState, @NotNull String nextState);
+
+	WishDTO updateStateStudentWish(@NotNull Long idWish, @NotNull String currentState, @NotNull String nextState);
 }

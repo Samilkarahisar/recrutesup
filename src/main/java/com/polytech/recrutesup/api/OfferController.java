@@ -71,4 +71,10 @@ public class OfferController {
 	public ResponseEntity<OfferDTO> updateOffer(@PathVariable Long idOffer, @Valid @RequestBody CreateOfferRequest offerDTO) {
 		return new ResponseEntity<>(this.offerServiceDTO.updateOffer(idOffer, offerDTO), HttpStatus.OK);
 	}
+	
+	@PatchMapping("/{idOffer}/{currentState}/{nextState}")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('COMPANY')")
+	public ResponseEntity<OfferDTO> updateStateOffer(@PathVariable Long idOffer, @PathVariable String currentState, @PathVariable String nextState) {
+		return new ResponseEntity<>(this.offerServiceDTO.updateStateOffer(idOffer, currentState, nextState), HttpStatus.OK);
+	}
 }

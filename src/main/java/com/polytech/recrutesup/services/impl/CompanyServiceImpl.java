@@ -30,8 +30,8 @@ import com.polytech.recrutesup.repositories.CompanyRepository;
 import com.polytech.recrutesup.repositories.RoleRepository;
 import com.polytech.recrutesup.services.CompanyService;
 import com.polytech.recrutesup.services.dto.CompanyServiceDTO;
-
-import net.bytebuddy.utility.RandomString;
+import com.polytech.recrutesup.utils.RandomStringUtils;
+import com.polytech.recrutesup.utils.WorkflowStateUtils;
 
 @Service
 public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
@@ -119,6 +119,24 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 
 		return companyMapper.companyToCompanyDTO(company);
 	}
+	
+	@Override
+	public CompanyDTO updateStateCompany(@NotNull Long idCompany, @NotNull String currentState,	@NotNull String nextState) {
+		boolean acceptable = WorkflowStateUtils.isNextStateAcceptable(ERole.ROLE_ADMIN, currentState, nextState);
+		if(!acceptable) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_COMPANY_INVALID);
+		}
+		
+		Company company = this.findOne(idCompany);
+		if(!currentState.equals(company.getState().toString())) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.STATE_COMPANY_INCORRECT);
+		}
+		
+		company.setState(EWorkflowState.valueOf(nextState));
+		
+		company = this.companyRepository.save(company);
+		return companyMapper.companyToCompanyDTO(company);
+	}
 
 	@Override
 	public List<EmployeeDTO> getAllEmployees() {
@@ -153,7 +171,7 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 		employee.setRole(role);
 
 		// Génération d'un mot de passe aléatoire de 16 caractères
-		RandomString randomString = new RandomString(16);
+		RandomStringUtils randomString = new RandomStringUtils(16);
 		String mdp = randomString.nextString();
 		employee.setPassword(passwordEncoder.encode(mdp));
 

@@ -57,6 +57,12 @@ public class CompanyController {
 	public ResponseEntity<CompanyDTO> updateCompany(@PathVariable Long idCompany, @Valid @RequestBody CreateCompanyRequest companyDTO) {
 		return new ResponseEntity<>(this.companyServiceDTO.updateCompany(idCompany, companyDTO), HttpStatus.OK);
 	}
+	
+	@PatchMapping("/{idCompany}/{currentState}/{nextState}")
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<CompanyDTO> updateStateCompany(@PathVariable Long idCompany, @PathVariable String currentState, @PathVariable String nextState) {
+		return new ResponseEntity<>(this.companyServiceDTO.updateStateCompany(idCompany, currentState, nextState), HttpStatus.OK);
+	}
 
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")

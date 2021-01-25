@@ -24,4 +24,6 @@ public interface OfferServiceDTO {
     OfferDTO createOffer(@NotNull @Valid CreateOfferRequest createOfferRequest);
     
     OfferDTO updateOffer(@NotNull Long idOffer, @NotNull @Valid CreateOfferRequest offerDTO);
+    
+    OfferDTO updateStateOffer(@NotNull Long idOffer, @NotNull String currentState, @NotNull String nextState);
 }

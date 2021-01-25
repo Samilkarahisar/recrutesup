@@ -53,10 +53,15 @@ public class StudentController {
 		return new ResponseEntity<>(this.studentServiceDTO.updateStudent(idUser, studentDTO), HttpStatus.OK);
 	}
 	
+	@PatchMapping("/{idUser}/{currentState}/{nextState}")
+	@PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
+	public ResponseEntity<StudentDTO> updateStateStudent(@PathVariable Long idUser, @PathVariable String currentState, @PathVariable String nextState) {
+		return new ResponseEntity<>(this.studentServiceDTO.updateStateStudent(idUser, currentState, nextState), HttpStatus.OK);
+	}
+	
 	@PatchMapping("/changePW/{idUser}")
 	@PreAuthorize("hasRole('STUDENT')")
 	public ResponseEntity<StudentDTO> changePassword(@PathVariable Long idUser, @Valid @RequestBody LoginRequest loginRequest) {
 		return new ResponseEntity<>(this.studentServiceDTO.changePassword(idUser, loginRequest), HttpStatus.OK);
 	}
-
 }
