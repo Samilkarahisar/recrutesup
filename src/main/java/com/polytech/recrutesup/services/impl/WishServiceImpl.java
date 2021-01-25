@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.polytech.recrutesup.dto.WishDTO;
@@ -19,6 +20,7 @@ import com.polytech.recrutesup.entities.Offer;
 import com.polytech.recrutesup.entities.Student;
 import com.polytech.recrutesup.entities.StudentWish;
 import com.polytech.recrutesup.entities.User;
+import com.polytech.recrutesup.entities.reference.ERole;
 import com.polytech.recrutesup.entities.reference.EWorkflowState;
 import com.polytech.recrutesup.exceptions.RecruteSupApplicationException;
 import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
@@ -29,8 +31,11 @@ import com.polytech.recrutesup.repositories.AdminRepository;
 import com.polytech.recrutesup.repositories.CompanyRepository;
 import com.polytech.recrutesup.repositories.OfferRepository;
 import com.polytech.recrutesup.repositories.StudentRepository;
+import com.polytech.recrutesup.repositories.UserRepository;
+import com.polytech.recrutesup.security.services.UserDetailsImpl;
 import com.polytech.recrutesup.services.WishService;
 import com.polytech.recrutesup.services.dto.WishServiceDTO;
+import com.polytech.recrutesup.utils.WorkflowStateUtils;
 
 @Service
 public class WishServiceImpl implements WishServiceDTO, WishService {
@@ -48,37 +53,52 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 	private AdminRepository adminRepository;
 	
 	@Autowired
+    private UserRepository userRepository;
+	
+	@Autowired
 	private MailService mailService;
 	
 	@Autowired
 	private WishMapper wishMapper;
 	
 	@Override
-	public WishDTO getStudentWish(Long id) {
-		List<Student> listStudents = this.studentRepository.findAll();
-		for(Student student: listStudents) {
-			for(StudentWish wish: student.getWishSendList()) {
+	public CompanyWish findOneCompanyWish(Long id) {
+		List<Company> listCompanies = this.companyRepository.findAll();
+		for(Company company: listCompanies) {
+			for(CompanyWish wish: company.getWishSendList()) {
 				if(wish.getId() == id) {
-					return this.wishMapper.studentWishSendedToWishDTO(wish);
+					return wish;
 				}
 			}
 		}
 		
 		throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_UNKNOWN);
 	}
-
+	
 	@Override
-	public WishDTO getCompanyWish(Long id) {
-		List<Company> listCompanies = this.companyRepository.findAll();
-		for(Company company: listCompanies) {
-			for(CompanyWish wish: company.getWishSendList()) {
+	public StudentWish findOneStudentWish(Long id) {
+		List<Student> listStudents = this.studentRepository.findAll();
+		for(Student student: listStudents) {
+			for(StudentWish wish: student.getWishSendList()) {
 				if(wish.getId() == id) {
-					return this.wishMapper.companyWishSendedToWishDTO(wish);
+					return wish;
 				}
 			}
 		}
 		
 		throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_UNKNOWN);
+	}
+	
+	@Override
+	public WishDTO getStudentWish(Long id) {
+		StudentWish wish = this.findOneStudentWish(id);
+		return this.wishMapper.studentWishSendedToWishDTO(wish);
+	}
+
+	@Override
+	public WishDTO getCompanyWish(Long id) {
+		CompanyWish wish = this.findOneCompanyWish(id);
+		return this.wishMapper.companyWishSendedToWishDTO(wish);
 	}
 	
 	@Override
@@ -186,6 +206,9 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 							throw new RecruteSupApplicationException(RecruteSupErrorType.STUDENT_UNKNOWN);
 						}
 						
+						// MISE A JOUR DU STATUT
+						this.updateStateCompanyWish(wish.getId(), "VALIDE", "MEETING_ORGANISE");
+						
 						if(createMeetingRequest.getIdReceiver() != null) {
 							this.mailService.sendEmailMeetingCreationRequest(createMeetingRequest.getDateMeeting(),
 																			 createMeetingRequest.getMessage(),
@@ -225,6 +248,9 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 						throw new RecruteSupApplicationException(RecruteSupErrorType.OFFER_UNKNOWN);
 					}
 					
+					// MISE A JOUR DU STATUT
+					this.updateStateStudentWish(wish.getId(), "VALIDE", "MEETING_ORGANISE");
+					
 					if(createMeetingRequest.getIdReceiver() != null) {
 						this.mailService.sendEmailMeetingCreationRequest(createMeetingRequest.getDateMeeting(),
 								 										 createMeetingRequest.getMessage(),
@@ -248,5 +274,83 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 		}
 		
 		throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_BAD_TYPE);
+	}
+
+	@Override
+	public WishDTO updateStateCompanyWish(@NotNull Long idWish, @NotNull String currentState, @NotNull String nextState) {
+		UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Long idUser = userDetails.getId();
+		
+		CompanyWish wish = this.findOneCompanyWish(idWish);
+		if(!currentState.equals(wish.getState().toString())) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.STATE_WISH_INCORRECT);
+		}
+		
+		boolean acceptable = false;
+		if(this.studentRepository.findByIdUser(idUser) != null) {
+			if(wish.getStudent().getUser().getId() != idUser) {
+				throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_WISH_INVALID);
+			}
+			
+			acceptable = WorkflowStateUtils.isNextStateAcceptable(ERole.ROLE_STUDENT, currentState, nextState);
+		} else {
+			Optional<Company> optCompany = this.companyRepository.findByEmployeesContains(this.userRepository.findById(idUser).get());
+			if(!optCompany.isPresent()) {
+				throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_UNKNOWN);
+			}
+			if(wish.getCompany().getId() != optCompany.get().getId()) {
+				throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_WISH_INVALID);
+			}
+			
+			acceptable = WorkflowStateUtils.isNextStateAcceptable(ERole.ROLE_COMPANY, currentState, nextState);
+		}
+		
+		if(!acceptable) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_WISH_INVALID);
+		}
+		
+		wish.setState(EWorkflowState.valueOf(nextState));
+		this.companyRepository.save(wish.getCompany());
+		
+		return wishMapper.companyWishSendedToWishDTO(wish);
+	}
+
+	@Override
+	public WishDTO updateStateStudentWish(@NotNull Long idWish, @NotNull String currentState, @NotNull String nextState) {
+		UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Long idUser = userDetails.getId();
+		
+		StudentWish wish = this.findOneStudentWish(idWish);
+		if(!currentState.equals(wish.getState().toString())) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.STATE_WISH_INCORRECT);
+		}
+		
+		boolean acceptable = false;
+		if(this.studentRepository.findByIdUser(idUser) != null) {
+			if(wish.getStudent().getUser().getId() != idUser) {
+				throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_WISH_INVALID);
+			}
+			
+			acceptable = WorkflowStateUtils.isNextStateAcceptable(ERole.ROLE_STUDENT, currentState, nextState);
+		} else {
+			Optional<Company> optCompany = this.companyRepository.findByEmployeesContains(this.userRepository.findById(idUser).get());
+			if(!optCompany.isPresent()) {
+				throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_UNKNOWN);
+			}
+			if(wish.getOffer().getCompany().getId() != optCompany.get().getId()) {
+				throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_WISH_INVALID);
+			}
+			
+			acceptable = WorkflowStateUtils.isNextStateAcceptable(ERole.ROLE_COMPANY, currentState, nextState);
+		}
+		
+		if(!acceptable) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_WISH_INVALID);
+		}
+		
+		wish.setState(EWorkflowState.valueOf(nextState));
+		this.studentRepository.save(wish.getStudent());
+		
+		return wishMapper.studentWishSendedToWishDTO(wish);
 	}
 }

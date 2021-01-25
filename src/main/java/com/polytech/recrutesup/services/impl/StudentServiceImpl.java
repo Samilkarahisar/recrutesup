@@ -6,6 +6,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +22,14 @@ import com.polytech.recrutesup.mail.service.MailService;
 import com.polytech.recrutesup.mappers.StudentMapper;
 import com.polytech.recrutesup.payload.request.CreateStudentRequest;
 import com.polytech.recrutesup.payload.request.LoginRequest;
+import com.polytech.recrutesup.repositories.AdminRepository;
 import com.polytech.recrutesup.repositories.RoleRepository;
 import com.polytech.recrutesup.repositories.StudentRepository;
+import com.polytech.recrutesup.security.services.UserDetailsImpl;
 import com.polytech.recrutesup.services.StudentService;
 import com.polytech.recrutesup.services.dto.StudentServiceDTO;
-
-import net.bytebuddy.utility.RandomString;
+import com.polytech.recrutesup.utils.RandomStringUtils;
+import com.polytech.recrutesup.utils.WorkflowStateUtils;
 
 @Service
 public class StudentServiceImpl implements StudentService, StudentServiceDTO {
@@ -45,6 +48,9 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 	
 	@Autowired
 	private MailService mailService;
+	
+	@Autowired
+	private AdminRepository adminRepository;
 
 	@Override
 	public Student findOne(Long idUser) {
@@ -75,7 +81,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		user.setRole(role);
 		
 		// Génération d'un mot de passe aléatoire de 16 caractères
-		RandomString randomString = new RandomString(16);
+		RandomStringUtils randomString = new RandomStringUtils(16);
 		String mdp = randomString.nextString();
 		user.setPassword(passwordEncoder.encode(mdp));
 		
@@ -120,6 +126,36 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		
 		return studentMapper.studentToStudentDTO(student);
 	}
+	
+	@Override
+	public StudentDTO updateStateStudent(@NotNull Long idUser, @NotNull String currentState, @NotNull String nextState) {
+		UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Long idUserConnected = userDetails.getId();
+		
+		boolean acceptable = false;
+		if(this.adminRepository.findByIdUser(idUserConnected) != null) {
+			acceptable = WorkflowStateUtils.isNextStateAcceptable(ERole.ROLE_ADMIN, currentState, nextState);
+		} else {
+			if(idUser != idUserConnected) {
+				throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_STUDENT_INVALID);
+			}
+			acceptable = WorkflowStateUtils.isNextStateAcceptable(ERole.ROLE_STUDENT, currentState, nextState);
+		}
+		
+		if(!acceptable) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_STATE_STUDENT_INVALID);
+		}
+		
+		Student student = this.findOne(idUser);
+		if(!currentState.equals(student.getState().toString())) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.STATE_STUDENT_INCORRECT);
+		}
+		
+		student.setState(EWorkflowState.valueOf(nextState));
+		
+		student = this.studentRepository.save(student);
+		return studentMapper.studentToStudentDTO(student);
+	}
 
 	@Override
 	public StudentDTO changePassword(Long idUser, LoginRequest loginRequest) {
@@ -135,5 +171,4 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		// On retourne le StudentDTO au front
 		return studentMapper.studentToStudentDTO(student);
 	}
-	
 }

@@ -23,4 +23,6 @@ public interface StudentServiceDTO {
 	StudentDTO updateStudent(@PathVariable Long idUser, @RequestBody CreateStudentRequest studentDTO);
 	
 	StudentDTO changePassword(@PathVariable Long idUser, @RequestBody LoginRequest loginRequest);
+	
+	StudentDTO updateStateStudent(@NotNull Long idUser, @NotNull String currentState, @NotNull String nextState);
 }

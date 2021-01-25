@@ -25,6 +25,8 @@ public interface CompanyServiceDTO {
 
 	CompanyDTO updateCompany(@NotNull Long idCompany, @NotNull @Valid CreateCompanyRequest companyDTO);
 
+	CompanyDTO updateStateCompany(@NotNull Long idCompany, @NotNull String currentState, @NotNull String nextState);
+	
 	// EMPLOYEE
 	List<EmployeeDTO> getAllEmployees();
 

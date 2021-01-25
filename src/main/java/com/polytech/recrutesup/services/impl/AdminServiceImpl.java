@@ -78,11 +78,9 @@ public class AdminServiceImpl implements AdminService, AdminServiceDTO {
 		Admin admin = this.findOne(idUser);
 		
 		admin.getUser().setPassword(passwordEncoder.encode(loginRequest.getPassword()));
-		
 		admin = adminRepository.save(admin);	
 		
 		mailService.sendEmailConfirmationChangePassword(admin.getUser());
-		
 		return adminMapper.adminToAdminDTO(admin);
 	}
 

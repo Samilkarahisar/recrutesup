@@ -47,7 +47,7 @@ public class MailObjectGenerator {
 				" <h3>" + firstname + " " + lastname + " : Vous avez demandé à changer votre mot de passe</h3>"
 				+ "Votre mot de passe a bien été modifié !<br>"
 				+ "Vous pouvez vous connecter au site recruteSUP et l'utiliser<br><br>"
-				+ "Si vous n'êtes pas à l'origine de cette demande, ignorez ce mail et contactez les administrateurs de Polytech Lyon. <br><br>"
+				+ "Si vous n'êtes pas à l'origine de cette demande, contactez les administrateurs de Polytech Lyon. <br><br>"
 				+ "Très bonne journée à vous ! <br>"
 				+ "L'équipe RecruteSUP";
 	}

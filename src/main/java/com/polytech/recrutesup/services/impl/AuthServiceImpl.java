@@ -26,8 +26,7 @@ import com.polytech.recrutesup.repositories.UserRepository;
 import com.polytech.recrutesup.security.jwt.JwtUtils;
 import com.polytech.recrutesup.security.services.UserDetailsImpl;
 import com.polytech.recrutesup.services.dto.AuthServiceDTO;
-
-import net.bytebuddy.utility.RandomString;
+import com.polytech.recrutesup.utils.RandomStringUtils;
 
 @Service
 public class AuthServiceImpl implements AuthServiceDTO {
@@ -71,7 +70,7 @@ public class AuthServiceImpl implements AuthServiceDTO {
 		}
 		
 		// Génération d'un mot de passe aléatoire de 16 caractères
-		RandomString randomString = new RandomString(16);
+		RandomStringUtils randomString = new RandomStringUtils(16);
 		String mdp = randomString.nextString();
 		User user = optUser.get();
 		user.setPassword(passwordEncoder.encode(mdp));
