@@ -23,6 +23,7 @@ public enum RecruteSupErrorType{
 	
 	OFFER_UNKNOWN("Offre inconnue", "l'offre ne peut pas être trouvée en BDD"),
 	STATE_OFFER_INCORRECT("Statut de l'offre incorrect", "le statut de l'offre est incorrect"),
+	UPDATE_OFFER_INVALID("Impossible de modifier l'offre", "l'offre ne peut pas être modifié"),
 	UPDATE_STATE_OFFER_INVALID("Impossible de modifier le statut de l'offre", "le statut de l'offre ne peut pas être modifié"),
 	
 	STUDENT_WISH_ALREADY_CREATED("voeu étudiant déjà créé", "le voeu reliant l'étudiant et l'offre existe déjà en BDD et ne peut être créé une deuxième fois"),

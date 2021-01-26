@@ -119,7 +119,8 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 	}
 
 	@Override
-	public StudentDTO updateStudent(Long idUser, CreateStudentRequest studentDTO) {
+	public StudentDTO updateStudent(CreateStudentRequest studentDTO) {
+		Long idUser = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 		Student student = this.findOne(idUser);
 		this.studentMapper.updateStudentFromCreateStudentRequest(studentDTO, student);
 		student = studentRepository.save(student);
@@ -158,17 +159,14 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 	}
 
 	@Override
-	public StudentDTO changePassword(Long idUser, LoginRequest loginRequest) {
-		// On récupère l'étudiant en BDD si il existe
+	public StudentDTO changePassword(LoginRequest loginRequest) {
+		Long idUser = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 		Student student = this.findOne(idUser);
 		
 		student.getUser().setPassword(passwordEncoder.encode(loginRequest.getPassword()));
-		
 		student = studentRepository.save(student);	
-		
 		mailService.sendEmailConfirmationChangePassword(student.getUser());
 		
-		// On retourne le StudentDTO au front
 		return studentMapper.studentToStudentDTO(student);
 	}
 }

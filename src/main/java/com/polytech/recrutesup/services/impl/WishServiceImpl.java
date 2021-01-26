@@ -111,7 +111,8 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 	}
 
 	@Override
-	public WishDTO createStudentWish(@NotNull Long idUser, @NotNull Long idOffer) {
+	public WishDTO createStudentWish(@NotNull Long idOffer) {
+		Long idUser = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 		Student student = this.studentRepository.findByIdUser(idUser);
 		if(student == null) {
 			throw new RecruteSupApplicationException(RecruteSupErrorType.STUDENT_UNKNOWN);
@@ -149,8 +150,11 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 	}
 
 	@Override
-	public WishDTO createCompanyWish(@NotNull Long idCompany, @NotNull Long idUser) {
-		Optional<Company> optCompany = this.companyRepository.findById(idCompany);
+	public WishDTO createCompanyWish(@NotNull Long idUser) {
+		Long idUserConnected = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+		User employee = this.userRepository.findById(idUserConnected).get();
+		
+		Optional<Company> optCompany = this.companyRepository.findByEmployeesContains(employee);
 		if (!optCompany.isPresent()) {
 			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_UNKNOWN);
 		}

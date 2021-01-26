@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ import com.polytech.recrutesup.payload.request.CreateEmployeeRequest;
 import com.polytech.recrutesup.payload.request.LoginRequest;
 import com.polytech.recrutesup.repositories.CompanyRepository;
 import com.polytech.recrutesup.repositories.RoleRepository;
+import com.polytech.recrutesup.repositories.UserRepository;
+import com.polytech.recrutesup.security.services.UserDetailsImpl;
 import com.polytech.recrutesup.services.CompanyService;
 import com.polytech.recrutesup.services.dto.CompanyServiceDTO;
 import com.polytech.recrutesup.utils.RandomStringUtils;
@@ -44,6 +47,9 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 
 	@Autowired
 	private CompanyMapper companyMapper;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -112,8 +118,15 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 	}
 
 	@Override
-	public CompanyDTO updateCompany(@NotNull Long idCompany, @NotNull @Valid CreateCompanyRequest companyDTO) {
-		Company company = this.findOne(idCompany);
+	public CompanyDTO updateCompany(@NotNull @Valid CreateCompanyRequest companyDTO) {
+		Long idUser  = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+		
+		Optional<Company> optCompany = this.companyRepository.findByEmployeesContains(this.userRepository.findById(idUser).get());
+		if(!optCompany.isPresent()) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_UNKNOWN);
+		}
+		
+		Company company = optCompany.get();
 		this.companyMapper.updateCompanyFromCreateCompanyRequest(companyDTO, company);
 		company = companyRepository.save(company);
 
@@ -224,36 +237,37 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 	}
 
 	@Override
-	public EmployeeDTO updateEmployee(@NotNull Long idUser, @NotNull @Valid CreateEmployeeRequest employeeDTO) {
-		List<Company> listCompany = this.companyRepository.findAll();
-		for (Company company : listCompany) {
-			for (User employee : company.getEmployees()) {
-				if (employee.getId() == idUser) {
-					this.companyMapper.updateEmployeeFromCreateEmployeeRequest(employeeDTO, employee);
-					company = companyRepository.save(company);
-					return companyMapper.userToEmployeeDTO(employee, company);
-				}
-			}
-		}
-
-		throw new RecruteSupApplicationException(RecruteSupErrorType.EMPLOYEE_UNKNOWN);
+	public EmployeeDTO updateEmployee(@NotNull @Valid CreateEmployeeRequest employeeDTO) {
+		Long idUser  = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+		User employee = this.userRepository.findById(idUser).get();
+		
+		Optional<Company> optCompany = this.companyRepository.findByEmployeesContains(employee);
+		if (!optCompany.isPresent()) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_UNKNOWN);
+		}		
+		Company company = optCompany.get();
+		
+		this.companyMapper.updateEmployeeFromCreateEmployeeRequest(employeeDTO, employee);
+		
+		company = companyRepository.save(company);
+		return companyMapper.userToEmployeeDTO(employee, company);
 	}
 
 	@Override
-	public EmployeeDTO changePassword(@NotNull Long idUser, @NotNull @Valid LoginRequest loginRequest) {
-		List<Company> listCompany = this.companyRepository.findAll();
-		for (Company company : listCompany) {
-			for (User employee : company.getEmployees()) {
-				if (employee.getId() == idUser) {
-					employee.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
-					company = companyRepository.save(company);
-					mailService.sendEmailConfirmationChangePassword(employee);
-					
-					return companyMapper.userToEmployeeDTO(employee, company);
-				}
-			}
-		}
+	public EmployeeDTO changePassword(@NotNull @Valid LoginRequest loginRequest) {
+		Long idUser = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+		User employee = this.userRepository.findById(idUser).get();
 		
-		throw new RecruteSupApplicationException(RecruteSupErrorType.EMPLOYEE_UNKNOWN);
+		Optional<Company> optCompany = this.companyRepository.findByEmployeesContains(employee);
+		if (!optCompany.isPresent()) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_UNKNOWN);
+		}	
+		Company company = optCompany.get();
+		
+		employee.setPassword(passwordEncoder.encode(loginRequest.getPassword()));
+		company = companyRepository.save(company);
+		mailService.sendEmailConfirmationChangePassword(employee);
+		
+		return companyMapper.userToEmployeeDTO(employee, company);
 	}
 }

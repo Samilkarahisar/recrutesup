@@ -15,7 +15,7 @@ public interface AdminServiceDTO {
 
 	List<AdminDTO> getAllAdmins();
 
-	AdminDTO updateAdmin(@NotNull Long idUser, @NotNull @Valid UpdateAdminRequest adminDTO);
+	AdminDTO updateAdmin(@NotNull @Valid UpdateAdminRequest adminDTO);
 	
-	AdminDTO changePassword(@NotNull Long idUser, @NotNull @Valid LoginRequest loginRequest);
+	AdminDTO changePassword(@NotNull @Valid LoginRequest loginRequest);
 }
