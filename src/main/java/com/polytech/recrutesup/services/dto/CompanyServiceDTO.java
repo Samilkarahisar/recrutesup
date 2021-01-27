@@ -23,7 +23,7 @@ public interface CompanyServiceDTO {
 	
 	CompanyDTO	getCompanyContainingEmployee(@NotNull Long idUser);
 
-	CompanyDTO updateCompany(@NotNull Long idCompany, @NotNull @Valid CreateCompanyRequest companyDTO);
+	CompanyDTO updateCompany(@NotNull @Valid CreateCompanyRequest companyDTO);
 
 	CompanyDTO updateStateCompany(@NotNull Long idCompany, @NotNull String currentState, @NotNull String nextState);
 	
@@ -34,9 +34,9 @@ public interface CompanyServiceDTO {
 
 	EmployeeDTO getEmployee(@NotNull Long idUser);
 
-	EmployeeDTO updateEmployee(@NotNull Long idUser, @NotNull @Valid CreateEmployeeRequest employeeDTO);
+	EmployeeDTO updateEmployee(@NotNull @Valid CreateEmployeeRequest employeeDTO);
 
 	EmployeeDTO createEmployee(@NotNull @Valid CreateEmployeeRequest createEmployeeDTO);
 	
-	EmployeeDTO changePassword(@NotNull Long idUser, @NotNull @Valid LoginRequest loginRequest);
+	EmployeeDTO changePassword(@NotNull @Valid LoginRequest loginRequest);
 }

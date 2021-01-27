@@ -16,9 +16,9 @@ public interface WishServiceDTO {
 	
 	WishDTO getCompanyWish(@NotNull Long idWish);
 	
-	WishDTO createStudentWish(@NotNull Long idUser, @NotNull Long idOffer);
+	WishDTO createStudentWish(@NotNull Long idOffer);
 	
-	WishDTO createCompanyWish(@NotNull Long idCompany, @NotNull Long idUser);
+	WishDTO createCompanyWish(@NotNull Long idUser);
 
 	WishDTO createMeeting(@Valid @NotNull CreateMeetingRequest createMeetingRequest);
 

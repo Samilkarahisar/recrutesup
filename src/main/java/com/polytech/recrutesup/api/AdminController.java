@@ -39,15 +39,15 @@ public class AdminController {
 		return new ResponseEntity<>(this.adminServiceDTO.getAllAdmins(), HttpStatus.OK);
 	}
 
-	@PatchMapping("/{idUser}")
+	@PatchMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<AdminDTO> updateAdmin(@PathVariable Long idUser, @Valid @RequestBody UpdateAdminRequest adminDTO) {
-		return new ResponseEntity<>(this.adminServiceDTO.updateAdmin(idUser, adminDTO), HttpStatus.OK);
+	public ResponseEntity<AdminDTO> updateAdmin(@Valid @RequestBody UpdateAdminRequest adminDTO) {
+		return new ResponseEntity<>(this.adminServiceDTO.updateAdmin(adminDTO), HttpStatus.OK);
 	}
 	
-	@PatchMapping("/changePW/{idUser}")
+	@PatchMapping("/changePW")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<AdminDTO> changePassword(@PathVariable Long idUser, @Valid @RequestBody LoginRequest loginRequest) {
-		return new ResponseEntity<>(this.adminServiceDTO.changePassword(idUser, loginRequest), HttpStatus.OK);
+	public ResponseEntity<AdminDTO> changePassword(@Valid @RequestBody LoginRequest loginRequest) {
+		return new ResponseEntity<>(this.adminServiceDTO.changePassword(loginRequest), HttpStatus.OK);
 	}
 }

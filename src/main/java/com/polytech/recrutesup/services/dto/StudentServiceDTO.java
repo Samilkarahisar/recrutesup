@@ -5,7 +5,6 @@ import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.polytech.recrutesup.dto.StudentDTO;
@@ -20,9 +19,9 @@ public interface StudentServiceDTO {
 	
 	List<StudentDTO> getAllStudents();
 	
-	StudentDTO updateStudent(@PathVariable Long idUser, @RequestBody CreateStudentRequest studentDTO);
+	StudentDTO updateStudent(@RequestBody CreateStudentRequest studentDTO);
 	
-	StudentDTO changePassword(@PathVariable Long idUser, @RequestBody LoginRequest loginRequest);
+	StudentDTO changePassword(@RequestBody LoginRequest loginRequest);
 	
 	StudentDTO updateStateStudent(@NotNull Long idUser, @NotNull String currentState, @NotNull String nextState);
 }

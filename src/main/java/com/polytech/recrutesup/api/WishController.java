@@ -47,16 +47,16 @@ public class WishController {
 		return new ResponseEntity<>(this.wishServiceDTO.getCompanyWish(idWish), HttpStatus.OK);
 	}
 	
-	@PostMapping("/student/{idUser}/{idOffer}")
+	@PostMapping("/student/{idOffer}")
 	@PreAuthorize("hasRole('STUDENT')")
-	public ResponseEntity<WishDTO> createStudentWish(@PathVariable Long idUser, @PathVariable Long idOffer) {
-		return new ResponseEntity<>(this.wishServiceDTO.createStudentWish(idUser, idOffer), HttpStatus.CREATED);
+	public ResponseEntity<WishDTO> createStudentWish(@PathVariable Long idOffer) {
+		return new ResponseEntity<>(this.wishServiceDTO.createStudentWish(idOffer), HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/company/{idCompany}/{idUser}")
+	@PostMapping("/company/{idUser}")
 	@PreAuthorize("hasRole('COMPANY')")
-	public ResponseEntity<WishDTO> createCompanyWish(@PathVariable Long idCompany, @PathVariable Long idUser) {
-		return new ResponseEntity<>(this.wishServiceDTO.createCompanyWish(idCompany, idUser), HttpStatus.CREATED);
+	public ResponseEntity<WishDTO> createCompanyWish(@PathVariable Long idUser) {
+		return new ResponseEntity<>(this.wishServiceDTO.createCompanyWish(idUser), HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/meeting")

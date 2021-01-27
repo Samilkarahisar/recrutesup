@@ -47,10 +47,10 @@ public class StudentController {
 		return new ResponseEntity<>(this.studentServiceDTO.createStudent(createStudentDTO), HttpStatus.CREATED);
 	}
 	
-	@PatchMapping("/{idUser}")
+	@PatchMapping
 	@PreAuthorize("hasRole('STUDENT')")
-	public ResponseEntity<StudentDTO> updateStudent(@PathVariable Long idUser, @Valid @RequestBody CreateStudentRequest studentDTO) {
-		return new ResponseEntity<>(this.studentServiceDTO.updateStudent(idUser, studentDTO), HttpStatus.OK);
+	public ResponseEntity<StudentDTO> updateStudent(@Valid @RequestBody CreateStudentRequest studentDTO) {
+		return new ResponseEntity<>(this.studentServiceDTO.updateStudent(studentDTO), HttpStatus.OK);
 	}
 	
 	@PatchMapping("/{idUser}/{currentState}/{nextState}")
@@ -59,9 +59,9 @@ public class StudentController {
 		return new ResponseEntity<>(this.studentServiceDTO.updateStateStudent(idUser, currentState, nextState), HttpStatus.OK);
 	}
 	
-	@PatchMapping("/changePW/{idUser}")
+	@PatchMapping("/changePW")
 	@PreAuthorize("hasRole('STUDENT')")
-	public ResponseEntity<StudentDTO> changePassword(@PathVariable Long idUser, @Valid @RequestBody LoginRequest loginRequest) {
-		return new ResponseEntity<>(this.studentServiceDTO.changePassword(idUser, loginRequest), HttpStatus.OK);
+	public ResponseEntity<StudentDTO> changePassword(@Valid @RequestBody LoginRequest loginRequest) {
+		return new ResponseEntity<>(this.studentServiceDTO.changePassword(loginRequest), HttpStatus.OK);
 	}
 }

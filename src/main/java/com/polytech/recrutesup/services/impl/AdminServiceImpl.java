@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import com.polytech.recrutesup.mappers.AdminMapper;
 import com.polytech.recrutesup.payload.request.LoginRequest;
 import com.polytech.recrutesup.payload.request.UpdateAdminRequest;
 import com.polytech.recrutesup.repositories.AdminRepository;
+import com.polytech.recrutesup.security.services.UserDetailsImpl;
 import com.polytech.recrutesup.services.AdminService;
 import com.polytech.recrutesup.services.dto.AdminServiceDTO;
 
@@ -65,7 +67,9 @@ public class AdminServiceImpl implements AdminService, AdminServiceDTO {
 	}
 
 	@Override
-	public AdminDTO updateAdmin(@NotNull Long idUser, @NotNull UpdateAdminRequest adminDTO) {
+	public AdminDTO updateAdmin(@NotNull @Valid UpdateAdminRequest adminDTO) {
+		Long idUser = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+		
 		Admin admin = this.findOne(idUser);
 		this.adminMapper.updateAdminFromUpdateAdminRequest(adminDTO, admin);
 		admin = adminRepository.save(admin);
@@ -74,7 +78,8 @@ public class AdminServiceImpl implements AdminService, AdminServiceDTO {
 	}
 
 	@Override
-	public AdminDTO changePassword(@NotNull Long idUser, @NotNull @Valid LoginRequest loginRequest) {
+	public AdminDTO changePassword(@NotNull @Valid LoginRequest loginRequest) {
+		Long idUser = ((UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
 		Admin admin = this.findOne(idUser);
 		
 		admin.getUser().setPassword(passwordEncoder.encode(loginRequest.getPassword()));

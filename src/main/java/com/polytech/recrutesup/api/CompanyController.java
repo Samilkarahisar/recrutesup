@@ -52,10 +52,10 @@ public class CompanyController {
 		return new ResponseEntity<>(this.companyServiceDTO.getCompanyContainingEmployee(idUser), HttpStatus.OK);
 	}
 
-	@PatchMapping("/{idCompany}")
+	@PatchMapping
 	@PreAuthorize("hasRole('COMPANY')")
-	public ResponseEntity<CompanyDTO> updateCompany(@PathVariable Long idCompany, @Valid @RequestBody CreateCompanyRequest companyDTO) {
-		return new ResponseEntity<>(this.companyServiceDTO.updateCompany(idCompany, companyDTO), HttpStatus.OK);
+	public ResponseEntity<CompanyDTO> updateCompany(@Valid @RequestBody CreateCompanyRequest companyDTO) {
+		return new ResponseEntity<>(this.companyServiceDTO.updateCompany(companyDTO), HttpStatus.OK);
 	}
 	
 	@PatchMapping("/{idCompany}/{currentState}/{nextState}")
@@ -90,10 +90,10 @@ public class CompanyController {
 		return new ResponseEntity<>(this.companyServiceDTO.getEmployee(idUser), HttpStatus.OK);
 	}
 
-	@PatchMapping("/employee/{idUser}")
+	@PatchMapping("/employee")
 	@PreAuthorize("hasRole('COMPANY')")
-	public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Long idUser, @RequestBody CreateEmployeeRequest employeeDTO) {
-		return new ResponseEntity<>(this.companyServiceDTO.updateEmployee(idUser, employeeDTO), HttpStatus.OK);
+	public ResponseEntity<EmployeeDTO> updateEmployee(@RequestBody CreateEmployeeRequest employeeDTO) {
+		return new ResponseEntity<>(this.companyServiceDTO.updateEmployee(employeeDTO), HttpStatus.OK);
 	}
 
 	@PostMapping("/employee")
@@ -102,9 +102,9 @@ public class CompanyController {
 		return new ResponseEntity<>(this.companyServiceDTO.createEmployee(createEmployeeDTO), HttpStatus.CREATED);
 	}
 	
-	@PatchMapping("/changePW/{idUser}")
+	@PatchMapping("/changePW")
 	@PreAuthorize("hasRole('COMPANY')")
-	public ResponseEntity<EmployeeDTO> changePassword(@PathVariable Long idUser, @Valid @RequestBody LoginRequest loginRequest) {
-		return new ResponseEntity<>(this.companyServiceDTO.changePassword(idUser, loginRequest), HttpStatus.OK);
+	public ResponseEntity<EmployeeDTO> changePassword(@Valid @RequestBody LoginRequest loginRequest) {
+		return new ResponseEntity<>(this.companyServiceDTO.changePassword(loginRequest), HttpStatus.OK);
 	}
 }

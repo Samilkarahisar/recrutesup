@@ -162,7 +162,20 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
 
 	@Override
 	public OfferDTO updateOffer(@NotNull Long idOffer, @NotNull @Valid CreateOfferRequest offerDTO) {
+		UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Long idUser = userDetails.getId();
+		
+		Optional<Company> optCompany = this.companyRepository.findByEmployeesContains(this.userRepository.findById(idUser).get());
+		if(!optCompany.isPresent()) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_UNKNOWN);
+		}
+		
 		Offer offer = this.findOne(idOffer);
+		
+		if(offer.getCompany().getId() != optCompany.get().getId()) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_OFFER_INVALID);
+		}
+		
 		this.offerMapper.updateOfferFromCreateOfferRequest(offerDTO, offer);	
 		offer = offerRepository.save(offer);
 		
