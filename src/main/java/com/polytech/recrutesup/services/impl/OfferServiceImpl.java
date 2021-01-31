@@ -176,7 +176,11 @@ public class OfferServiceImpl implements OfferService, OfferServiceDTO {
 			throw new RecruteSupApplicationException(RecruteSupErrorType.UPDATE_OFFER_INVALID);
 		}
 		
-		this.offerMapper.updateOfferFromCreateOfferRequest(offerDTO, offer);	
+		this.offerMapper.updateOfferFromCreateOfferRequest(offerDTO, offer);
+		if(offer.getState().equals(EWorkflowState.DISPONIBLE)) {
+			offer.setState(EWorkflowState.BROUILLON);
+		}
+		
 		offer = offerRepository.save(offer);
 		
 		return offerMapper.offerToOfferDTO(offer);

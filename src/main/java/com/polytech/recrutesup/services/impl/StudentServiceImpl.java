@@ -74,7 +74,7 @@ public class StudentServiceImpl implements StudentService, StudentServiceDTO {
 		Role role = roleRepository.findByName(ERole.ROLE_STUDENT).orElseThrow(()-> new RecruteSupApplicationException(RecruteSupErrorType.ROLE_STUDENT_UNKNOWN));
 		
 		User user = new User();
-		user.setFirstname(createStudentDTO.getFirstname().trim());
+		user.setFirstname(createStudentDTO.getFirstname().trim().substring(0, 1).toUpperCase() + createStudentDTO.getFirstname().trim().substring(1).toLowerCase());
 		user.setLastname(createStudentDTO.getLastname().trim().toUpperCase());
 		user.setMailAddress(createStudentDTO.getMailAddress().trim());
 		user.setPhoneNumber(createStudentDTO.getPhoneNumber());

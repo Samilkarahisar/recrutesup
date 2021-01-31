@@ -118,6 +118,12 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 			throw new RecruteSupApplicationException(RecruteSupErrorType.STUDENT_UNKNOWN);
 		}
 		
+		if(student.getState().equals(EWorkflowState.INVALIDE)) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.STUDENT_INVALIDE);
+		} else if(student.getState().equals(EWorkflowState.INDISPONIBLE)) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.STUDENT_INDISPONIBLE);
+		}
+		
 		Optional<Offer> optOffer = this.offerRepository.findById(idOffer);
         if (!optOffer.isPresent()) {
             throw new RecruteSupApplicationException(RecruteSupErrorType.OFFER_UNKNOWN);
@@ -159,6 +165,10 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_UNKNOWN);
 		}
 		Company company = optCompany.get();
+		
+		if(company.getState().equals(EWorkflowState.INVALIDE)) {
+			throw new RecruteSupApplicationException(RecruteSupErrorType.COMPANY_INVALIDE);
+		}
 		
 		Student student = this.studentRepository.findByIdUser(idUser);
 		if(student == null) {

@@ -24,6 +24,7 @@ public interface OfferMapper {
             @Mapping(source = "offer.createdByUser.id", target = "userId"),
             @Mapping(source = "offer.company.id", target = "companyId"),
             @Mapping(source = "offer.company.name", target = "companyName"),
+            @Mapping(source = "offer.company.state", target = "companyState"),
             @Mapping(target = "wishReceivedList", source = "wishReceivedList", qualifiedByName = { "WishMapper", "listStudentWishReceived"}) })
     OfferDTO offerToOfferDTO(Offer offer);
 
