@@ -5,6 +5,8 @@ public enum RecruteSupErrorType{
 	USER_UNKNOWN("Utilisateur inconnu", "l'utilisateur ne peut pas être trouvée en BDD"),
 	
 	STUDENT_UNKNOWN("Etudiant inconnu", "l'étudiant ne peut pas être trouvée en BDD"),
+	STUDENT_INVALIDE("Etudiant invalide", "Vous êtes au statut invalide"),
+	STUDENT_INDISPONIBLE("Etudiant indisponible", "Vous êtes au statut indisponible"),
 	STUDENT_ALREADY_CREATED("Etudiant déjà créé","l'étudiant existe déjà en BDD et ne peut être créé une deuxième fois"),
 	STATE_STUDENT_INCORRECT("Statut de l'étudiant incorrecte", "le statut de l'étudiant est incorrecte"),
 	UPDATE_STATE_STUDENT_INVALID("Impossible de modifier le statut de l'étudiant", "le statut de l'étudiant ne peut pas être modifié"),
@@ -14,6 +16,7 @@ public enum RecruteSupErrorType{
 	ROLE_ADMIN_UNKNOWN("Role Admin inconnu", "le role Admin souhaité n'existe pas en BDD"),
 	
 	COMPANY_UNKNOWN("Entreprise inconnue", "l'entreprise ne peut pas être trouvée en BDD"),
+	COMPANY_INVALIDE("Entreprise invalide", "Vous êtes au status invalide"),
 	COMPANY_ALREADY_CREATED("Entreprise déjà créée","l'entreprise existe déjà en BDD et ne peut être créée une deuxième fois"),
 	STATE_COMPANY_INCORRECT("Statut de l'entreprise incorrect", "le statut de l'entreprise est incorrect"),
 	UPDATE_STATE_COMPANY_INVALID("Impossible de modifier le statut de l'entreprise", "le statut de l'entreprise ne peut pas être modifié"),

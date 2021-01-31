@@ -44,7 +44,8 @@ public class WorkflowStateUtils {
 							nextState.equals(EWorkflowState.SUPPRIME));
 					
 				case DISPONIBLE:
-					return (nextState.equals(EWorkflowState.INDISPONIBLE));
+					return (nextState.equals(EWorkflowState.INDISPONIBLE) ||
+							nextState.equals(EWorkflowState.SUPPRIME));
 					
 				case TRANSMIS:
 					return (nextState.equals(EWorkflowState.REFUSE) ||

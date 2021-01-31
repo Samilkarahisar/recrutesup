@@ -177,8 +177,8 @@ public class CompanyServiceImpl implements CompanyService, CompanyServiceDTO {
 		Role role = roleRepository.findByName(ERole.ROLE_COMPANY)
 				.orElseThrow(() -> new RecruteSupApplicationException(RecruteSupErrorType.ROLE_COMPANY_UNKNOWN));
 		employee = new User();
-		employee.setFirstname(createEmployeeDTO.getFirstname().trim());
-		employee.setLastname(createEmployeeDTO.getLastname().trim());
+		employee.setFirstname(createEmployeeDTO.getFirstname().trim().substring(0, 1).toUpperCase() + createEmployeeDTO.getFirstname().trim().substring(1).toLowerCase());
+		employee.setLastname(createEmployeeDTO.getLastname().trim().toUpperCase());
 		employee.setMailAddress(createEmployeeDTO.getMailAddress().trim());
 		employee.setPhoneNumber(createEmployeeDTO.getPhoneNumber());
 		employee.setRole(role);

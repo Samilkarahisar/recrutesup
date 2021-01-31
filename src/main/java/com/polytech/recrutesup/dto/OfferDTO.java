@@ -43,6 +43,8 @@ public class OfferDTO {
 	private Long companyId;
 
 	private String companyName;
+	
+	private EWorkflowState companyState;
 
 	private List<AttachmentDTO> attachmentList;
 
