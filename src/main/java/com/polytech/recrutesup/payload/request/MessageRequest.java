@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CreateMeetingRequest {
+public class MessageRequest {
 
 	@NotNull
 	Long idWish;
@@ -29,9 +29,5 @@ public class CreateMeetingRequest {
     Long idSender;
     
 	@NotNull
-    Long idInterlocutor;
-	
-	String dateMeeting;
-    
     Long idReceiver;
 }
