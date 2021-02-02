@@ -56,7 +56,7 @@ public class MailObjectGenerator {
 		return
 				" <h3>" + firstname + " : Vous avez reçu un voeu d'une entreprise !</h3>"
 				+ "L'entreprise <b>" + companyName + "</b> vous a envoyé un voeu et cherche à rentrer en contact avec vous.<br>"
-				+ "Allez dans l'onglet 'Voeux' de l'application RecruteSUP pour consulter vos voeux envoyés et reçus.<br>"
+				+ "Allez dans l'onglet 'Voeux' de l'application RecruteSUP pour consulter vos voeux envoyés et reçus.<br><br>"
 				+ "Très bonne journée à vous ! <br>"
 				+ "L'équipe RecruteSUP";
 	}
@@ -66,12 +66,12 @@ public class MailObjectGenerator {
 				" <h3>" + companyName + " : Vous avez reçu un voeu d'un étudiant !</h3>"
 				+ "<b>" + firstname + " " + lastname + "</b> vous a envoyé un voeu et cherche à rentrer en contact avec vous.<br>"
 				+ "Cet étudiant est intéressé par l'offre que vous avez publié : <b>" + labelOffer + "</b><br>"
-				+ "Allez dans l'onglet 'Voeux' de l'application RecruteSUP pour consulter vos voeux envoyés et reçus.<br>"
+				+ "Allez dans l'onglet 'Voeux' de l'application RecruteSUP pour consulter vos voeux envoyés et reçus.<br><br>"
 				+ "Très bonne journée à vous ! <br>"
 				+ "L'équipe RecruteSUP";
 	}
 	
-	public static final String creationMeetingRequestToAdmin(String dateMeeting, String message, String sender, String senderMail, String interlocutor, String interlocutorMail) {
+	public static final String creationMeetingRequestToAdminWithDate(String dateMeeting, String message, String sender, String senderMail, String interlocutor, String interlocutorMail) {
 		return
 				" <h3>" + sender + " souhaite rencontrer " + interlocutor + "</h3>"
 				+ "Message de " + sender + " : <br>"
@@ -80,18 +80,63 @@ public class MailObjectGenerator {
 				+ "<b>Attention</b> , tous les administrateurs de Polytech Lyon ont reçu cette demande <br>"
 				+ "Les participants obligatoires sont : <br>"
 				+ " - " + sender + " : " + senderMail + "<br>"
-				+ " - " + interlocutor + " : " + interlocutorMail + "<br>"
+				+ " - " + interlocutor + " : " + interlocutorMail + "<br><br>"
 				+ "Très bonne journée à vous ! <br>"
 				+ "L'équipe RecruteSUP";
 	}
 	
-	public static final String creationMeetingRequest(String dateMeeting, String message, String sender, String senderMail, String interlocutor) {
+	public static final String creationMeetingRequestToAdminWithoutDate(String message, String sender, String senderMail, String interlocutor, String interlocutorMail) {
+		return
+				" <h3>" + sender + " souhaite rencontrer " + interlocutor + "</h3>"
+				+ "Message de " + sender + " : <br>"
+				+ "<div style=\"white-space: pre-wrap;\"> \"" + message + "\" </div> <br><br>"  
+				+ "Pouvez-vous organiser cette rencontre ? <br>"
+				+ "<b>Attention</b> , tous les administrateurs de Polytech Lyon ont reçu cette demande <br>"
+				+ "Les participants obligatoires sont : <br>"
+				+ " - " + sender + " : " + senderMail + "<br>"
+				+ " - " + interlocutor + " : " + interlocutorMail + "<br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String creationMeetingRequestWithDate(String dateMeeting, String message, String sender, String senderMail, String interlocutor) {
 		return
 				" <h3>" + interlocutor + " : " + sender + " souhaite vous rencontrer </h3>"
 				+ "Message de " + sender + " : <br>"
 				+ "<div style=\"white-space: pre-wrap;\"> \"" + message + "\" </div> <br><br>"  
 				+ "Cette rencontre doit avoir lieu le " + dateMeeting + "<br>"
-				+ "Si vous souhaitez contacter cette personne directement son adresse mail est la suivante : " + senderMail + "<br>"
+				+ "Si vous souhaitez répondre à cette personne, son adresse mail est la suivante : " + senderMail + "<br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String creationMeetingRequestWithoutDate(String message, String sender, String senderMail, String interlocutor) {
+		return
+				" <h3>" + interlocutor + " : " + sender + " souhaite vous rencontrer </h3>"
+				+ "Message de " + sender + " : <br>"
+				+ "<div style=\"white-space: pre-wrap;\"> \"" + message + "\" </div> <br><br>"  
+				+ "Si vous souhaitez répondre à cette personne, son adresse mail est la suivante : " + senderMail + "<br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String emailMessage(String message, String sender, String senderMail, String receiver) {
+		return
+				" <h3>" + receiver + " : " + sender + " vous a envoyé un message ! </h3>"
+				+ "Message de " + sender + " : <br>"
+				+ "<div style=\"white-space: pre-wrap;\"> \"" + message + "\" </div> <br><br>"  
+				+ "Si vous souhaitez répondre à cette personne, son adresse mail est la suivante : " + senderMail + "<br><br>"
+				+ "Très bonne journée à vous ! <br>"
+				+ "L'équipe RecruteSUP";
+	}
+	
+	public static final String emailMessage(String message, String sender, String senderMail, String offerLabel, String receiver) {
+		return
+				" <h3>" + receiver + " : " + sender + " vous a envoyé un message ! </h3>"
+				+ "Celui-ci concerne l'offre : " + offerLabel + " <br>"
+				+ "Message de " + sender + " : <br>"
+				+ "<div style=\"white-space: pre-wrap;\"> \"" + message + "\" </div> <br><br>"  
+				+ "Si vous souhaitez répondre à cette personne, son adresse mail est la suivante : " + senderMail + "<br><br>"
 				+ "Très bonne journée à vous ! <br>"
 				+ "L'équipe RecruteSUP";
 	}

@@ -75,43 +75,56 @@ public class MailService {
 		this.sendEmail("ptut.recrutesup@gmail.com", "Vous avez reçu un voeu !", MailObjectGenerator.creationStudentWish(student.getUser().getFirstname(), student.getUser().getLastname(), offer.getCompany().getName(), offer.getLabel()));
 	}
 	
-	public void sendEmailMeetingCreationRequest(String dateMeeting, String message, Student sender, Offer interlocutor, User receiver) {
-		this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
-				MailObjectGenerator.creationMeetingRequest(dateMeeting,
-														   message,
-														   sender.getUser().getFirstname() + " " + sender.getUser().getLastname(),
-														   sender.getUser().getMailAddress(),
-														   interlocutor.getCreatedByUser().getFirstname() + " " + interlocutor.getCreatedByUser().getLastname() + " (" + interlocutor.getCompany().getName() + ")"));
-	
-	}
-	
-	public void sendEmailMeetingCreationRequestToAdmin(String dateMeeting, String message, Student sender, Offer interlocutor, List<Admin> receivers) {
-		this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
-				MailObjectGenerator.creationMeetingRequestToAdmin(dateMeeting,
-															      message,
-															      sender.getUser().getFirstname() + " " + sender.getUser().getLastname(),
-															      sender.getUser().getMailAddress(),
-															      interlocutor.getCreatedByUser().getFirstname() + " " + interlocutor.getCreatedByUser().getLastname() + " (" + interlocutor.getCompany().getName() + ")",
-																  interlocutor.getCreatedByUser().getMailAddress()));
-	
-	}
-	
-	public void sendEmailMeetingCreationRequest(String dateMeeting, String message, User sender, Company company, Student interlocutor, User receiver) {
+	public void sendEmailMeetingCreationRequestWithDate(String dateMeeting, String message, User sender, Company company, Student interlocutor, User receiver) {
 			this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
-					MailObjectGenerator.creationMeetingRequest(dateMeeting,
+					MailObjectGenerator.creationMeetingRequestWithDate(dateMeeting,
 							                                   message,
 							                                   sender.getFirstname() + " " + sender.getLastname() + " (" + company.getName() + ")",
 							                                   sender.getMailAddress(),
 							                                   interlocutor.getUser().getFirstname()));
 	}
 	
-	public void sendEmailMeetingCreationRequestToAdmin(String dateMeeting, String message, User sender, Company company, Student interlocutor, List<Admin> receivers) {
+	public void sendEmailMeetingCreationRequestWithoutDate(String message, User sender, Company company, Student interlocutor, User receiver) {
 		this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
-				MailObjectGenerator.creationMeetingRequestToAdmin(dateMeeting,
+				MailObjectGenerator.creationMeetingRequestWithoutDate(message,
+						                                   sender.getFirstname() + " " + sender.getLastname() + " (" + company.getName() + ")",
+						                                   sender.getMailAddress(),
+						                                   interlocutor.getUser().getFirstname()));
+	}
+	
+	public void sendEmailMeetingCreationRequestToAdminWithDate(String dateMeeting, String message, User sender, Company company, Student interlocutor, List<Admin> receivers) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
+				MailObjectGenerator.creationMeetingRequestToAdminWithDate(dateMeeting,
 							                                      message,
 							                                      sender.getFirstname() + " " + sender.getLastname() + " (" + company.getName() + ")",
 							                                      sender.getMailAddress(),
 							                                      interlocutor.getUser().getFirstname() + " " + interlocutor.getUser().getLastname(),
 							                                      interlocutor.getUser().getMailAddress()));
-}
+	}
+	
+	public void sendEmailMeetingCreationRequestToAdminWithoutDate(String message, User sender, Company company, Student interlocutor, List<Admin> receivers) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Demande de rencontre",
+				MailObjectGenerator.creationMeetingRequestToAdminWithoutDate(message,
+							                                      sender.getFirstname() + " " + sender.getLastname() + " (" + company.getName() + ")",
+							                                      sender.getMailAddress(),
+							                                      interlocutor.getUser().getFirstname() + " " + interlocutor.getUser().getLastname(),
+							                                      interlocutor.getUser().getMailAddress()));
+	}
+	
+	public void sendEmailMessage(String message, User sender, Offer offer, User receiver) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Vous avez un message",
+				MailObjectGenerator.emailMessage(message,
+		                                         sender.getFirstname() + " " + sender.getLastname(),
+		                                         sender.getMailAddress(),
+		                                         offer.getLabel(),
+		                                         receiver.getFirstname() + " " + receiver.getLastname()));
+	}
+	
+	public void sendEmailMessage(String message, User sender, Company company, User receiver) {
+		this.sendEmail("ptut.recrutesup@gmail.com", "Vous avez un message",
+				MailObjectGenerator.emailMessage(message,
+		                                         sender.getFirstname() + " " + sender.getLastname() + " (" + company.getName() + ")",
+		                                         sender.getMailAddress(),
+		                                         receiver.getFirstname() + " " + receiver.getLastname()));
+	}
 }

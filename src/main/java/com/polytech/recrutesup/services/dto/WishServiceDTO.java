@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import com.polytech.recrutesup.dto.WishDTO;
 import com.polytech.recrutesup.payload.request.CreateMeetingRequest;
+import com.polytech.recrutesup.payload.request.MessageRequest;
 
 public interface WishServiceDTO {
 
@@ -21,6 +22,8 @@ public interface WishServiceDTO {
 	WishDTO createCompanyWish(@NotNull Long idUser);
 
 	WishDTO createMeeting(@Valid @NotNull CreateMeetingRequest createMeetingRequest);
+	
+	WishDTO sendMessage(@Valid @NotNull MessageRequest messageRequest);
 
 	WishDTO updateStateCompanyWish(@NotNull Long idWish, @NotNull String currentState, @NotNull String nextState);
 

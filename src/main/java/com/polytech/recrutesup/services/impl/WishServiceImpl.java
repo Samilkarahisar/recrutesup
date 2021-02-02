@@ -27,6 +27,7 @@ import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
 import com.polytech.recrutesup.mail.service.MailService;
 import com.polytech.recrutesup.mappers.WishMapper;
 import com.polytech.recrutesup.payload.request.CreateMeetingRequest;
+import com.polytech.recrutesup.payload.request.MessageRequest;
 import com.polytech.recrutesup.repositories.AdminRepository;
 import com.polytech.recrutesup.repositories.CompanyRepository;
 import com.polytech.recrutesup.repositories.OfferRepository;
@@ -223,22 +224,45 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 						// MISE A JOUR DU STATUT
 						this.updateStateCompanyWish(wish.getId(), "VALIDE", "MEETING_ORGANISE");
 						
-						if(createMeetingRequest.getIdReceiver() != null) {
-							this.mailService.sendEmailMeetingCreationRequest(createMeetingRequest.getDateMeeting(),
-																			 createMeetingRequest.getMessage(),
-																			 employee,
-																			 company,
-																			 student,
-																			 student.getUser());
+						// SI LA DATE EST RENSEIGNEE
+						if(createMeetingRequest.getDateMeeting() != null) {
+							// ENVOI A UN ETUDIANT OU UN SALARIE
+							if(createMeetingRequest.getIdReceiver() != null) {
+								this.mailService.sendEmailMeetingCreationRequestWithDate(createMeetingRequest.getDateMeeting(),
+																				 createMeetingRequest.getMessage(),
+																				 employee,
+																				 company,
+																				 student,
+																				 student.getUser());
+							} else {
+								// ENVOI A TOUS LES ADMINS
+								List<Admin> admins = this.adminRepository.findAll();
+								this.mailService.sendEmailMeetingCreationRequestToAdminWithDate(createMeetingRequest.getDateMeeting(),
+																					    createMeetingRequest.getMessage(),
+																					    employee,
+																					    company,
+																					    student,
+																						admins);
+							}
 						} else {
-							List<Admin> admins = this.adminRepository.findAll();
-							this.mailService.sendEmailMeetingCreationRequestToAdmin(createMeetingRequest.getDateMeeting(),
-																				    createMeetingRequest.getMessage(),
-																				    employee,
-																				    company,
-																				    student,
-																					admins);
+							// ENVOI A UN ETUDIANT OU UN SALARIE
+							if(createMeetingRequest.getIdReceiver() != null) {
+								this.mailService.sendEmailMeetingCreationRequestWithoutDate(createMeetingRequest.getMessage(),
+																				 employee,
+																				 company,
+																				 student,
+																				 student.getUser());
+							} else {
+								// ENVOI A TOUS LES ADMINS
+								List<Admin> admins = this.adminRepository.findAll();
+								this.mailService.sendEmailMeetingCreationRequestToAdminWithoutDate(createMeetingRequest.getMessage(),
+																					    employee,
+																					    company,
+																					    student,
+																						admins);
+							}
 						}
+						
 						
 						return this.wishMapper.companyWishSendedToWishDTO(wish);
 					}
@@ -247,14 +271,50 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 			
 			throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_INCORRECT);
 			
-		} else if(createMeetingRequest.getType().equals("STUDENT")) {
-			Student student = this.studentRepository.findByIdUser(createMeetingRequest.getIdSender());
+		}
+		
+		throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_BAD_TYPE);
+	}
+	
+	@Override
+	public WishDTO sendMessage(@Valid @NotNull MessageRequest messageRequest) {
+		if(messageRequest.getType().equals("COMPANY")) {
+			List<Company> listCompanies = this.companyRepository.findAll();
+			for(Company company: listCompanies) {
+				for(CompanyWish wish: company.getWishSendList()) {
+					if(wish.getId() == messageRequest.getIdWish() && wish.getState().equals(EWorkflowState.VALIDE)) {
+						Optional<User> optEmployee = company.getEmployees().stream().filter(e -> e.getId() == messageRequest.getIdSender()).findFirst();
+						User employee = null;
+						if(optEmployee != null) {
+							employee = optEmployee.get();
+						} else {
+							throw new RecruteSupApplicationException(RecruteSupErrorType.EMPLOYEE_UNKNOWN);
+						}
+						
+						Student student = this.studentRepository.findByIdUser(messageRequest.getIdReceiver());
+						if(student == null) {
+							throw new RecruteSupApplicationException(RecruteSupErrorType.STUDENT_UNKNOWN);
+						}
+						
+						this.mailService.sendEmailMessage(messageRequest.getMessage(),
+														  employee,
+														  company,
+														  student.getUser());
+						
+						return this.wishMapper.companyWishSendedToWishDTO(wish);
+					}
+				}
+			}
+			
+			throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_INCORRECT);
+		} else if(messageRequest.getType().equals("STUDENT")) {
+			Student student = this.studentRepository.findByIdUser(messageRequest.getIdSender());
 			if(student == null) {
 				throw new RecruteSupApplicationException(RecruteSupErrorType.STUDENT_UNKNOWN);
 			}
 			for(StudentWish wish: student.getWishSendList()) {
-				if(wish.getId() == createMeetingRequest.getIdWish() && wish.getState().equals(EWorkflowState.VALIDE)) {
-					Optional<Offer> optOffer = offerRepository.findById(createMeetingRequest.getIdInterlocutor());
+				if(wish.getId() == messageRequest.getIdWish() && wish.getState().equals(EWorkflowState.VALIDE)) {
+					Optional<Offer> optOffer = offerRepository.findById(messageRequest.getIdReceiver());
 					Offer offer = null;
 					if(optOffer != null) {
 						offer = optOffer.get();
@@ -262,29 +322,16 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 						throw new RecruteSupApplicationException(RecruteSupErrorType.OFFER_UNKNOWN);
 					}
 					
-					// MISE A JOUR DU STATUT
-					this.updateStateStudentWish(wish.getId(), "VALIDE", "MEETING_ORGANISE");
-					
-					if(createMeetingRequest.getIdReceiver() != null) {
-						this.mailService.sendEmailMeetingCreationRequest(createMeetingRequest.getDateMeeting(),
-								 										 createMeetingRequest.getMessage(),
-																		 student,
-																		 offer,
-																		 offer.getCreatedByUser());
-					} else {
-						List<Admin> admins = this.adminRepository.findAll();
-						this.mailService.sendEmailMeetingCreationRequestToAdmin(createMeetingRequest.getDateMeeting(),
-																				createMeetingRequest.getMessage(),
-																				student,
-																				offer,
-																				admins);
-					}
+					this.mailService.sendEmailMessage(messageRequest.getMessage(),
+												      student.getUser(),
+												      offer,
+												      offer.getCreatedByUser());
 					
 					return this.wishMapper.studentWishSendedToWishDTO(wish);
 				}
 			}
 			
-			throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_INCORRECT);
+			throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_INCORRECT);			
 		}
 		
 		throw new RecruteSupApplicationException(RecruteSupErrorType.WISH_BAD_TYPE);
