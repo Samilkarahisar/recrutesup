@@ -27,8 +27,8 @@ public class MailConfig {
         Properties javaMailProperties = new Properties();
         javaMailProperties.put("mail.smtp.starttls.enable", env.getProperty("spring.mail.properties.mail.smtp.starttls.enable"));
         javaMailProperties.put("mail.smtp.auth", env.getProperty("spring.mail.properties.mail.smtp.auth"));
-        javaMailProperties.put("mail.debug", env.getProperty("mail.smtp.debug"));
-        javaMailProperties.put("mail.transport.protocol", "smtp");
+        javaMailProperties.put("mail.debug", env.getProperty("spring.mail.smtp.debug"));
+        javaMailProperties.put("mail.transport.protocol", env.getProperty("spring.mail.protocol"));
  
         mailSender.setJavaMailProperties(javaMailProperties);
         return mailSender;
