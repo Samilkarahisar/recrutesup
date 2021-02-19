@@ -27,7 +27,7 @@ import com.polytech.recrutesup.exceptions.RecruteSupErrorType;
 import com.polytech.recrutesup.mail.service.MailService;
 import com.polytech.recrutesup.mappers.WishMapper;
 import com.polytech.recrutesup.payload.request.CreateMeetingRequest;
-import com.polytech.recrutesup.payload.request.MessageRequest;
+import com.polytech.recrutesup.payload.request.WishMessageRequest;
 import com.polytech.recrutesup.repositories.AdminRepository;
 import com.polytech.recrutesup.repositories.CompanyRepository;
 import com.polytech.recrutesup.repositories.OfferRepository;
@@ -277,7 +277,7 @@ public class WishServiceImpl implements WishServiceDTO, WishService {
 	}
 	
 	@Override
-	public WishDTO sendMessage(@Valid @NotNull MessageRequest messageRequest) {
+	public WishDTO sendMessage(@Valid @NotNull WishMessageRequest messageRequest) {
 		if(messageRequest.getType().equals("COMPANY")) {
 			List<Company> listCompanies = this.companyRepository.findAll();
 			for(Company company: listCompanies) {

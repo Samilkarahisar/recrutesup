@@ -141,4 +141,10 @@ public class MailService {
 		                                         sender.getMailAddress(),
 		                                         receiver.getFirstname() + " " + receiver.getLastname()));
 	}
+	
+	public void sendAdminMessage(String message, User receiver) {
+		this.sendEmail(receiver.getMailAddress(), "Vous aves un message des admins",
+				MailObjectGenerator.adminMessage(message));
+	}
+	
 }

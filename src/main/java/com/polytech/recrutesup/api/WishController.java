@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.polytech.recrutesup.dto.WishDTO;
 import com.polytech.recrutesup.payload.request.CreateMeetingRequest;
-import com.polytech.recrutesup.payload.request.MessageRequest;
+import com.polytech.recrutesup.payload.request.WishMessageRequest;
 import com.polytech.recrutesup.services.dto.WishServiceDTO;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -68,7 +68,7 @@ public class WishController {
 	
 	@PostMapping("/message")
 	@PreAuthorize("hasRole('COMPANY') or hasRole('STUDENT')")
-	public ResponseEntity<WishDTO> sendMessage(@Valid @RequestBody MessageRequest messageRequest) {
+	public ResponseEntity<WishDTO> sendMessage(@Valid @RequestBody WishMessageRequest messageRequest) {
 		return new ResponseEntity<>(this.wishServiceDTO.sendMessage(messageRequest), HttpStatus.OK);
 	}
 	
