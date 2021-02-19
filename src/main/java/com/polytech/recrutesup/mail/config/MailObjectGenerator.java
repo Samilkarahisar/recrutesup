@@ -140,4 +140,10 @@ public class MailObjectGenerator {
 				+ "Très bonne journée à vous ! <br>"
 				+ "L'équipe RecruteSUP";
 	}
+	
+	public static final String adminMessage(String message) {
+		return
+				"<div style=\"white-space: pre-wrap;\">" + message + "</div><br>"
+				+ "-- Ce message a été envoyé depuis l'application RecruteSUP --";
+	}
 }

@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import com.polytech.recrutesup.dto.AdminDTO;
 import com.polytech.recrutesup.payload.request.LoginRequest;
+import com.polytech.recrutesup.payload.request.MessageRequest;
 import com.polytech.recrutesup.payload.request.UpdateAdminRequest;
 
 public interface AdminServiceDTO {
@@ -18,4 +19,6 @@ public interface AdminServiceDTO {
 	AdminDTO updateAdmin(@NotNull @Valid UpdateAdminRequest adminDTO);
 	
 	AdminDTO changePassword(@NotNull @Valid LoginRequest loginRequest);
+	
+	AdminDTO sendMessage(@NotNull @Valid MessageRequest messageRequest);
 }

@@ -1,6 +1,7 @@
 package com.polytech.recrutesup.payload.request;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,12 +14,20 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MessageRequest {
+public class WishMessageRequest {
 
-	String role;
+	@NotNull
+	Long idWish;
 	
-    String state;
+	@NotBlank
+	String type;
+	
+	@NotBlank
+    String message;
     
-    @NotBlank
-	String message;
+	@NotNull
+    Long idSender;
+    
+	@NotNull
+    Long idReceiver;
 }
