@@ -1,86 +1,12 @@
--- phpMyAdmin SQL Dump
--- version 4.9.2
--- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 22 fév. 2021 à 08:44
--- Version du serveur :  10.4.10-MariaDB
--- Version de PHP :  7.3.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de données :  `recrutesup`
+-- Déchargement des données de la table `role`
 --
 
--- --------------------------------------------------------
+INSERT INTO `role` (`id`, `name`) VALUES
+(1, 'ROLE_ADMIN'),
+(2, 'ROLE_COMPANY'),
+(3, 'ROLE_STUDENT');
 
---
--- Structure de la table `admin`
---
-
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `id_user` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK4ert0ej65rd0y5e7b7ukmi82t` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `admin`
---
-
-INSERT INTO `admin` (`id`, `id_user`) VALUES
-(1, 1),
-(2, 2);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `attachment`
---
-
-DROP TABLE IF EXISTS `attachment`;
-CREATE TABLE IF NOT EXISTS `attachment` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `label` varchar(40) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `attachment`
---
-
-INSERT INTO `attachment` (`id`, `label`) VALUES
-(1, 'OFFRE'),
-(2, 'OFFRE');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `company`
---
-
-DROP TABLE IF EXISTS `company`;
-CREATE TABLE IF NOT EXISTS `company` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `description` varchar(500) DEFAULT NULL,
-  `mail_address` varchar(40) NOT NULL,
-  `name` varchar(40) NOT NULL,
-  `state` varchar(40) NOT NULL,
-  `website_url` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `company`
@@ -99,317 +25,6 @@ INSERT INTO `company` (`id`, `description`, `mail_address`, `name`, `state`, `we
 (10, 'LE GROUPE SWORD EST UNE SOCIÉTÉ INTERNATIONALE DE SOFTWARE, DE CONSEILS\r\nET DE SERVICES. NOUS ASSISTONS LES LEADERS MONDIAUX DANS LEURS PROGRAMMES DE TRANSFORMATION TECHNOLOGIQUE ET DIGITALE.', 'sword-group-contact@gmail.com', 'Sword Group', 'ENREGISTRE', 'https://www.sword-group.com/'),
 (11, NULL, 'apollo-contact@gmail.com', 'Apollo SSC', 'INVALIDE', '');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `company_employee`
---
-
-DROP TABLE IF EXISTS `company_employee`;
-CREATE TABLE IF NOT EXISTS `company_employee` (
-  `id_company` bigint(20) NOT NULL,
-  `id_employee` bigint(20) NOT NULL,
-  UNIQUE KEY `UK_2t18hunupw76a5sdorsksl37f` (`id_employee`),
-  KEY `FKkkxyemi5ffgq5cih5gf96bcws` (`id_company`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `company_employee`
---
-
-INSERT INTO `company_employee` (`id_company`, `id_employee`) VALUES
-(1, 3),
-(1, 16),
-(1, 17),
-(2, 4),
-(2, 18),
-(2, 19),
-(3, 20),
-(3, 21),
-(4, 22),
-(4, 23),
-(5, 24),
-(5, 25),
-(6, 26),
-(6, 27),
-(7, 28),
-(7, 29),
-(8, 30),
-(8, 31),
-(9, 32),
-(9, 33),
-(10, 34),
-(10, 35),
-(11, 36),
-(11, 37);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `company_offer`
---
-
-DROP TABLE IF EXISTS `company_offer`;
-CREATE TABLE IF NOT EXISTS `company_offer` (
-  `id_company` bigint(20) DEFAULT NULL,
-  `id_offer` bigint(20) NOT NULL,
-  PRIMARY KEY (`id_offer`),
-  KEY `FKd8h9ct7x3t44q2mu2adccdxqm` (`id_company`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `company_offer`
---
-
-INSERT INTO `company_offer` (`id_company`, `id_offer`) VALUES
-(1, 1),
-(1, 3),
-(1, 4),
-(1, 5),
-(1, 6),
-(1, 7),
-(2, 2),
-(2, 8),
-(2, 9),
-(2, 10);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `company_wish`
---
-
-DROP TABLE IF EXISTS `company_wish`;
-CREATE TABLE IF NOT EXISTS `company_wish` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `creation_date` date NOT NULL,
-  `priority_receiver` int(11) NOT NULL,
-  `priority_sender` int(11) NOT NULL,
-  `state` varchar(40) NOT NULL,
-  `id_company` bigint(20) NOT NULL,
-  `id_student` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKcju47d0lok3d0dxaooctp4xxd` (`id_company`),
-  KEY `FKc0d6pbcjwhvxn1m8sh0r63uc5` (`id_student`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `company_wish`
---
-
-INSERT INTO `company_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_company`, `id_student`) VALUES
-(1, '2021-01-26', 1, 1, 'VALIDE', 1, 1),
-(2, '2021-01-26', 1, 1, 'VALIDE', 2, 2),
-(4, '2021-01-26', 1, 3, 'TRANSMIS', 1, 3),
-(5, '2021-01-26', 1, 4, 'VALIDE', 1, 10),
-(6, '2021-01-26', 2, 2, 'TRANSMIS', 2, 1),
-(7, '2021-01-26', 1, 3, 'TRANSMIS', 2, 4),
-(9, '2021-01-26', 1, 4, 'MEETING_ORGANISE', 2, 9);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `offer`
---
-
-DROP TABLE IF EXISTS `offer`;
-CREATE TABLE IF NOT EXISTS `offer` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `address` varchar(40) NOT NULL,
-  `city` varchar(40) NOT NULL,
-  `creation_date` date NOT NULL,
-  `description` varchar(500) DEFAULT NULL,
-  `label` varchar(100) NOT NULL,
-  `mail_address` varchar(40) NOT NULL,
-  `state` varchar(40) NOT NULL,
-  `created_by_user` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKe8605jrsv6xcslalj9piehly3` (`created_by_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `offer`
---
-
-INSERT INTO `offer` (`id`, `address`, `city`, `creation_date`, `description`, `label`, `mail_address`, `state`, `created_by_user`) VALUES
-(1, '11 avenue Leon Blum', 'Villeurbanne', '2020-11-09', 'Nous recherchons un développeur maîtrisant le langage java et le framework Spring. le développeur sera amené Ã  réaliser des missions en autonomie pour un acteur du secteur des transport.', 'Développeur Java/Spring', 'contact-offer@test.com', 'DISPONIBLE', 3),
-(2, '25 avenue des Noisetiers', 'St-Priest', '2020-12-08', 'Nous recherchons un développeur maîtrisant les bases d\'Angular et de Java. Il est fortement recommandé de maîtriser les frameworks Spring pour Java et Materials pour Angular', 'Développeur Full Stack Java/Angular', 'contact-offer2@test.com', 'DISPONIBLE', 4),
-(3, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Poste d\'alternance Full Stack sur des technologies variés. Vous serez épaulés par des experts puis serez ensuite amenés à évoluer par vous-même en autonomie sur des missions de complexités diverses. Le poste concerne une équipe de moins de 10 personnes  pour un de nos clients lyonnais du domaine bancaire', 'Développeur Full Stack', 'soprasteria@contact.com', 'DISPONIBLE', 3),
-(4, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Venez découvrir le domaine devOps. Entourez d\'experts, vous pourrez évoluer sur des projets attractifs et à forte valeur ajoutée ! De quoi booster vos compétences et votre CV ! Notre équipe n\'attend que vous !', 'Ingénieur DevOps', 'contact@soprasteria.com', 'EN_VALIDATION', 3),
-(5, '108 avenue garibaldi', 'Lyon', '2021-01-26', 'Nous recherchons un passionné de cybersécurité, plutôt que quelqu\'un de vraiment expert dedans. Les compétences ne nous intéressent pas, nous cherchons à vous faire évoluer et vous former tout au long de votre apprentissage. \nLe poste se trouve en centre-ville directement chez un de nos clients du domaine bancaire. Vous serez en permanence accompagné de quelqu\'un de chez Sopra Steria, et serez pleinement impliqué dans les décisions prises quotidiennement.', 'Ingénieur CyberSécurité', 'soprasteria@contact.com', 'EN_VALIDATION', 3),
-(6, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Le poste concerne le domaine de la data, c\'est à dire la gestion de données en base de données. Leur manipulation, leur traitement. Vos missions concerneront des problématiques diverses  comme :\n- l\'optimisation des flux en transit sur les serveurs\n- la récurrence de certaines requêtes et l\'impact sur les performances chez le client\n- la pluridisciplinarité des objets en BDD manipulés\n', 'Ingénieur Data', 'soprasteria@contact.com', 'EN_VALIDATION', 3),
-(7, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Ce poste concerne un projet d\'application web pour un de nos clients du domaine de l\'énergie. Vous serez amené à développer vos compétences Back, en utilisant principalement Java et des frameworks comme Spring. Vous serez amené à manipuler des bases de données et des modèles objets parfois complexes. Bien sûr vous serez encadré par des experts qui tâcheront de vous faire évoluer dans ce milieu et dans notre entreprise.', 'Technicien Java/Spring', 'soprasteria@contact.com', 'BROUILLON', 3),
-(8, '5 avenue Berthelot', 'St-Priest', '2021-01-26', 'Nous cherchons une personne motivée pour apprendre à développer une application web, en maîtrisant toutes les phases de développement. ', 'Développeur Full Stack', 'atos@contact.com', 'DISPONIBLE', 4),
-(9, '5 avenue Berthelot', 'St-Priest', '2021-01-26', 'Maîtrisez les phases DevOps ainsi que la méthodologie DevOps. ', 'Ingénieur DevOps', 'atos@contact.com', 'EN_VALIDATION', 4),
-(10, '5 rue leon blum', 'Lyon', '2021-01-26', 'Nous recherchons un futur alternant pour un post Full Stack avec comme technos : J2EE et l\'utilisation du framework Spring. Et aussi l\'utilisation de reactJS.\n\nTous les niveaux son appréciés, nous nous chargerons de votre montée en compétences et de votre évolution dans le domaine.', 'Développeur J2EE/ReactJs', 'atos@contact.com', 'EN_VALIDATION', 4);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `offer_attachment`
---
-
-DROP TABLE IF EXISTS `offer_attachment`;
-CREATE TABLE IF NOT EXISTS `offer_attachment` (
-  `id_offer` bigint(20) NOT NULL,
-  `id_attachment` bigint(20) NOT NULL,
-  UNIQUE KEY `UK_ec944gnqhp6tvb97ye5brl4db` (`id_attachment`),
-  KEY `FK39tnf0nqdyrkikmr0vygwo6jm` (`id_offer`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `offer_attachment`
---
-
-INSERT INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
-(1, 1),
-(2, 2);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `offer_student_wish`
---
-
-DROP TABLE IF EXISTS `offer_student_wish`;
-CREATE TABLE IF NOT EXISTS `offer_student_wish` (
-  `id_offer` bigint(20) NOT NULL,
-  `id_student_wish` bigint(20) NOT NULL,
-  UNIQUE KEY `UK_fp1l3kenl9oa2n2ypvs8w2xfg` (`id_student_wish`),
-  KEY `FKd0fnj8i9qhowyfic54t9r5yxp` (`id_offer`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `offer_student_wish`
---
-
-INSERT INTO `offer_student_wish` (`id_offer`, `id_student_wish`) VALUES
-(1, 1),
-(1, 4),
-(2, 2),
-(2, 3),
-(3, 5),
-(8, 6);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `role`
---
-
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE IF NOT EXISTS `role` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(40) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `role`
---
-
-INSERT INTO `role` (`id`, `name`) VALUES
-(1, 'ROLE_ADMIN'),
-(2, 'ROLE_COMPANY'),
-(3, 'ROLE_STUDENT');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `student`
---
-
-DROP TABLE IF EXISTS `student`;
-CREATE TABLE IF NOT EXISTS `student` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `description` varchar(500) DEFAULT NULL,
-  `label` varchar(100) DEFAULT NULL,
-  `school_year` varchar(40) NOT NULL,
-  `state` varchar(40) NOT NULL,
-  `id_user` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKb4lfwbonj876jqkfv3syhp06o` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `student`
---
-
-INSERT INTO `student` (`id`, `description`, `label`, `school_year`, `state`, `id_user`) VALUES
-(1, 'Je suis à  la recherche d\'une alternance à  partir de septembre 2021. Je recherche un poste de développeur dans une ESN de la région lyonnaise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour septembre 2021 dans la région lyonnaise', '5A', 'VALIDE', 5),
-(2, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région grenobloise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour octobre 2021 dans la région grenobloise', '5A', 'VALIDE', 6),
-(3, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région stéphanoise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour octobre 2021 dans la région stéphanoise', '4A', 'VALIDE', 7),
-(4, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste d\'apprentissage pour devenir expert en sécurité.', 'Recherche une alternance en sécurité des SI', '3A', 'VALIDE', 8),
-(5, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région grenobloise, dans le but de développer mes capacités PHP.', 'Cherche un emploi en alternance pour rentrée 2021', '4A', 'VALIDE', 9),
-(6, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région grenobloise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'Recherche une alternance dans une ESN, pour développer mes compétences Java/Angular', '5A', 'VALIDE', 10),
-(7, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région lyonnaise, je suis véhiculé et peux donc me déplacer autour de Lyon.', 'En recherche d\'un emploi en alternance pour octobre 2021', '5A', 'ENREGISTRE', 11),
-(8, 'Je suis à  la recherche d\'une alternance à  partir de septembre 2021. Je recherche un poste de développeur dans une ESN de la région lyonnaise, dans le but de développer mes capacités Php.', 'Recherche un poste de développeur PHP', '4A', 'ENREGISTRE', 12),
-(9, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste d\'apprentissage pour apprendre à devenir un expert data, notamment en Big Data et Machine Learning.', 'Recherche un poste d\'alternance en Big Data ou Machine Learning', '4A', 'INDISPONIBLE', 13),
-(10, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur Front-end sur des projets divers et variés. Le but étant de développer mes capacités Angular.', 'En recherche d\'une alternance Front-End, spécialisée en Angular', '5A', 'INDISPONIBLE', 14),
-(11, '', '', '3A', 'INVALIDE', 15);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `student_attachment`
---
-
-DROP TABLE IF EXISTS `student_attachment`;
-CREATE TABLE IF NOT EXISTS `student_attachment` (
-  `id_student` bigint(20) NOT NULL,
-  `id_attachment` bigint(20) NOT NULL,
-  UNIQUE KEY `UK_eq99ay7usfbkkeq4dqqei2ned` (`id_attachment`),
-  KEY `FKekfnqt3ojle2n13rpab6elnm9` (`id_student`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `student_wish`
---
-
-DROP TABLE IF EXISTS `student_wish`;
-CREATE TABLE IF NOT EXISTS `student_wish` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `creation_date` date NOT NULL,
-  `priority_receiver` int(11) NOT NULL,
-  `priority_sender` int(11) NOT NULL,
-  `state` varchar(40) NOT NULL,
-  `id_offer` bigint(20) NOT NULL,
-  `id_student` bigint(20) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK28ckog27qt2rsfqgng5aoy4jb` (`id_offer`),
-  KEY `FK8lndqv06fnh9i6tl35udkfxs2` (`id_student`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `student_wish`
---
-
-INSERT INTO `student_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_offer`, `id_student`) VALUES
-(1, '2021-01-26', 1, 1, 'VALIDE', 1, 1),
-(2, '2021-01-26', 1, 1, 'VALIDE', 2, 2),
-(3, '2021-01-26', 2, 2, 'TRANSMIS', 2, 1),
-(4, '2021-01-26', 2, 2, 'VALIDE', 1, 2),
-(5, '2021-01-26', 1, 3, 'TRANSMIS', 3, 1),
-(6, '2021-01-26', 1, 4, 'TRANSMIS', 8, 1);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `firstname` varchar(40) NOT NULL,
-  `lastname` varchar(40) NOT NULL,
-  `mail_address` varchar(40) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `phone_number` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `user`
@@ -454,19 +69,158 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `mail_address`, `password`, `
 (36, 'Serge', 'TREPI', 'serge-trepi@apollo.com', '$2a$10$7vgH0Y0LdbIOATksAG3HFeA5KMjINumRjAp908a1m4Ea6sWrTVbwm', '0623357418'),
 (37, 'Emilie', 'BERJOT', 'emilie-berjot@apollo.com', '$2a$10$UXE4S391bXvtVzirbHOsWuTMiKZ2VlJw8S.Om1EuOr7X3YXXsTs3S', '0637489512');
 
--- --------------------------------------------------------
 
 --
--- Structure de la table `user_role`
+-- Déchargement des données de la table `admin`
 --
 
-DROP TABLE IF EXISTS `user_role`;
-CREATE TABLE IF NOT EXISTS `user_role` (
-  `id_role` bigint(20) DEFAULT NULL,
-  `id_user` bigint(20) NOT NULL,
-  PRIMARY KEY (`id_user`),
-  KEY `FK2aam9nt2tv8vcfymi3jo9c314` (`id_role`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `admin` (`id`, `id_user`) VALUES
+(1, 1),
+(2, 2);
+
+
+--
+-- Déchargement des données de la table `company_employee`
+--
+
+INSERT INTO `company_employee` (`id_company`, `id_employee`) VALUES
+(1, 3),
+(1, 16),
+(1, 17),
+(2, 4),
+(2, 18),
+(2, 19),
+(3, 20),
+(3, 21),
+(4, 22),
+(4, 23),
+(5, 24),
+(5, 25),
+(6, 26),
+(6, 27),
+(7, 28),
+(7, 29),
+(8, 30),
+(8, 31),
+(9, 32),
+(9, 33),
+(10, 34),
+(10, 35),
+(11, 36),
+(11, 37);
+
+
+--
+-- Déchargement des données de la table `student`
+--
+
+INSERT INTO `student` (`id`, `description`, `label`, `school_year`, `state`, `id_user`) VALUES
+(1, 'Je suis à  la recherche d\'une alternance à  partir de septembre 2021. Je recherche un poste de développeur dans une ESN de la région lyonnaise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour septembre 2021 dans la région lyonnaise', '5A', 'VALIDE', 5),
+(2, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région grenobloise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour octobre 2021 dans la région grenobloise', '5A', 'VALIDE', 6),
+(3, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région stéphanoise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour octobre 2021 dans la région stéphanoise', '4A', 'VALIDE', 7),
+(4, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste d\'apprentissage pour devenir expert en sécurité.', 'Recherche une alternance en sécurité des SI', '3A', 'VALIDE', 8),
+(5, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région grenobloise, dans le but de développer mes capacités PHP.', 'Cherche un emploi en alternance pour rentrée 2021', '4A', 'VALIDE', 9),
+(6, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région grenobloise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'Recherche une alternance dans une ESN, pour développer mes compétences Java/Angular', '5A', 'VALIDE', 10),
+(7, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région lyonnaise, je suis véhiculé et peux donc me déplacer autour de Lyon.', 'En recherche d\'un emploi en alternance pour octobre 2021', '5A', 'ENREGISTRE', 11),
+(8, 'Je suis à  la recherche d\'une alternance à  partir de septembre 2021. Je recherche un poste de développeur dans une ESN de la région lyonnaise, dans le but de développer mes capacités Php.', 'Recherche un poste de développeur PHP', '4A', 'ENREGISTRE', 12),
+(9, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste d\'apprentissage pour apprendre à devenir un expert data, notamment en Big Data et Machine Learning.', 'Recherche un poste d\'alternance en Big Data ou Machine Learning', '4A', 'INDISPONIBLE', 13),
+(10, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur Front-end sur des projets divers et variés. Le but étant de développer mes capacités Angular.', 'En recherche d\'une alternance Front-End, spécialisée en Angular', '5A', 'INDISPONIBLE', 14),
+(11, '', '', '3A', 'INVALIDE', 15);
+
+
+--
+-- Déchargement des données de la table `offer`
+--
+
+INSERT INTO `offer` (`id`, `address`, `city`, `creation_date`, `description`, `label`, `mail_address`, `state`, `created_by_user`) VALUES
+(1, '11 avenue Leon Blum', 'Villeurbanne', '2020-11-09', 'Nous recherchons un développeur maîtrisant le langage java et le framework Spring. le développeur sera amené Ã  réaliser des missions en autonomie pour un acteur du secteur des transport.', 'Développeur Java/Spring', 'contact-offer@test.com', 'DISPONIBLE', 3),
+(2, '25 avenue des Noisetiers', 'St-Priest', '2020-12-08', 'Nous recherchons un développeur maîtrisant les bases d\'Angular et de Java. Il est fortement recommandé de maîtriser les frameworks Spring pour Java et Materials pour Angular', 'Développeur Full Stack Java/Angular', 'contact-offer2@test.com', 'DISPONIBLE', 4),
+(3, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Poste d\'alternance Full Stack sur des technologies variés. Vous serez épaulés par des experts puis serez ensuite amenés à évoluer par vous-même en autonomie sur des missions de complexités diverses. Le poste concerne une équipe de moins de 10 personnes  pour un de nos clients lyonnais du domaine bancaire', 'Développeur Full Stack', 'soprasteria@contact.com', 'DISPONIBLE', 3),
+(4, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Venez découvrir le domaine devOps. Entourez d\'experts, vous pourrez évoluer sur des projets attractifs et à forte valeur ajoutée ! De quoi booster vos compétences et votre CV ! Notre équipe n\'attend que vous !', 'Ingénieur DevOps', 'contact@soprasteria.com', 'EN_VALIDATION', 3),
+(5, '108 avenue garibaldi', 'Lyon', '2021-01-26', 'Nous recherchons un passionné de cybersécurité, plutôt que quelqu\'un de vraiment expert dedans. Les compétences ne nous intéressent pas, nous cherchons à vous faire évoluer et vous former tout au long de votre apprentissage. \nLe poste se trouve en centre-ville directement chez un de nos clients du domaine bancaire. Vous serez en permanence accompagné de quelqu\'un de chez Sopra Steria, et serez pleinement impliqué dans les décisions prises quotidiennement.', 'Ingénieur CyberSécurité', 'soprasteria@contact.com', 'EN_VALIDATION', 3),
+(6, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Le poste concerne le domaine de la data, c\'est à dire la gestion de données en base de données. Leur manipulation, leur traitement. Vos missions concerneront des problématiques diverses  comme :\n- l\'optimisation des flux en transit sur les serveurs\n- la récurrence de certaines requêtes et l\'impact sur les performances chez le client\n- la pluridisciplinarité des objets en BDD manipulés\n', 'Ingénieur Data', 'soprasteria@contact.com', 'EN_VALIDATION', 3),
+(7, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Ce poste concerne un projet d\'application web pour un de nos clients du domaine de l\'énergie. Vous serez amené à développer vos compétences Back, en utilisant principalement Java et des frameworks comme Spring. Vous serez amené à manipuler des bases de données et des modèles objets parfois complexes. Bien sûr vous serez encadré par des experts qui tâcheront de vous faire évoluer dans ce milieu et dans notre entreprise.', 'Technicien Java/Spring', 'soprasteria@contact.com', 'BROUILLON', 3),
+(8, '5 avenue Berthelot', 'St-Priest', '2021-01-26', 'Nous cherchons une personne motivée pour apprendre à développer une application web, en maîtrisant toutes les phases de développement. ', 'Développeur Full Stack', 'atos@contact.com', 'DISPONIBLE', 4),
+(9, '5 avenue Berthelot', 'St-Priest', '2021-01-26', 'Maîtrisez les phases DevOps ainsi que la méthodologie DevOps. ', 'Ingénieur DevOps', 'atos@contact.com', 'EN_VALIDATION', 4),
+(10, '5 rue leon blum', 'Lyon', '2021-01-26', 'Nous recherchons un futur alternant pour un post Full Stack avec comme technos : J2EE et l\'utilisation du framework Spring. Et aussi l\'utilisation de reactJS.\n\nTous les niveaux son appréciés, nous nous chargerons de votre montée en compétences et de votre évolution dans le domaine.', 'Développeur J2EE/ReactJs', 'atos@contact.com', 'EN_VALIDATION', 4);
+
+
+--
+-- Déchargement des données de la table `attachment`
+--
+
+INSERT INTO `attachment` (`id`, `label`) VALUES
+(1, 'OFFRE'),
+(2, 'OFFRE');
+
+
+--
+-- Déchargement des données de la table `offer_attachment`
+--
+
+INSERT INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
+(1, 1),
+(2, 2);
+
+
+--
+-- Déchargement des données de la table `student_wish`
+--
+
+INSERT INTO `student_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_offer`, `id_student`) VALUES
+(1, '2021-01-26', 1, 1, 'TRANSMIS', 1, 1),
+(2, '2021-01-26', 1, 1, 'TRANSMIS', 2, 2),
+(3, '2021-01-26', 2, 2, 'TRANSMIS', 2, 1),
+(4, '2021-01-26', 2, 2, 'TRANSMIS', 1, 2),
+(5, '2021-01-26', 1, 3, 'TRANSMIS', 3, 1),
+(6, '2021-01-26', 1, 4, 'TRANSMIS', 8, 1);
+
+
+--
+-- Déchargement des données de la table `offer_student_wish`
+--
+
+INSERT INTO `offer_student_wish` (`id_offer`, `id_student_wish`) VALUES
+(1, 1),
+(1, 4),
+(2, 2),
+(2, 3),
+(3, 5),
+(8, 6);
+
+
+--
+-- Déchargement des données de la table `company_wish`
+--
+
+INSERT INTO `company_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_company`, `id_student`) VALUES
+(1, '2021-01-26', 1, 1, 'TRANSMIS', 1, 1),
+(2, '2021-01-26', 1, 1, 'TRANSMIS', 2, 2),
+(3, '2021-01-26', 1, 2, 'TRANSMIS', 1, 7),
+(4, '2021-01-26', 1, 3, 'TRANSMIS', 1, 3),
+(5, '2021-01-26', 1, 4, 'TRANSMIS', 1, 10),
+(6, '2021-01-26', 2, 2, 'TRANSMIS', 2, 1),
+(7, '2021-01-26', 1, 3, 'TRANSMIS', 2, 4),
+(9, '2021-01-26', 1, 4, 'TRANSMIS', 2, 9),
+(10, '2021-01-26', 1, 5, 'TRANSMIS', 2, 8);
+
+
+--
+-- Déchargement des données de la table `company_offer`
+--
+
+INSERT INTO `company_offer` (`id_company`, `id_offer`) VALUES
+(1, 1),
+(1, 3),
+(1, 4),
+(1, 5),
+(1, 6),
+(1, 7),
+(2, 2),
+(2, 8),
+(2, 9),
+(2, 10);
+
 
 --
 -- Déchargement des données de la table `user_role`
@@ -510,86 +264,3 @@ INSERT INTO `user_role` (`id_role`, `id_user`) VALUES
 (3, 13),
 (3, 14),
 (3, 15);
-
---
--- Contraintes pour les tables déchargées
---
-
---
--- Contraintes pour la table `admin`
---
-ALTER TABLE `admin`
-  ADD CONSTRAINT `FK4ert0ej65rd0y5e7b7ukmi82t` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
-
---
--- Contraintes pour la table `company_employee`
---
-ALTER TABLE `company_employee`
-  ADD CONSTRAINT `FKkkxyemi5ffgq5cih5gf96bcws` FOREIGN KEY (`id_company`) REFERENCES `company` (`id`),
-  ADD CONSTRAINT `FKq33xr0outyvbxrdj6hi33xdfm` FOREIGN KEY (`id_employee`) REFERENCES `user` (`id`);
-
---
--- Contraintes pour la table `company_offer`
---
-ALTER TABLE `company_offer`
-  ADD CONSTRAINT `FKd8h9ct7x3t44q2mu2adccdxqm` FOREIGN KEY (`id_company`) REFERENCES `company` (`id`),
-  ADD CONSTRAINT `FKe4ak3otscdhk3rw8ophagc63j` FOREIGN KEY (`id_offer`) REFERENCES `offer` (`id`);
-
---
--- Contraintes pour la table `company_wish`
---
-ALTER TABLE `company_wish`
-  ADD CONSTRAINT `FKc0d6pbcjwhvxn1m8sh0r63uc5` FOREIGN KEY (`id_student`) REFERENCES `student` (`id`),
-  ADD CONSTRAINT `FKcju47d0lok3d0dxaooctp4xxd` FOREIGN KEY (`id_company`) REFERENCES `company` (`id`);
-
---
--- Contraintes pour la table `offer`
---
-ALTER TABLE `offer`
-  ADD CONSTRAINT `FKe8605jrsv6xcslalj9piehly3` FOREIGN KEY (`created_by_user`) REFERENCES `user` (`id`);
-
---
--- Contraintes pour la table `offer_attachment`
---
-ALTER TABLE `offer_attachment`
-  ADD CONSTRAINT `FK39tnf0nqdyrkikmr0vygwo6jm` FOREIGN KEY (`id_offer`) REFERENCES `offer` (`id`),
-  ADD CONSTRAINT `FKh7i70qwo9uutqxx8ik01fjsqa` FOREIGN KEY (`id_attachment`) REFERENCES `attachment` (`id`);
-
---
--- Contraintes pour la table `offer_student_wish`
---
-ALTER TABLE `offer_student_wish`
-  ADD CONSTRAINT `FKd0fnj8i9qhowyfic54t9r5yxp` FOREIGN KEY (`id_offer`) REFERENCES `offer` (`id`),
-  ADD CONSTRAINT `FKnstrilxmbfqcl41vlg4ccy6s` FOREIGN KEY (`id_student_wish`) REFERENCES `student_wish` (`id`);
-
---
--- Contraintes pour la table `student`
---
-ALTER TABLE `student`
-  ADD CONSTRAINT `FKb4lfwbonj876jqkfv3syhp06o` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
-
---
--- Contraintes pour la table `student_attachment`
---
-ALTER TABLE `student_attachment`
-  ADD CONSTRAINT `FK3ikh34ylc4q6tcleiprvwfa9m` FOREIGN KEY (`id_attachment`) REFERENCES `attachment` (`id`),
-  ADD CONSTRAINT `FKekfnqt3ojle2n13rpab6elnm9` FOREIGN KEY (`id_student`) REFERENCES `student` (`id`);
-
---
--- Contraintes pour la table `student_wish`
---
-ALTER TABLE `student_wish`
-  ADD CONSTRAINT `FK28ckog27qt2rsfqgng5aoy4jb` FOREIGN KEY (`id_offer`) REFERENCES `offer` (`id`),
-  ADD CONSTRAINT `FK8lndqv06fnh9i6tl35udkfxs2` FOREIGN KEY (`id_student`) REFERENCES `student` (`id`);
-
---
--- Contraintes pour la table `user_role`
---
-ALTER TABLE `user_role`
-  ADD CONSTRAINT `FK2aam9nt2tv8vcfymi3jo9c314` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`),
-  ADD CONSTRAINT `FKfhxaael2m459kbk8lv8smr5iv` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
