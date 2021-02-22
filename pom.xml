@@ -11,7 +11,7 @@
 	<groupId>com.polytech</groupId>
 	<artifactId>recrutesup</artifactId>
 	<version>SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>recrutesup</name>
 	<description>Gestion Forum recrutement des alternants de l'école Polytech Lyon</description>
 
