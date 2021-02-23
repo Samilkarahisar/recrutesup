@@ -143,7 +143,7 @@ public class MailService {
 	}
 	
 	public void sendAdminMessage(String message, User receiver) {
-		this.sendEmail(receiver.getMailAddress(), "Vous aves un message des admins",
+		this.sendEmail(receiver.getMailAddress(), "Vous avez un message des admins",
 				MailObjectGenerator.adminMessage(message));
 	}
 	
