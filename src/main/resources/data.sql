@@ -2,7 +2,7 @@
 -- Déchargement des données de la table `role`
 --
 
-INSERT INTO `role` (`id`, `name`) VALUES
+INSERT IGNORE INTO `role` (`id`, `name`) VALUES
 (1, 'ROLE_ADMIN'),
 (2, 'ROLE_COMPANY'),
 (3, 'ROLE_STUDENT');
@@ -12,7 +12,7 @@ INSERT INTO `role` (`id`, `name`) VALUES
 -- Déchargement des données de la table `company`
 --
 
-INSERT INTO `company` (`id`, `description`, `mail_address`, `name`, `state`, `website_url`) VALUES
+INSERT IGNORE INTO `company` (`id`, `description`, `mail_address`, `name`, `state`, `website_url`) VALUES
 (1, 'Sopra Steria est une entreprise de services du numérique (ESN) française et une société de conseil en transformation digitale des entreprises et des organisations.', 'company@test.com', 'Sopra Steria', 'VALIDE', 'https://www.soprasteria.com/fr'),
 (2, 'Atos est une entreprise de services du numérique (ESN) française, créée en 1997. Elle fait partie des 10 plus grandes ESN au niveau mondial', 'company2@test.com', 'Atos', 'VALIDE', 'https://atos.net/fr/'),
 (3, 'Orange Wholesale France, aujourd’hui, c’est une gamme complète d’offres qui vous apporte le meilleur de nos réseaux.\r\n\r\nDans un marché marqué par de fortes mutations, les opérateurs ont besoin d’un partenaire capable de leur offrir un réseau de qualité et à la pointe de l’innovation. A ce titre, nous avons un rôle essentiel à jouer auprès de vous.', 'or-wh-fr@gmail.com', 'Orange Wholesale France', 'VALIDE', 'https://wholesalefrance.orange.fr/fr/'),
@@ -30,7 +30,7 @@ INSERT INTO `company` (`id`, `description`, `mail_address`, `name`, `state`, `we
 -- Déchargement des données de la table `user`
 --
 
-INSERT INTO `user` (`id`, `firstname`, `lastname`, `mail_address`, `password`, `phone_number`) VALUES
+INSERT IGNORE INTO `user` (`id`, `firstname`, `lastname`, `mail_address`, `password`, `phone_number`) VALUES
 (1, 'Florence', 'PERRAUD', 'admin@test.com', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL),
 (2, 'Selma', 'LARIBI', 'admin2@test.com', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL),
 (3, 'Philippe', 'REBARD', 'employee@test.com', '$2y$10$yY66fnZ1IdrxaxDPezNlKunsrZQ/9byNLwreYs1cjp1zoqMfc0v36', NULL),
@@ -74,7 +74,7 @@ INSERT INTO `user` (`id`, `firstname`, `lastname`, `mail_address`, `password`, `
 -- Déchargement des données de la table `admin`
 --
 
-INSERT INTO `admin` (`id`, `id_user`) VALUES
+INSERT IGNORE INTO `admin` (`id`, `id_user`) VALUES
 (1, 1),
 (2, 2);
 
@@ -83,7 +83,7 @@ INSERT INTO `admin` (`id`, `id_user`) VALUES
 -- Déchargement des données de la table `company_employee`
 --
 
-INSERT INTO `company_employee` (`id_company`, `id_employee`) VALUES
+INSERT IGNORE INTO `company_employee` (`id_company`, `id_employee`) VALUES
 (1, 3),
 (1, 16),
 (1, 17),
@@ -114,7 +114,7 @@ INSERT INTO `company_employee` (`id_company`, `id_employee`) VALUES
 -- Déchargement des données de la table `student`
 --
 
-INSERT INTO `student` (`id`, `description`, `label`, `school_year`, `state`, `id_user`) VALUES
+INSERT IGNORE INTO `student` (`id`, `description`, `label`, `school_year`, `state`, `id_user`) VALUES
 (1, 'Je suis à  la recherche d\'une alternance à  partir de septembre 2021. Je recherche un poste de développeur dans une ESN de la région lyonnaise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour septembre 2021 dans la région lyonnaise', '5A', 'VALIDE', 5),
 (2, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région grenobloise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour octobre 2021 dans la région grenobloise', '5A', 'VALIDE', 6),
 (3, 'Je suis à  la recherche d\'une alternance à  partir d\'octobre 2021. Je recherche un poste de développeur dans une ESN de la région stéphanoise, dans le but de développer mes capacités Java et Angular que je maîtrise déjà  assez bien.', 'En recherche d\'une alternance pour octobre 2021 dans la région stéphanoise', '4A', 'VALIDE', 7),
@@ -132,7 +132,7 @@ INSERT INTO `student` (`id`, `description`, `label`, `school_year`, `state`, `id
 -- Déchargement des données de la table `offer`
 --
 
-INSERT INTO `offer` (`id`, `address`, `city`, `creation_date`, `description`, `label`, `mail_address`, `state`, `created_by_user`) VALUES
+INSERT IGNORE INTO `offer` (`id`, `address`, `city`, `creation_date`, `description`, `label`, `mail_address`, `state`, `created_by_user`) VALUES
 (1, '11 avenue Leon Blum', 'Villeurbanne', '2020-11-09', 'Nous recherchons un développeur maîtrisant le langage java et le framework Spring. le développeur sera amené Ã  réaliser des missions en autonomie pour un acteur du secteur des transport.', 'Développeur Java/Spring', 'contact-offer@test.com', 'DISPONIBLE', 3),
 (2, '25 avenue des Noisetiers', 'St-Priest', '2020-12-08', 'Nous recherchons un développeur maîtrisant les bases d\'Angular et de Java. Il est fortement recommandé de maîtriser les frameworks Spring pour Java et Materials pour Angular', 'Développeur Full Stack Java/Angular', 'contact-offer2@test.com', 'DISPONIBLE', 4),
 (3, '11 rue des Noisetiers', 'Limonest', '2021-01-26', 'Poste d\'alternance Full Stack sur des technologies variés. Vous serez épaulés par des experts puis serez ensuite amenés à évoluer par vous-même en autonomie sur des missions de complexités diverses. Le poste concerne une équipe de moins de 10 personnes  pour un de nos clients lyonnais du domaine bancaire', 'Développeur Full Stack', 'soprasteria@contact.com', 'DISPONIBLE', 3),
@@ -149,7 +149,7 @@ INSERT INTO `offer` (`id`, `address`, `city`, `creation_date`, `description`, `l
 -- Déchargement des données de la table `attachment`
 --
 
-INSERT INTO `attachment` (`id`, `label`) VALUES
+INSERT IGNORE INTO `attachment` (`id`, `label`) VALUES
 (1, 'OFFRE'),
 (2, 'OFFRE');
 
@@ -158,7 +158,7 @@ INSERT INTO `attachment` (`id`, `label`) VALUES
 -- Déchargement des données de la table `offer_attachment`
 --
 
-INSERT INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
+INSERT IGNORE INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
 (1, 1),
 (2, 2);
 
@@ -167,7 +167,7 @@ INSERT INTO `offer_attachment` (`id_offer`, `id_attachment`) VALUES
 -- Déchargement des données de la table `student_wish`
 --
 
-INSERT INTO `student_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_offer`, `id_student`) VALUES
+INSERT IGNORE INTO `student_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_offer`, `id_student`) VALUES
 (1, '2021-01-26', 1, 1, 'TRANSMIS', 1, 1),
 (2, '2021-01-26', 1, 1, 'TRANSMIS', 2, 2),
 (3, '2021-01-26', 2, 2, 'TRANSMIS', 2, 1),
@@ -180,7 +180,7 @@ INSERT INTO `student_wish` (`id`, `creation_date`, `priority_receiver`, `priorit
 -- Déchargement des données de la table `offer_student_wish`
 --
 
-INSERT INTO `offer_student_wish` (`id_offer`, `id_student_wish`) VALUES
+INSERT IGNORE INTO `offer_student_wish` (`id_offer`, `id_student_wish`) VALUES
 (1, 1),
 (1, 4),
 (2, 2),
@@ -193,7 +193,7 @@ INSERT INTO `offer_student_wish` (`id_offer`, `id_student_wish`) VALUES
 -- Déchargement des données de la table `company_wish`
 --
 
-INSERT INTO `company_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_company`, `id_student`) VALUES
+INSERT IGNORE INTO `company_wish` (`id`, `creation_date`, `priority_receiver`, `priority_sender`, `state`, `id_company`, `id_student`) VALUES
 (1, '2021-01-26', 1, 1, 'TRANSMIS', 1, 1),
 (2, '2021-01-26', 1, 1, 'TRANSMIS', 2, 2),
 (3, '2021-01-26', 1, 2, 'TRANSMIS', 1, 7),
@@ -209,7 +209,7 @@ INSERT INTO `company_wish` (`id`, `creation_date`, `priority_receiver`, `priorit
 -- Déchargement des données de la table `company_offer`
 --
 
-INSERT INTO `company_offer` (`id_company`, `id_offer`) VALUES
+INSERT IGNORE INTO `company_offer` (`id_company`, `id_offer`) VALUES
 (1, 1),
 (1, 3),
 (1, 4),
@@ -226,7 +226,7 @@ INSERT INTO `company_offer` (`id_company`, `id_offer`) VALUES
 -- Déchargement des données de la table `user_role`
 --
 
-INSERT INTO `user_role` (`id_role`, `id_user`) VALUES
+INSERT IGNORE INTO `user_role` (`id_role`, `id_user`) VALUES
 (1, 1),
 (1, 2),
 (2, 3),
